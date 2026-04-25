@@ -277,6 +277,22 @@
   .cr.bad  { border-color: #fca5a5; background: #fff8f8; color: #7f1d1d; }
   .cr.good { border-color: #86efac; background: #f0fdf4; color: #14532d; }
   .diag-note { margin-top: 12px; font-size: 12px; color: var(--muted); border-left: 2px solid var(--rule); padding-left: 10px; line-height: 1.7; }
+
+  /* Built tags */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .built-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    background: #f0ede8;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .built-tag:hover { background: #e8e5e0; color: var(--text); }
 </style>
 </head>
 <body>
@@ -293,22 +309,24 @@
   <div class="section section--built">
     <div class="section-label"><span class="hl">What I Built</span></div>
 
-    <p><strong>Cost of Doing Nothing Calculator</strong> — Interactive financial model that inputs team size, incident rate, and salary to return the annual dollar cost of staying on a legacy setup. Became an outbounding tool. Gave AEs a concrete anchor where there wasn't one.</p>
+    <p id="item-calc"><strong>Cost of Doing Nothing Calculator</strong> — Interactive financial model that inputs team size, incident rate, and salary to return the annual dollar cost of staying on a legacy setup. Became an outbounding tool. Gave AEs a concrete anchor where there wasn't one.</p>
     <div class="btn-row">
       <button class="btn" onclick="openModal('calc-modal')">▶ Preview</button>
     </div>
 
-    <p style="margin-top:28px;"><strong>Stored Procs vs dbt Visual Explainer</strong> — Diagram-first interactive comparison. Once customers could see the difference, the deal moved. Other SAs started building their own.</p>
+    <p id="item-diagram" style="margin-top:28px;"><strong>Stored Procs vs dbt Visual Explainer</strong> — Diagram-first interactive comparison. Once customers could see the difference, the deal moved. Other SAs started building their own.</p>
     <div class="btn-row">
       <button class="btn" onclick="openModal('diag-modal')">▶ Preview</button>
     </div>
 
-    <p style="margin-top:28px;"><strong>PROMPT.md Artifact Replication System</strong> — Skill document so any SA can generate customer-facing HTML explainers without building from scratch. Became a shared team pattern.</p>
+    <p id="item-prompt-md" style="margin-top:28px;"><strong>PROMPT.md Artifact Replication System</strong> — Skill document so any SA can generate customer-facing HTML explainers without building from scratch. Became a shared team pattern.</p>
     <div class="btn-row">
       <button class="btn" onclick="dlPromptMD()">💾 Download .md</button>
     </div>
 
-    <p style="margin-top:28px;"><strong>Workshop-Driven Soft POC Motion</strong> — Workshop format replacing formal POC overhead. Used across Moneris, Frankenmuth, RadNet, and KEEN. Eliminated formal POC in several deals. Now part of how I ramp AEs.</p>
+    <p id="item-workshop" style="margin-top:28px;"><strong>Workshop-Driven Soft POC Motion</strong> — Workshop format replacing formal POC overhead. Used across multiple customer engagements. Eliminated formal POC in several deals. Now part of how I ramp AEs.</p>
+
+    <p id="item-discovery" style="margin-top:28px;"><strong>Discovery Process Redesign</strong> — Reshaped and standardized the discovery motion across the org. The Cost of Doing Nothing calculator moved into outbounding, giving AEs a financial anchor before the first call. Introduced whiteboarding sessions to map customer architectures live during discovery, replacing abstract conversations with something customers could see and react to.</p>
   </div>
 
   <!-- TEAM IMPACT -->
@@ -340,14 +358,25 @@
     <div class="influence-item">
       <div class="influence-name">SA Teammate</div>
       <div class="influence-desc">Built a public interactive guide covering dbt architecture, development workflow, orchestration, and competitive positioning. Directly inspired by and modeled after my work.</div>
+      <div class="tag-row">
+        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
     </div>
     <div class="influence-item">
       <div class="influence-name">SA Teammate</div>
       <div class="influence-desc">Built interactive side-by-side comparison pages covering dbt Platform vs. dbt Core, vs. Snowflake native tooling, and vs. Databricks. Used live in customer conversations.</div>
+      <div class="tag-row">
+        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
     </div>
     <div class="influence-item">
       <div class="influence-name">SA Teammate</div>
       <div class="influence-desc">Incorporated the artifact approach into an upcoming training workshop for new hires, extending the pattern into onboarding.</div>
+      <div class="tag-row">
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
     </div>
     <div class="influence-item">
       <div class="influence-name">Reusable dbt 101 Deck</div>
@@ -362,16 +391,16 @@
     <div class="sub-label">As Solutions Architect · Aug 2025 – present</div>
     <div class="numbers-grid">
       <div class="num-cell">
-        <div class="num-val"><span class="hl hl-arr">~$737K</span></div>
-        <div class="num-label">Delta ARR as Technical Owner</div>
+        <div class="num-val"><span class="hl hl-arr">$2.3M+</span></div>
+        <div class="num-label">Total contract value</div>
       </div>
       <div class="num-cell">
         <div class="num-val"><span class="hl hl-top">Top Growth SA</span></div>
-        <div class="num-label">Q4 FY2026 post-sales tracking</div>
+        <div class="num-label">Q4 FY2026 · expansion tracking</div>
       </div>
       <div class="num-cell">
-        <div class="num-val"><span class="hl hl-pipe">$400K</span></div>
-        <div class="num-label">Early-stage pipeline for two new AEs within 45 days</div>
+        <div class="num-val"><span class="hl hl-pipe">3 for 3</span></div>
+        <div class="num-label">AEs promoted</div>
       </div>
     </div>
 
