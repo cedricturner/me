@@ -1,4 +1,4 @@
-# me — Cedric Turner II
+# Who is Cedric Turner?
 
 Personal site hosted on GitHub Pages.
 
