@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cedric Turner II</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Abril+Fatface&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -49,6 +50,22 @@
     margin-bottom: 20px;
   }
 
+  .hl {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 2px 7px;
+    display: inline-block;
+  }
+
+  .section--writing .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
+  .section--writing .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
+
+  .section--work .section-label { font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: #1a1a1a; }
+  .section--work .section-label .hl { background: #fca5a5; transform: rotate(1.5deg); }
+
+  .section--elsewhere .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
+  .section--elsewhere .section-label .hl { background: #a7f3d0; transform: rotate(-1.5deg); }
+
   ul {
     list-style: none;
   }
@@ -91,8 +108,8 @@
     <p>curious!</p>
   </header>
 
-  <section>
-    <div class="section-label">Writing</div>
+  <section class="section--writing">
+    <div class="section-label"><span class="hl">Writing</span></div>
     <ul>
       <li>
         <a class="item" href="./blog/27/">
@@ -103,8 +120,8 @@
     </ul>
   </section>
 
-  <section>
-    <div class="section-label">Work</div>
+  <section class="section--work">
+    <div class="section-label"><span class="hl">Work</span></div>
     <ul>
       <li>
         <a class="item" href="./brag-sheet/">
@@ -121,8 +138,8 @@
     </ul>
   </section>
 
-  <section>
-    <div class="section-label">Elsewhere</div>
+  <section class="section--elsewhere">
+    <div class="section-label"><span class="hl">Elsewhere</span></div>
     <ul>
       <li>
         <a class="item" href="https://github.com/cedricturner" target="_blank">
