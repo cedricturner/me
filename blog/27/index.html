@@ -3,68 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Me at 27 — Cedric Turner II</title>
+<title>Cedric Turner II</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text: #1c1c1c;
+    --muted: #888;
+    --faint: #bbb;
+    --bg: #fafaf9;
+    --rule: #e8e5e0;
+  }
+
+  html { font-size: 17px; }
 
   body {
-    background: #faf9f7;
-    color: #1a1a1a;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 19px;
-    line-height: 1.8;
-    padding: 60px 24px 120px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.75;
+    padding: 0 24px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .wrap {
-    max-width: 640px;
+    max-width: 620px;
     margin: 0 auto;
   }
 
+  /* ── Nav ── */
   nav {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 40px 0 64px;
     font-size: 13px;
-    color: #999;
-    margin-bottom: 64px;
-    letter-spacing: 0.02em;
+    color: var(--muted);
   }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--text); }
 
-  nav a {
-    color: #999;
-    text-decoration: none;
+  /* ── Hero ── */
+  .hero {
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 72px;
   }
-
-  nav a:hover { color: #1a1a1a; }
-
-  .meta {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 13px;
-    color: #999;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+  .hero h1 {
+    font-size: clamp(26px, 5vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
     margin-bottom: 16px;
   }
+  .hero p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+  }
 
-  h1 {
-    font-size: 32px;
-    font-weight: normal;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    margin-bottom: 48px;
-    color: #1a1a1a;
+  /* ── Sections ── */
+  .section {
+    margin-bottom: 72px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 28px;
   }
 
   p {
-    margin-bottom: 28px;
+    margin-bottom: 22px;
+    font-size: 16px;
+    line-height: 1.8;
     color: #2a2a2a;
   }
 
   p:last-child { margin-bottom: 0; }
 
-  .divider {
-    border: none;
-    border-top: 1px solid #e0ddd8;
-    margin: 48px 0;
+  /* ── Bullets ── */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  ul li {
+    font-size: 16px;
+    color: #2a2a2a;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    gap: 12px;
+    line-height: 1.65;
+  }
+  ul li:last-child { border-bottom: 1px solid var(--rule); }
+  ul li::before {
+    content: "—";
+    color: var(--faint);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Closing ── */
+  .closing {
+    border-top: 1px solid var(--rule);
+    padding-top: 56px;
+    margin-bottom: 96px;
+  }
+  .closing p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 500px;
   }
 </style>
 </head>
@@ -73,116 +122,76 @@
 
   <nav><a href="../../">← cedric turner ii</a></nav>
 
-  <div class="meta">April 2026 &nbsp;·&nbsp; Age 27</div>
-  <h1>Me at 27</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>I help people understand complex things and make decisions they actually feel good about.</h1>
+    <p>I'm selective about what I take on — not because I'm hard to work with, but because I think the fit matters more than the opportunity.</p>
+  </div>
 
-  <p>I've always been someone who thinks a lot about why things are the way they are. Not in a loud or academic way, just naturally. If something happens, I usually don't just take it at face value. I want to understand what's underneath it, and whether it could be different.</p>
+  <!-- HOW I THINK -->
+  <div class="section">
+    <div class="section-label">How I Think</div>
 
-  <p>I think a lot of that comes from how I grew up.</p>
+    <p>I've always been someone who wants to understand what's underneath things. Not in a loud or academic way, just naturally. If something happens, I don't take it at face value. I want to know why it's that way, and whether it could be different.</p>
 
-  <p>I'm an only child, and people joke about that, but it actually shaped how I interact with people more than I realized at the time. If you have siblings, there's a built-in system. You can argue, you can be annoying, you can push things a little too far, and somehow you still end up interacting. There's always a path back in.</p>
+    <p>A lot of that comes from how I grew up. I'm an only child. People joke about it, but it actually shaped how I interact with people more than I realized at the time. If you have siblings, there's a built-in system — you can push things too far and there's always a path back. I didn't have that. If I wanted people to engage with me, I had to give them a reason to. It either worked or it didn't.</p>
 
-  <p>I didn't really have that. If I wanted people to engage with me, I had to give them a reason to. It either worked or it didn't. There wasn't a fallback.</p>
+    <p>So I learned early that connection required intention. Not performance — just paying attention. My parents were older when they had me, and they were particular about how you showed up. Tone mattered. The way you said something mattered as much as what you said. That stuck.</p>
 
-  <p>So I learned early that if I wanted connection, I had to be someone people wanted to connect with. Not in a fake way, just in a way where I was paying attention to them.</p>
+    <p>Over time I became very aware of people. What they were saying, how they were saying it, what made them open up or shut down. And once you start noticing that, you start to see patterns.</p>
 
-  <p>My parents also had me later, so they were older, and they were big on respect. Not just in a strict way, but in a "be aware of how you show up" kind of way. Tone mattered. The way you said something mattered just as much as what you said.</p>
+    <p>The biggest one: people don't feel seen as often as you'd expect. Even people surrounded by others. If you give someone space to talk about something they actually care about — and you're really listening, not just waiting — something shifts. They relax. They start saying things they weren't planning to say. It's a small thing with a big effect.</p>
 
-  <p>So over time, I think I just became very aware of people. What they were saying, how they were saying it, what they cared about, what made them open up or shut down.</p>
+    <p>But it only works when it's real. There's a line between what feels natural and what feels forced, and most people can sense it even when they can't name it. A lot of how I interact is just staying on the right side of that line.</p>
 
-  <p>And once you start paying attention like that, you begin to notice patterns.</p>
+    <p>That same instinct carries into how I approach problems. I try to keep it simple: what's happening right now? What do we actually want instead? What's in the way? I use food as a mental shorthand — what are you eating, what do you want to be eating, what's stopping you? Easy to apply anywhere.</p>
 
-  <hr class="divider">
+    <p>But the part I care about most is what happens after you get what you say you want. If someone says they want to be in great shape, that's straightforward on the surface. But if they woke up tomorrow with that outcome, their entire routine would have to change. Same in work — better systems, better data, better tooling all sound good until you realize they require different ownership, different habits, different expectations. So I find myself asking, even if I don't say it directly: are you actually ready for that version of things?</p>
 
-  <p>One of the biggest ones is that people don't actually feel seen as often as you'd think. Even people who are around others all the time.</p>
+    <p>That said, not everything needs that depth. If someone hasn't eaten in three days, the answer isn't to explore their long-term goals. They need food. The severity of the situation tells you how deep to go. When it's something layered — something that affects how decisions get made or how people work — that's when you go further. Second, third, fourth-level questions. Not to complicate things, but to understand what's actually driving what's happening.</p>
+  </div>
 
-  <p>If you give someone space to talk about something they genuinely care about, and you're actually listening, not just waiting for your turn to speak, something shifts. They relax a little. They start saying things they weren't planning to say.</p>
+  <!-- HOW I WORK -->
+  <div class="section">
+    <div class="section-label">How I Work</div>
 
-  <p>It's a small thing, but it has a big effect.</p>
+    <p>I ask a lot of questions. Not because I'm stalling, but because I've found that the first answer is rarely the real answer. People often say what they think you want to hear, or what sounds right in the moment. I try to get past that.</p>
 
-  <p>And it only works if it's real. People can tell when you're doing something because you read it somewhere versus when you actually understand why it matters.</p>
+    <p>I simplify things. When something feels complicated, I look for the version of it that a non-expert could understand without feeling talked down to. That's usually the version that actually gets used.</p>
 
-  <p>It's kind of like humor. The Office works because it understands what's normal and then pushes just slightly outside of it. Not too far, just enough. When something goes too far, it stops feeling funny and just feels off.</p>
+    <p>I make people feel understood before I try to move them. This is maybe the most important part of how I work. People have to want the solution before the solution matters. You can build the best tool in the world, but if nobody wants it, it doesn't get used. So I focus on alignment first — do we actually want the same thing? Does this make sense for where you are? Are you ready for what comes with it? Once that's established, the technical side is a lot easier.</p>
 
-  <p>Same thing with people. There's a line between what feels natural and what feels forced, and most people can feel it even if they can't explain it.</p>
+    <p>I pay attention to the small things. Remembering what someone mentioned, showing up prepared, sometimes just bringing coffee. Not because I expect anything back, but because it signals that I was actually listening. Those things add up. Trust isn't just someone liking you — it's someone feeling comfortable enough to put their name next to yours.</p>
+  </div>
 
-  <p>So a lot of how I interact with people is just paying attention to that line. What feels normal here? What feels slightly different in a good way? What would feel fake?</p>
+  <!-- WHAT I'M GREAT AT -->
+  <div class="section">
+    <div class="section-label">What I'm Great At</div>
+    <ul>
+      <li>Reading a room and understanding what someone actually needs, not just what they said</li>
+      <li>Asking questions that move a conversation forward without making it feel like an interrogation</li>
+      <li>Taking something complex and finding the simple version of it</li>
+      <li>Building trust quickly, especially with technical and executive audiences at the same time</li>
+      <li>Helping people feel aligned before anything gets built or decided</li>
+      <li>Staying calm when things are unclear — ambiguity doesn't rattle me</li>
+    </ul>
+  </div>
 
-  <hr class="divider">
+  <!-- WHAT I DON'T DO -->
+  <div class="section">
+    <div class="section-label">What I Don't Do</div>
+    <ul>
+      <li>I'm not a deep from-scratch builder. I can work close to technical systems, but I'm not an engineer and I don't pretend to be</li>
+      <li>I don't do performative selling. If I don't think something is the right fit, I'll say so — I'm not interested in closing deals that create problems later</li>
+      <li>I don't thrive in environments where speed is the only value and everything is on fire all the time. I work better when there's room to think</li>
+      <li>I'm not good at disconnecting my work from whether it actually helps someone. If I can't see the value, it's hard for me to stay motivated</li>
+    </ul>
+  </div>
 
-  <p>That way of thinking carries over into how I approach problems too.</p>
-
-  <p>When I'm trying to understand something, I usually break it down pretty simply. What's happening right now? What do we actually want instead? What's in the way? What's the gap between those two?</p>
-
-  <p>I use simple analogies in my head for this. Food is an easy one.</p>
-
-  <p>What are you eating right now? What do you want? To be healthy, to be in shape? What's stopping you? Time, money, habits?</p>
-
-  <p>But that's just the surface level.</p>
-
-  <p>The part I care more about is what happens if you actually get what you say you want.</p>
-
-  <p>If someone says they want to be in great shape, that sounds straightforward. But if they woke up tomorrow with that outcome, their entire life would have to adjust to maintain it. New routines, new habits, even how they see themselves.</p>
-
-  <p>Same thing in work. People say they want better systems, better data, better tools. But those things come with changes. Ownership changes, workflows change, expectations change.</p>
-
-  <p>So I find myself asking, even if I don't say it directly, are you actually ready for that version of things? Not just do you want it, but can you operate in it?</p>
-
-  <p>Because getting what you want and being ready for it are two different things.</p>
-
-  <hr class="divider">
-
-  <p>At the same time, not every situation needs that level of thinking.</p>
-
-  <p>If someone hasn't eaten in three days, the answer isn't to explore their long-term goals. They need food. That's it. The severity of the situation kind of tells you how deep to go.</p>
-
-  <p>But when it's something bigger, something layered, something that's going to affect how people work or how decisions get made, that's when it makes sense to go deeper. That's when you start asking second, third, fourth-level questions. Not to make things complicated, but to understand what's actually driving what's happening.</p>
-
-  <p>And I think that's part of why people say I'm good at discovery or that I ask good questions.</p>
-
-  <p>I don't feel like I'm doing anything special. I'm mostly just trying to understand what's actually going on instead of stopping at the first answer.</p>
-
-  <hr class="divider">
-
-  <p>That shows up in small ways too.</p>
-
-  <p>I try to give people space to talk. I pay attention to details. I remember things people mention. Sometimes it's as simple as bringing coffee or cookies to a meeting. Not because I expect anything from it, but because it shows I'm paying attention in a way that isn't obvious.</p>
-
-  <p>Those small things add up.</p>
-
-  <p>Because at the end of the day, trust isn't just someone liking you. It's someone feeling comfortable enough to put their name next to yours.</p>
-
-  <p>If someone introduces you to their manager, they're taking a risk. They're saying, "I trust this person enough to bring them into a bigger conversation." And they only do that if they feel like you understand them and won't make them look bad in that next interaction.</p>
-
-  <hr class="divider">
-
-  <p>That's a big part of how I think about my role too.</p>
-
-  <p>I work in a technical space, but I don't think the technical part is the most important part. It has to be right, but it's not the starting point.</p>
-
-  <p>People have to want the solution before the solution matters.</p>
-
-  <p>You can build the best tool in the world, but if nobody wants it, it doesn't get used. It's like cooking the best steak possible and serving it in a room full of vegans. It might be objectively great, but it's the wrong thing for that room.</p>
-
-  <p>So a lot of what I focus on is alignment. Do we actually want the same thing? Does this make sense for you? Are you ready for what comes with it?</p>
-
-  <p>Once that's there, the technical side becomes a lot easier to navigate.</p>
-
-  <hr class="divider">
-
-  <p>I'm still figuring parts of this out though.</p>
-
-  <p>I naturally adapt to people. I read the room, adjust how I speak, how I approach things. That's been helpful, but there's a point where you can do that too much and lose your own voice in the process.</p>
-
-  <p>I also don't really like compliments. I tend to downplay things or frame them as "it seems like" instead of just accepting them. I'm aware of it, I just haven't fully worked through it yet.</p>
-
-  <p>And even with writing this, I think a lot about voice.</p>
-
-  <p>I don't want to sound like everyone else. I don't want something that feels polished but doesn't actually sound like me. I'd rather it feel a little imperfect and real, like you're actually hearing how I think instead of reading something that was cleaned up too much.</p>
-
-  <p>This is probably the closest way I can describe how I see things right now.</p>
-
-  <p>It'll change over time, but this is where I'm at.</p>
+  <!-- CLOSING -->
+  <div class="closing">
+    <p>I care about clarity, alignment, and understanding what's actually going on before trying to fix it. I'm intentional about what I take on — not because I'm difficult, but because I think the wrong fit wastes everyone's time. If something here resonates, I'd like to talk.</p>
+  </div>
 
 </div>
 </body>
