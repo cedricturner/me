@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Playfair+Display:ital@1&family=Space+Mono:wght@700&family=Abril+Fatface&family=Permanent+Marker&display=swap" rel="stylesheet">
 <title>Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,6 +74,59 @@
     margin-bottom: 28px;
   }
 
+  /* ── Highlight treatment ── */
+  .hl {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 2px 7px;
+  }
+
+  .hero h1 {
+    font-family: 'Special Elite', cursive;
+  }
+  .hero h1 .hl { background: #fde68a; }
+
+  .section--think .section-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .section--think .section-label .hl { background: #bfdbfe; }
+
+  .section--work .section-label {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+    color: var(--text);
+  }
+  .section--work .section-label .hl { background: #fca5a5; }
+
+  .section--great .section-label {
+    font-family: 'Abril Fatface', cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 17px;
+    color: var(--text);
+  }
+  .section--great .section-label .hl { background: #a7f3d0; }
+
+  .section--dont .section-label {
+    font-family: 'Permanent Marker', cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .section--dont .section-label .hl { background: #e9d5ff; }
+
   p {
     margin-bottom: 22px;
     font-size: 16px;
@@ -124,12 +178,12 @@
 
   <!-- HERO -->
   <div class="hero">
-    <h1>i like to make people think</h1>
+    <h1><span class="hl">i like to make people think</span></h1>
   </div>
 
   <!-- HOW I THINK -->
-  <div class="section">
-    <div class="section-label">How I Think</div>
+  <div class="section section--think">
+    <div class="section-label"><span class="hl">How I Think</span></div>
 
     <p>I've always been someone who wants to understand what's underneath things. Not in a loud or academic way, just naturally. If something happens, I don't take it at face value. I want to know why it's that way, and whether it could be different.</p>
 
@@ -151,8 +205,8 @@
   </div>
 
   <!-- HOW I WORK -->
-  <div class="section">
-    <div class="section-label">How I Work</div>
+  <div class="section section--work">
+    <div class="section-label"><span class="hl">How I Work</span></div>
 
     <p>I ask a lot of questions. Not because I'm stalling, but because I've found that the first answer is rarely the real answer. People often say what they think you want to hear, or what sounds right in the moment. I try to get past that.</p>
 
@@ -164,8 +218,8 @@
   </div>
 
   <!-- WHAT I'M GREAT AT -->
-  <div class="section">
-    <div class="section-label">What I'm Great At</div>
+  <div class="section section--great">
+    <div class="section-label"><span class="hl">What I'm Great At</span></div>
     <ul>
       <li>Reading a room and understanding what someone actually needs, not just what they said</li>
       <li>Asking questions that move a conversation forward without making it feel like an interrogation</li>
@@ -177,8 +231,8 @@
   </div>
 
   <!-- WHAT I DON'T DO -->
-  <div class="section">
-    <div class="section-label">What I Don't Do</div>
+  <div class="section section--dont">
+    <div class="section-label"><span class="hl">What I Don't Do</span></div>
     <ul>
       <li>I'm not a deep from-scratch builder. I can work close to technical systems, but I'm not an engineer and I don't pretend to be</li>
       <li>I don't do performative selling. If I don't think something is the right fit, I'll say so. I'm not interested in closing deals that create problems later</li>
