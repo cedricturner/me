@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@600&family=Space+Mono:wght@700&family=Abril+Fatface&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@600&family=Space+Mono:wght@700&family=Abril+Fatface&family=Permanent+Marker&family=Caveat:wght@600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <title>Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -151,6 +151,36 @@
   }
   .section--dont .section-label .hl { background: #e9d5ff; display: inline-block; transform: rotate(2.5deg); }
 
+  .section--fit .section-label {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 19px;
+    color: var(--text);
+  }
+  .section--fit .section-label .hl { background: #fdba74; display: inline-block; transform: rotate(-1.5deg); }
+
+  .section--nofit .section-label {
+    font-family: 'Special Elite', cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .section--nofit .section-label .hl { background: #fda4af; display: inline-block; transform: rotate(2deg); }
+
+  .section--belief .section-label {
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 18px;
+    color: var(--text);
+  }
+  .section--belief .section-label .hl { background: #7dd3fc; display: inline-block; transform: rotate(-1deg); }
+
   p {
     margin-bottom: 22px;
     font-size: 16px;
@@ -276,6 +306,45 @@
       <li>I can't disconnect my work from whether it actually helps someone. If I can't see the value, it's hard to stay engaged</li>
       <li>I don't thrive in environments where we're just working to work. I like to think things through and do them well, not just fast</li>
     </ul>
+  </div>
+
+  <!-- WHERE I FIT -->
+  <div class="section section--fit">
+    <div class="section-label"><span class="hl">Where I Fit</span></div>
+
+    <p>I work best in roles where I'm helping teams figure out what they actually need, not just showing them tools.</p>
+
+    <p>Most of the value I bring comes before the solution is obvious. When things are unclear, when teams are evaluating too many options, or when decisions are stalled.</p>
+
+    <p>I'm not a pure engineer and I'm not a scripted seller. I sit in the middle. That's where I'm most effective.</p>
+  </div>
+
+  <!-- WHERE I DON'T FIT -->
+  <div class="section section--nofit">
+    <div class="section-label"><span class="hl">Where I Don't Fit</span></div>
+
+    <p>I'm not the best fit for roles that are purely:</p>
+
+    <ul>
+      <li>deep engineering from scratch</li>
+      <li>feature-by-feature product pitching</li>
+      <li>highly scripted sales environments</li>
+    </ul>
+
+    <p style="margin-top: 22px;">I do my best work when I can understand people, simplify complexity, and help them make decisions they can stand behind.</p>
+  </div>
+
+  <!-- HOW I THINK ABOUT PROBLEMS -->
+  <div class="section section--belief">
+    <div class="section-label"><span class="hl">How I Think About Problems</span></div>
+
+    <p>Most teams think they have a tooling problem.</p>
+
+    <p>Usually, they don't.</p>
+
+    <p>They have a clarity problem.</p>
+
+    <p>If you solve that first, the right solution becomes obvious. If you skip it, you end up debating features that don't matter.</p>
   </div>
 
   <!-- CLOSING -->
