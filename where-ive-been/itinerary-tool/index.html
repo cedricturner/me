@@ -1453,7 +1453,7 @@ function buildActivityCard(act, stopIndex, day) {
             : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`
           }
         </button>
-        <button class="map-btn" onclick="openMaps(event, '${encodeURIComponent(act.address || act.name)}')" title="Open in Google Maps">
+        <button class="map-btn" onclick="openMaps(event, '${encodeURIComponent(mapsAddress(act))}')" title="Open in Google Maps">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </button>
       </div>
@@ -1563,6 +1563,17 @@ function rerenderActivityList(dayId) {
 // =============================================
 // MAPS
 // =============================================
+
+// For flight activities (e.g. "Fly AUS → HND"), return just the destination airport
+function mapsAddress(act) {
+  const sources = [act.address || '', act.name || ''];
+  for (const s of sources) {
+    const m = s.match(/\b([A-Z]{3})\s*[→>-]+\s*([A-Z]{3})\b/);
+    if (m) return m[2] + ' Airport';
+  }
+  return act.address || act.name || '';
+}
+
 function openMaps(e, encodedQuery) {
   e.stopPropagation();
   window.open(`https://www.google.com/maps/search/?api=1&query=${encodedQuery}`, '_blank');
@@ -1573,7 +1584,7 @@ function openDayRoute(dayIndex) {
   const day = itinerary.days[idx];
   if (!day) return;
   const stops = day.activities
-    .map(a => a.address || a.name)
+    .map(a => mapsAddress(a))
     .filter(Boolean)
     .slice(0, 8);
   if (stops.length === 0) { showToast('No stops to navigate'); return; }
@@ -1859,12 +1870,16 @@ function parseTextItinerary(text) {
       const timeMatch = content.match(/(\d{1,2}:\d{2}\s*(?:AM|PM)?)/i);
       const costMatch = content.match(/(¥[\d,]+|\$[\d,.]+|USD?\s*[\d,.]+)/i);
       const name = content.replace(/\s*\(.*?\)\s*/g,'').replace(/(¥[\d,]+|\$[\d,.]+)/g,'').replace(/\d{1,2}:\d{2}\s*(?:AM|PM)?/gi,'').trim().replace(/[:—-]+$/, '').trim();
+      const actName = name || content.slice(0, 60);
+      // For flights, use destination airport as the address
+      const flightMatch = content.match(/\b([A-Z]{3})\s*[→>-]+\s*([A-Z]{3})\b/);
+      const actAddress = flightMatch ? flightMatch[2] + ' Airport' : actName;
       currentDay.activities.push({
         id: 'a' + Date.now() + Math.random(),
-        name: name || content.slice(0, 60),
+        name: actName,
         time: timeMatch ? timeMatch[1] : '',
         neighborhood: '',
-        address: name || content.slice(0, 60),
+        address: actAddress,
         categories: inferCategories(content),
         priority: content.toLowerCase().includes('must') ? 'must' : content.toLowerCase().includes('nice') ? 'nice' : 'optional',
         cost: costMatch ? costMatch[1] : '',
