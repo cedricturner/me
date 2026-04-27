@@ -1034,7 +1034,7 @@ a { color: inherit; text-decoration: none; }
       <svg class="panel-chevron" id="importChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="panel-body" id="importBody">
-      <textarea id="importText" placeholder="Paste text, markdown, or JSON itinerary here…"></textarea>
+      <textarea id="importText" placeholder="Paste your itinerary here — from Notes, Messages, a Google Doc, anywhere..."></textarea>
       <div class="import-preview" id="importPreview"></div>
       <div class="panel-actions">
         <button class="btn btn-secondary" onclick="parseImport()">
@@ -1047,11 +1047,11 @@ a { color: inherit; text-decoration: none; }
         </button>
       </div>
       <div class="file-input-wrapper mt-8">
-        <label class="btn btn-secondary" for="jsonFile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Load JSON file
+        <label class="btn btn-secondary" for="photoFile" id="photoFileLabel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Upload a photo
         </label>
-        <input type="file" id="jsonFile" accept=".json" onchange="loadJsonFile(event)">
+        <input type="file" id="photoFile" accept="image/*" onchange="loadPhotoFile(event)">
         <span id="fileStatus" style="font-size:12px;color:var(--muted)"></span>
       </div>
     </div>
@@ -1747,22 +1747,7 @@ function parseImport() {
   const raw = document.getElementById('importText').value.trim();
   if (!raw) return;
 
-  let parsed = null;
-
-  // Try JSON
-  if (raw.startsWith('{') || raw.startsWith('[')) {
-    try {
-      const obj = JSON.parse(raw);
-      if (obj.days && Array.isArray(obj.days)) {
-        parsed = obj;
-      }
-    } catch(e) {}
-  }
-
-  // Try markdown / text
-  if (!parsed) {
-    parsed = parseTextItinerary(raw);
-  }
+  const parsed = parseTextItinerary(raw);
 
   const preview = document.getElementById('importPreview');
   const importBtn = document.getElementById('importBtn');
@@ -1884,16 +1869,40 @@ function doImport() {
   showToast('Imported successfully');
 }
 
-function loadJsonFile(event) {
+function loadTesseract() {
+  return new Promise((resolve, reject) => {
+    if (window.Tesseract) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+async function loadPhotoFile(event) {
   const file = event.target.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    document.getElementById('importText').value = e.target.result;
-    document.getElementById('fileStatus').textContent = file.name;
-    parseImport();
-  };
-  reader.readAsText(file);
+  event.target.value = '';
+
+  const status = document.getElementById('fileStatus');
+  const label  = document.getElementById('photoFileLabel');
+  status.textContent = 'Reading photo...';
+  label.style.opacity = '0.5';
+  label.style.pointerEvents = 'none';
+
+  try {
+    await loadTesseract();
+    const { data: { text } } = await Tesseract.recognize(file, 'eng');
+    const cleaned = text.replace(/\f/g, '\n').trim();
+    document.getElementById('importText').value = cleaned;
+    status.textContent = 'Photo read — review the text above, then click Parse';
+  } catch (err) {
+    status.textContent = 'Could not read photo. Try copying the text and pasting it instead.';
+  } finally {
+    label.style.opacity = '';
+    label.style.pointerEvents = '';
+  }
 }
 
 // =============================================
