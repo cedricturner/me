@@ -344,6 +344,65 @@ a { color: inherit; text-decoration: none; }
   border: 1.5px solid #fdd;
 }
 
+/* ── Saved Trips list ── */
+.saved-trips-empty {
+  padding: 20px 0 8px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+.saved-trip-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.saved-trip-item:last-of-type { border-bottom: 1px solid var(--border); }
+.saved-trip-info {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+.saved-trip-info:hover .saved-trip-name { color: var(--purple); }
+.saved-trip-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s;
+}
+.saved-trip-route {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+.saved-trip-date {
+  font-size: 10px;
+  color: var(--faint);
+  margin-top: 1px;
+}
+.saved-trip-del {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.saved-trip-del:hover { background: #fff0f0; color: #d44; }
+.saved-trip-del svg { width: 13px; height: 13px; }
+
 .share-wrap {
   position: relative;
   display: inline-flex;
@@ -1099,6 +1158,9 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
       <div class="header-actions">
+        <button class="header-icon-btn" onclick="togglePanel('trips')" title="My Trips">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
         <button class="header-icon-btn" onclick="confirmReset()" title="Reset to default">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
@@ -1106,6 +1168,26 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="day-tabs-wrapper" id="dayTabs"></div>
   </header>
+
+  <!-- MY TRIPS PANEL -->
+  <div class="panel" id="tripsPanel">
+    <div class="panel-header" onclick="togglePanel('trips')">
+      <div class="panel-header-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        My Trips
+      </div>
+      <svg class="panel-chevron" id="tripsChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="panel-body" id="tripsBody">
+      <div id="tripsList"></div>
+      <div class="panel-actions" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="saveCurrentTrip()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Save current trip
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- IMPORT PANEL -->
   <div class="panel" id="importPanel">
@@ -2480,10 +2562,83 @@ function saveTripConfig() {
 }());
 
 // =============================================
+// SAVED TRIPS
+// =============================================
+const SAVED_TRIPS_KEY = 'itinerary-saved-trips';
+
+function getSavedTrips() {
+  try { return JSON.parse(localStorage.getItem(SAVED_TRIPS_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveCurrentTrip() {
+  const name = itinerary.tripName || (tripConfig.toCity ? `Trip to ${tripConfig.toCity}` : 'My Trip');
+  const trips = getSavedTrips();
+  const trip = {
+    id: 'trip_' + Date.now(),
+    name,
+    savedAt: new Date().toISOString(),
+    tripConfig: { ...tripConfig },
+    itinerary: deepClone(itinerary),
+  };
+  trips.unshift(trip);
+  localStorage.setItem(SAVED_TRIPS_KEY, JSON.stringify(trips));
+  renderSavedTrips();
+  showToast(`"${name}" saved`);
+}
+
+function loadSavedTrip(id) {
+  const trips = getSavedTrips();
+  const trip = trips.find(t => t.id === id);
+  if (!trip) return;
+  itinerary = deepClone(trip.itinerary);
+  tripConfig = { ...trip.tripConfig };
+  save();
+  saveTripConfigToStorage();
+  applyTripConfig();
+  render();
+  showToast(`Loaded "${trip.name}"`);
+}
+
+function deleteSavedTrip(id) {
+  const trips = getSavedTrips().filter(t => t.id !== id);
+  localStorage.setItem(SAVED_TRIPS_KEY, JSON.stringify(trips));
+  renderSavedTrips();
+}
+
+function renderSavedTrips() {
+  const container = document.getElementById('tripsList');
+  if (!container) return;
+  const trips = getSavedTrips();
+  if (!trips.length) {
+    container.innerHTML = '<div class="saved-trips-empty">No saved trips yet</div>';
+    return;
+  }
+  container.innerHTML = trips.map(t => {
+    const route = (t.tripConfig.fromCode && t.tripConfig.toCode)
+      ? `${t.tripConfig.fromCode} → ${t.tripConfig.toCode}`
+      : t.tripConfig.toCity || '';
+    const date = new Date(t.savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `
+      <div class="saved-trip-item">
+        <div class="saved-trip-info" onclick="loadSavedTrip('${t.id}')">
+          <div class="saved-trip-name">${t.name}</div>
+          ${route ? `<div class="saved-trip-route">${route}</div>` : ''}
+          <div class="saved-trip-date">${date}</div>
+        </div>
+        <button class="saved-trip-del" onclick="deleteSavedTrip('${t.id}')" title="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>`;
+  }).join('');
+}
+
+// =============================================
 // BOOT
 // =============================================
 init();
 loadTripConfig();
+renderSavedTrips();
 
 // =============================================
 // AIRPORT AUTOCOMPLETE
