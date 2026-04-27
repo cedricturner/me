@@ -303,6 +303,19 @@
     margin-top: 18px;
   }
 
+  /* Analogy sub-headings */
+  .analogy-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+  .analogy-sub:first-of-type { margin-top: 0; }
+
   /* CTA list */
   .cta-list {
     list-style: none;
@@ -535,33 +548,18 @@
     </div>
   </div>
 
-  <!-- THE LOTTERY -->
+  <!-- ANALOGIES -->
   <div class="section section--lottery">
-    <div class="section-label"><span class="hl">The Lottery</span></div>
+    <div class="section-label"><span class="hl">Three Analogies</span></div>
 
-    <p>There's a pattern I keep thinking about when lottery winners fall apart. Someone spends their whole life in a system where working equals earning: you go to work, you get paid on a schedule, the harder you work or the more educated you are, the more you make. That's the system they know, built into how they see themselves. Vacation feels earned because you saved up for it, and weekends feel different from weekdays because the process makes them different.</p>
+    <div class="analogy-sub">The Lottery</div>
+    <p>Lottery winners are a useful extreme. Someone spends a lifetime inside a system where work equals earning — you show up, you get paid, the harder you work the more you make. That logic becomes identity. Then overnight the process is gone, and a lot of them fall apart, not because they're bad people but because they've never had to think clearly about what they actually wanted. Without the process to orient around, they don't know what they were working toward. AI is doing this to whole categories of workers right now, just slower.</p>
 
-    <p>Then they win the lottery and the process disappears overnight, and it corrupts a lot of them — not because they're bad people, but because they've spent their entire lives thinking about the process and they've never had to think clearly about the outputs: what do I actually want, what does having all this money give me? Without the process to orient around, a lot of people fall apart because they don't know what they were working toward.</p>
+    <div class="analogy-sub">The Fitness Example</div>
+    <p>If you woke up tomorrow in perfect shape, your wardrobe doesn't fit, your diet has to change, your daily rituals are gone. The process — the habits, the structure, the discipline — is a lot of what gives daily life its texture. When the output shows up without the process, it can feel wrong even if it's exactly what you said you wanted. The disruption isn't the result, it's the removal of the process you'd built your days around.</p>
 
-    <p>AI is doing something similar to a lot of people right now: removing the process they've built their identity around, and doing it fast. The panic isn't irrational, but the thing to solve for isn't how to protect the process, it's how to figure out the outputs.</p>
-  </div>
-
-  <!-- THE FITNESS EXAMPLE -->
-  <div class="section section--fitness">
-    <div class="section-label"><span class="hl">The Fitness Example</span></div>
-
-    <p>If you're overweight and woke up tomorrow in perfect shape, it would be disorienting in ways you wouldn't expect: your wardrobe doesn't fit, you need a gym membership to maintain what you now have, the type of people who find you attractive are different, and you have to ask yourself whether you're ready for conversations with a different pool of people, whether those are even the kind of people you share anything with.</p>
-
-    <p>You can't eat the same way either. Your whole maintenance process, the way you've sustained who you are day to day, changes completely, and that process is a big part of what gives life its texture for a lot of people: the habits, the rituals, the daily structure. When it's gone, the output can feel wrong even if it was exactly what you said you wanted. Removing the process immediately is the problem, and that's exactly what AI is doing.</p>
-  </div>
-
-  <!-- OUTPUTS HAVE TO BE WANTED -->
-  <div class="section section--outputs">
-    <div class="section-label"><span class="hl">The Vegan Room</span></div>
-
-    <p>Understanding outputs has to come before perfecting the process. Gordon Ramsay can master Beef Wellington to an extraordinary level, but if he presents it to a room full of vegans, the craft is irrelevant: nobody buys it, and he fails. The process being excellent doesn't save you if no one wants what it produces.</p>
-
-    <p>I don't like Beef Wellington. Some people are vegan. It doesn't matter how refined the technique is if the output isn't something anyone in the room wants, because the process was wasted. Understanding who the output is actually for, and what they want from it, has to happen before you go deep on the craft. AI is accelerating this realization, because a lot of people perfected the process without ever deeply asking whether anyone would want what it produced, and now the process is gone and the question is right in front of them.</p>
+    <div class="analogy-sub">The Vegan Room</div>
+    <p>Gordon Ramsay can master Beef Wellington, but present it to a room full of vegans and the craft is irrelevant. Nobody buys it. The process being excellent doesn't save you if no one wants what it produces. A lot of people spent careers perfecting execution without ever asking whether anyone wanted what they were building — and now that the process is going away, that question is unavoidable.</p>
   </div>
 
   <!-- WHY YOU WANT IT MATTERS -->
@@ -598,6 +596,8 @@
 
     <p>Beyond the inputs, you have to know what you actually want from the results, not what you've been told to want, not the output that meets some external standard, but the one that makes sense for where you are and what you're actually trying to do, and why.</p>
 
+    <p>There's a concrete version of this already playing out in data infrastructure. The dbt <a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl" target="_blank">Semantic Layer</a> is a place where teams agree on what they want the outputs to mean before anyone builds anything — what's the canonical definition of revenue, what counts as an active user. Before it existed, every team ran their own query and got a different answer. The semantic layer is a shared location for common wants: you define what good looks like once, and every process downstream — human-built queries, AI agents, dashboards — answers the same question. That's what the shift to AI requires more broadly. Not better prompting, but clearer definitions of what you're actually after.</p>
+
     <p>What I think happens from here: the hard line between engineering decisions and business decisions starts to go away. It had to exist when the process was the hard part and you needed specialists who owned the craft, but with that gone, decision-making collapses into one thing: someone who understands the inputs, knows what outputs they're after, and can work end to end with AI to get there. The divide between manager and engineer gets smaller, more people have to think all the way through the system, and junior engineers ten years from now will ship what senior engineers ship today. The way we interact with code changes more than the output does.</p>
   </div>
 
@@ -610,8 +610,8 @@
     <p>What I'd encourage: figure out your preferences first, and then use AI to do the things you couldn't do before. The open source ecosystem makes it easier than it's ever been to just try something without permission or infrastructure.</p>
 
     <ul class="cta-list">
-      <li>If you're in data: spin up dbt Core, point it at something real, see what you can build</li>
-      <li>If you're in design: open Figma and try Figma Make — you don't need a developer to ship something</li>
+      <li>If you're in data: spin up <a href="https://github.com/dbt-labs/dbt-core" target="_blank">dbt Core</a>, point it at something real, see what you can build</li>
+      <li>If you're in design: open Figma and try <a href="https://www.figma.com/make/" target="_blank">Figma Make</a> — you don't need a developer to ship something</li>
       <li>Try a food you haven't tried, or cook something you've never made</li>
       <li>Think about the output you actually want first, then work backwards to the inputs you need</li>
       <li>Have a preference — not just a skill, but an actual point of view on what good looks like</li>
@@ -621,7 +621,7 @@
   </div>
 
   <div class="closing">
-    <p>This is a draft — more to come. <a href="mailto:cedricbturner@gmail.com">let's talk!</a></p>
+    <p>have thoughts about ai. <a href="mailto:cedricbturner@gmail.com">let's talk!</a></p>
   </div>
 
 </div>
