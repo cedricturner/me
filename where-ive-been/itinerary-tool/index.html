@@ -83,6 +83,15 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 10px;
 }
 
+.trip-name-display {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
 .airport-date-row {
   display: flex;
   justify-content: space-between;
@@ -1057,6 +1066,7 @@ a { color: inherit; text-decoration: none; }
     <div class="header-top">
       <!-- Airport hero — click to edit -->
       <div class="airport-hero" onclick="openTripConfig()" title="Edit trip details">
+        <div class="trip-name-display" id="tripNameDisplay">My Trip</div>
         <div class="airport-date-row">
           <span class="airport-date" id="headerDepDate">05/19</span>
           <span class="airport-date" id="headerArrDate">05/30</span>
@@ -1074,12 +1084,6 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
       <div class="header-actions">
-        <button class="header-icon-btn" onclick="togglePresentation()" title="Presentation mode">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </button>
-        <button class="header-icon-btn" onclick="window.print()" title="Print">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        </button>
         <button class="header-icon-btn" onclick="confirmReset()" title="Reset to default">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
@@ -1131,16 +1135,8 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="panel-body" id="exportBody">
       <div class="panel-actions" style="margin-top:12px">
-        <button class="btn btn-secondary" onclick="copyAsText()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy as list
-        </button>
-        <button class="btn btn-green" onclick="togglePresentation()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Presentation Mode
-        </button>
         <div class="share-wrap">
-          <button class="btn btn-secondary" onclick="handleShare(event)">
+          <button class="btn btn-primary" onclick="handleShare(event)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             Share
           </button>
@@ -1163,7 +1159,11 @@ a { color: inherit; text-decoration: none; }
             </button>
             <button onclick="window.print();closeShareMenu()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              Print
+              Print / Save as PDF
+            </button>
+            <button onclick="togglePresentation();closeShareMenu()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              Presentation Mode
             </button>
           </div>
         </div>
@@ -1189,6 +1189,11 @@ a { color: inherit; text-decoration: none; }
   <div class="config-modal" id="configModal">
     <div class="modal-handle"></div>
     <div class="modal-title">Edit Trip</div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label class="form-label">Trip Name</label>
+      <input type="text" class="form-input" id="cfgTripName" placeholder="Japan 2026">
+    </div>
 
     <div class="form-row">
       <div class="form-group">
@@ -2127,23 +2132,35 @@ function copyAsText() {
 }
 
 function itineraryText() {
-  let txt = itinerary.tripName + '\n';
-  txt += itinerary.travelers + ' · ' + formatDateLong(itinerary.startDate) + ' – ' + formatDateLong(itinerary.endDate) + '\n\n';
+  const name = itinerary.tripName || 'My Trip';
+  const travelers = itinerary.travelers || '';
+  const dateRange = formatDateLong(itinerary.startDate) + ' – ' + formatDateLong(itinerary.endDate);
+
+  let txt = name.toUpperCase() + '\n';
+  if (travelers) txt += travelers + '\n';
+  txt += dateRange + '\n';
+  txt += '—'.repeat(32) + '\n\n';
+
   itinerary.days.forEach(day => {
-    txt += day.label + ' · ' + formatDateLong(day.date);
-    if (day.title) txt += ' — ' + day.title;
+    const dayDate = day.date ? formatDateLong(day.date) : '';
+    txt += (day.label || '').toUpperCase();
+    if (day.title) txt += ' · ' + day.title;
+    if (dayDate) txt += '\n' + dayDate;
     txt += '\n';
     day.activities.forEach(act => {
       const time = act.time ? formatTime(act.time) + '  ' : '';
-      const star = act.priority === 'must' ? ' ★' : '';
-      txt += '  - ' + time + act.name + star;
-      if (act.neighborhood) txt += ' (' + act.neighborhood + ')';
-      if (act.reservation && !act.reservationDone) txt += ' [reserve]';
-      txt += '\n';
+      const must = act.priority === 'must' ? ' ★' : '';
+      const reserve = (act.reservation && !act.reservationDone) ? ' [book ahead]' : '';
+      const cost = act.cost ? '  ' + act.cost : '';
+      txt += '  • ' + time + act.name + must + cost + reserve + '\n';
     });
     txt += '\n';
   });
-  return txt;
+  return txt.trimEnd();
+}
+
+function shareFilename() {
+  return (itinerary.tripName || 'itinerary').toLowerCase().replace(/\s+/g, '-') + '.txt';
 }
 
 function handleShare(e) {
@@ -2173,7 +2190,7 @@ async function shareAsText() {
 async function shareAsFile() {
   closeShareMenu();
   const text = itineraryText();
-  const filename = (itinerary.tripName || 'itinerary').toLowerCase().replace(/\s+/g, '-') + '.txt';
+  const filename = shareFilename();
   const file = new File([text], filename, { type: 'text/plain' });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try { await navigator.share({ files: [file], title: itinerary.tripName || 'Itinerary' }); return; } catch(e) { if (e.name === 'AbortError') return; }
@@ -2197,7 +2214,7 @@ function shareViaEmail() {
 function saveAsFile() {
   closeShareMenu();
   const text = itineraryText();
-  const filename = (itinerary.tripName || 'itinerary').toLowerCase().replace(/\s+/g, '-') + '.txt';
+  const filename = shareFilename();
   downloadFile(filename, text, 'text/plain');
   showToast('Saved as ' + filename);
 }
@@ -2352,6 +2369,8 @@ function applyTripConfig() {
   document.getElementById('headerTo').textContent = (tripConfig.toCode || '???').toUpperCase();
   document.getElementById('headerFromCity').textContent = tripConfig.fromCity || '';
   document.getElementById('headerToCity').textContent = tripConfig.toCity || '';
+  const nameEl = document.getElementById('tripNameDisplay');
+  if (nameEl) nameEl.textContent = itinerary.tripName || tripConfig.toCity || 'My Trip';
 
   // Format dates as MM/DD
   function fmtShort(dateStr) {
@@ -2367,6 +2386,7 @@ function applyTripConfig() {
 }
 
 function openTripConfig() {
+  document.getElementById('cfgTripName').value = itinerary.tripName || '';
   document.getElementById('cfgFromCode').value = tripConfig.fromCode;
   document.getElementById('cfgToCode').value = tripConfig.toCode;
   document.getElementById('cfgFromCity').value = tripConfig.fromCity;
@@ -2387,6 +2407,8 @@ function closeConfigModalOnBackdrop(e) {
 }
 
 function saveTripConfig() {
+  const name = document.getElementById('cfgTripName').value.trim();
+  if (name) itinerary.tripName = name;
   tripConfig = {
     fromCode: (document.getElementById('cfgFromCode').value.trim() || 'AUS').toUpperCase(),
     fromCity: document.getElementById('cfgFromCity').value.trim() || 'Austin',
@@ -2395,6 +2417,7 @@ function saveTripConfig() {
     depDate: document.getElementById('cfgDepDate').value || '2026-05-19',
     retDate: document.getElementById('cfgRetDate').value || '2026-05-30'
   };
+  save();
   saveTripConfigToStorage();
   applyTripConfig();
   closeTripConfig();
