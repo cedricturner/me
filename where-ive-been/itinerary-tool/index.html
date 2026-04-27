@@ -2802,22 +2802,69 @@ const AIRPORTS = [
   {c:'PPT',city:'Papeete',name:'Faa\'a Intl',country:'PF'},
 ];
 
-// Pick a random trip if no saved config
+// Coordinates for nearest-airport detection (major hubs worldwide)
+const AIRPORT_COORDS = {
+  ATL:[33.6407,-84.4277],LAX:[33.9425,-118.4081],ORD:[41.9742,-87.9073],
+  DFW:[32.8998,-97.0403],DEN:[39.8561,-104.6737],JFK:[40.6413,-73.7781],
+  SFO:[37.6213,-122.379],SEA:[47.4502,-122.3088],LAS:[36.084,-115.1537],
+  MCO:[28.4312,-81.3081],EWR:[40.6895,-74.1745],MIA:[25.7959,-80.287],
+  PHX:[33.4373,-112.0078],IAH:[29.9902,-95.3368],MSP:[44.8848,-93.2223],
+  DTW:[42.2124,-83.3534],BOS:[42.3656,-71.0096],CLT:[35.214,-80.9431],
+  PHL:[39.8744,-75.2424],SLC:[40.7899,-111.9791],BWI:[39.1754,-76.6682],
+  DCA:[38.8512,-77.0402],IAD:[38.9531,-77.4565],HNL:[21.3245,-157.9251],
+  ANC:[61.1743,-149.9961],AUS:[30.1975,-97.6664],PDX:[45.5898,-122.5951],
+  SAN:[32.7338,-117.1933],TPA:[27.9755,-82.5332],BNA:[36.1245,-86.6782],
+  RDU:[35.8776,-78.7875],STL:[38.7487,-90.37],MSY:[29.9934,-90.258],
+  MCI:[39.2976,-94.7139],SAT:[29.5337,-98.4698],ABQ:[35.0402,-106.609],
+  OAK:[37.7213,-122.2208],SJC:[37.3626,-121.929],SMF:[38.6954,-121.5908],
+  LHR:[51.47,-0.4543],CDG:[49.0097,2.5479],NRT:[35.772,140.3929],
+  HND:[35.5494,139.7798],ICN:[37.4691,126.451],SYD:[-33.9399,151.1753],
+  DXB:[25.2532,55.3657],SIN:[1.3644,103.9915],AMS:[52.3086,4.7639],
+  FRA:[50.0379,8.5622],ZRH:[47.4582,8.5555],BCN:[41.2974,2.0833],
+  MAD:[40.4719,-3.5626],FCO:[41.8003,12.2389],IST:[41.2753,28.7519],
+  BKK:[13.69,100.7501],HKG:[22.308,113.9185],PEK:[40.0799,116.6031],
+  PVG:[31.1443,121.8083],MEX:[19.4363,-99.0721],GRU:[-23.4356,-46.4731],
+  YYZ:[43.6777,-79.6248],YVR:[49.1967,-123.1815],MEL:[-37.6733,144.843],
+  JNB:[-26.1367,28.2411],MNL:[14.5086,121.019],KUL:[2.7456,101.7099],
+};
+
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371, toRad = x => x * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function nearestAirport(lat, lon) {
+  let best = null, bestDist = Infinity;
+  for (const [code, [alat, alon]] of Object.entries(AIRPORT_COORDS)) {
+    const d = haversineKm(lat, lon, alat, alon);
+    if (d < bestDist) { bestDist = d; best = code; }
+  }
+  return best ? AIRPORTS.find(a => a.c === best) : null;
+}
+
+// Pick a trip on first open: detect nearest airport for "from", random international for "to"
 (function maybeRandomizeTrip() {
   if (localStorage.getItem('itinerary-trip-config')) return;
-  const interesting = AIRPORTS.filter(a => !['US'].includes(a.country));
+  const international = AIRPORTS.filter(a => a.country !== 'US');
   const domestic = AIRPORTS.filter(a => a.country === 'US');
-  const from = domestic[Math.floor(Math.random() * domestic.length)];
-  const to = interesting[Math.floor(Math.random() * interesting.length)];
-  tripConfig = {
-    fromCode: from.c,
-    fromCity: from.city,
-    toCode: to.c,
-    toCity: to.city,
-    depDate: tripConfig.depDate,
-    retDate: tripConfig.retDate,
-  };
-  applyTripConfig();
+  const to = international[Math.floor(Math.random() * international.length)];
+
+  function setTrip(from) {
+    tripConfig = { fromCode: from.c, fromCity: from.city, toCode: to.c, toCity: to.city, depDate: tripConfig.depDate, retDate: tripConfig.retDate };
+    applyTripConfig();
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => { const near = nearestAirport(pos.coords.latitude, pos.coords.longitude); setTrip(near || domestic[Math.floor(Math.random() * domestic.length)]); },
+      ()  => { setTrip(domestic[Math.floor(Math.random() * domestic.length)]); },
+      { timeout: 5000 }
+    );
+  } else {
+    setTrip(domestic[Math.floor(Math.random() * domestic.length)]);
+  }
 }());
 
 let acFocusIndex = { from: -1, to: -1 };
