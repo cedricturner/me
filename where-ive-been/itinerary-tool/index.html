@@ -2120,27 +2120,34 @@ function saveTripConfig() {
 // =============================================
 (function () {
   const SCROLL_MAX  = 80;   // px scroll to reach full effect
-  const SPREAD_PX   = 120;  // max translateX each side — pushes to screen edges
+  const SPREAD_PX   = 120;  // max translateX each side
   const SCALE_END   = 0.72; // shrink to 72% at full scroll
   const OPACITY_MIN = 0.18; // very faint at full scroll
 
-  function onScroll() {
-    const progress = Math.min(window.scrollY, SCROLL_MAX) / SCROLL_MAX;
-    const spread   = progress * SPREAD_PX;
-    const scale    = 1 - progress * (1 - SCALE_END);
-    const opacity  = 1 - progress * (1 - OPACITY_MIN);
+  const fromEl = document.getElementById('headerFrom');
+  // Capture initial left offset before any scroll so we can clamp the
+  // leftward spread to keep 'from' on-screen
+  const fromInitLeft = fromEl ? fromEl.getBoundingClientRect().left : 20;
 
+  function onScroll() {
     const from = document.getElementById('headerFrom');
     const to   = document.getElementById('headerTo');
-    const swap = document.querySelector('.airport-hero-swap');
+    const swap    = document.querySelector('.airport-hero-swap');
     const cityRow = document.querySelector('.airport-city-row');
     if (!from || !to) return;
 
-    from.style.transform       = `translateX(-${spread}px) scale(${scale})`;
+    const progress   = Math.min(window.scrollY, SCROLL_MAX) / SCROLL_MAX;
+    const rawSpread  = progress * SPREAD_PX;
+    // Clamp leftward spread so 'from' never leaves the viewport
+    const fromSpread = Math.min(rawSpread, Math.max(0, fromInitLeft - 4));
+    const scale      = 1 - progress * (1 - SCALE_END);
+    const opacity    = 1 - progress * (1 - OPACITY_MIN);
+
+    from.style.transform       = `translateX(-${fromSpread}px) scale(${scale})`;
     from.style.transformOrigin = 'left center';
     from.style.opacity         = opacity;
 
-    to.style.transform       = `translateX(${spread}px) scale(${scale})`;
+    to.style.transform       = `translateX(${rawSpread}px) scale(${scale})`;
     to.style.transformOrigin = 'right center';
     to.style.opacity         = opacity;
 
