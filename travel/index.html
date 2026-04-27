@@ -86,7 +86,7 @@
 
   .leaflet-control-attribution a { color: #bbb; }
 
-  .home-marker { background: none !important; border: none !important; }
+  .home-marker, .fav-marker { background: none !important; border: none !important; }
 
   /* Section layout */
   .section {
@@ -209,11 +209,26 @@
   }
 
   /* Photo tags */
+  .photo-tags-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .photos-label {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 12px;
+    color: #bbb;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+
   .photo-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 16px;
   }
 
   .photo-tag {
@@ -271,6 +286,31 @@
     color: #666;
     margin-top: 12px;
   }
+
+  .lb-counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #444;
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+  }
+
+  .lb-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.45);
+    font-size: 32px;
+    padding: 12px 16px;
+    cursor: pointer;
+    line-height: 1;
+    display: none;
+  }
+  .lb-arrow:hover { color: rgba(255,255,255,0.85); }
+  .lb-prev { left: 8px; }
+  .lb-next { right: 8px; }
 
   /* Map legend */
   .map-legend {
@@ -337,10 +377,8 @@
   </div>
 
   <div class="map-legend">
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#93c5fd"></span>once</div>
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#c084fc"></span>twice</div>
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#fb923c"></span>several times</div>
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#ef4444"></span>frequently</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#9ca3af"></span>visited</div>
+    <div class="map-legend-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" style="flex-shrink:0"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e85d75"/></svg>favorite</div>
     <div class="map-legend-item"><svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 20 20" style="flex-shrink:0"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" fill="#1c1c1c"/></svg>home</div>
   </div>
 
@@ -352,7 +390,7 @@
 
     <p>I grew up in Texas, which means I grew up driving everywhere. At sixteen, learning to drive wasn't some milestone you earned — it was just what teenagers did. My family is in Houston. There's space out there. Homes are big, land is cheap. I grew up in a house in the suburbs where a 15-minute drive was considered right around the corner. People would say "it's right up the street" and mean something that required getting in a car, and nobody thought that was strange. The beach was Galveston — and if you know Galveston, you know.</p>
 
-    <p>Then I went to Japan. I walked everywhere, took trains everywhere. There were hills, mountains, lakes, things I just didn't grow up around.</p>
+    <p>Then I went to Japan. I walked everywhere, took trains everywhere. Hills, mountains, lakes — things I just didn't grow up around.</p>
 
     <div class="photo-compare">
       <div class="polaroid-real" style="transform: rotate(-2.5deg);">
@@ -365,13 +403,13 @@
       </div>
     </div>
 
-    <p>But the deeper thing wasn't the scenery. It was that the people there are used to all of it. The trains, the density, the walkability — that's just Tuesday for them. On my second trip I asked my tour guide where her favorite place she'd ever traveled was. She said somewhere in the US, Yellowstone or maybe Colorado, said it was the most beautiful nature she'd ever seen. I just sat with that for a second. Because the whole time I'm in Japan I'm thinking: why would anyone ever want to leave. And she's thinking the same thing about where I'm from.</p>
+    <p>But the deeper thing wasn't the scenery. It was that the people there are used to all of it. The trains, the density, the walkability — that's just Tuesday for them. On my second trip I asked my tour guide where her favorite place she'd ever traveled was. She lived in Osaka. We were in Tokyo. She said somewhere in the US, Colorado or maybe Yellowstone, the most beautiful nature she'd ever seen. And her actual favorite place was Bangkok. I just sat with that. Because my favorite place is Osaka. That's where she lives. And she wants to be somewhere else.</p>
 
     <p>It's not surprising when you really think about it, but you don't realize it until you're sitting across from someone who proves it. Everyone treats their own country like the default and everywhere else like the interesting part. You just don't figure that out until you go somewhere and find someone thinking the exact same thing about you.</p>
 
     <p>I used to think I wanted to move abroad. Japan especially made that case pretty convincingly. But what I've figured out is that's not actually what I want. What I like is the newness of it — seeing how things work somewhere different, adapting to it, living a different way for a little while. I still want to leave the US at some point, but I can't figure out where I'd actually settle. That's kind of the problem with traveling enough: too many places are genuinely good.</p>
 
-    <p>It's true within the US too. The South has its own thing. People talk a certain way, joke a certain way, move a certain way. The West Coast is different. The East Coast, people are kind of mean in a way that takes some getting used to. Different logic everywhere, and you have to adapt wherever you land.</p>
+    <p>It's true within the US too. The South has its own thing. People talk a certain way, joke a certain way, move a certain way. The West Coast is different. The East Coast, people are mean. Different logic everywhere, and you have to adapt wherever you land.</p>
 
     <p>The part I love most is the human connection. When you don't speak the same language and you're both still managing to be kind to each other, finding the laughs that come out of not understanding what either person is saying — that's the part I keep coming back for.</p>
   </section>
@@ -381,14 +419,18 @@
     <div class="section-label"><span class="hl">The places that stuck</span></div>
 
     <div class="place-heading">Japan</div>
-    <p>I've been twice and I'm going back in May 2026. There's an obvious reason everyone is drawn to Japan — the anime, the food, the aesthetic. People are interested before they even go. But what actually hits you when you're there is how functional it is. You can walk anywhere, the trains run on time, and the signage works even if you don't read a single character of Japanese. It's like New York in the sense that everything is at your fingertips, except it's clean and there's no part of the city where the convenience just drops off. The gap between the best version of something and the everyday version of it is unusually small. And then there's the nature. Hakone, the views around Mount Fuji, the way the countryside looks between cities. Most places are either highly organized or genuinely beautiful. Japan is both at once, which feels almost unfair.</p>
+    <p>I've been twice and I'm going back in May 2026. There's an obvious reason everyone is drawn to Japan — the anime, the food, the aesthetic, and one more thing I'm not putting in writing but it explains a disproportionate number of guys who are very enthusiastic about Japan. People are interested before they even go. But what actually hits you when you're there is how functional it is. You can walk anywhere, the trains run on time, and the signage works even if you don't read a single character of Japanese. It's like New York in the sense that everything is at your fingertips, except it's clean and there's no part of the city where I'd feel like I need a gun. The gap between the best version of something and the everyday version of it is unusually small. And then there's the nature. Hakone, the views around Mount Fuji, the way the countryside looks between cities. Most places are either highly organized or genuinely beautiful. Japan is both at once, which feels almost unfair.</p>
 
-    <div class="photo-tags">
-      <button class="photo-tag" onclick="openLb('japan-photo.jpg','Hakone · Lake Ashi')">Hakone</button>
-      <button class="photo-tag" onclick="openLb('photos/japan-IMG_6800.jpg','Tokyo')">Tokyo</button>
-      <button class="photo-tag" onclick="openLb('photos/japan-IMG_0832.jpg','Kyoto')">Kyoto</button>
-      <button class="photo-tag" onclick="openLb('photos/japan-IMG_6945.jpg','Osaka Castle')">Osaka</button>
-      <button class="photo-tag no-photo">Hiroshima</button>
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('hakone',0)">Hakone</button>
+        <button class="photo-tag" onclick="openGallery('tokyo',0)">Tokyo</button>
+        <button class="photo-tag" onclick="openGallery('kyoto',0)">Kyoto</button>
+        <button class="photo-tag" onclick="openGallery('osaka',0)">Osaka</button>
+        <button class="photo-tag" onclick="openGallery('himeji',0)">Himeji</button>
+        <button class="photo-tag" onclick="openGallery('hiroshima',0)">Hiroshima</button>
+      </div>
     </div>
 
     <div class="place-heading">Australia and New Zealand</div>
@@ -401,12 +443,15 @@
 
     <p>That said, I didn't love Zurich. I went in December and it was expensive in a way I wasn't prepared for — I could barely afford to eat without it being a whole thing. The views were fine, it was gloomy the whole time, I get why some people love it, but I just didn't see it. Amsterdam was a completely different experience. I could have stayed longer. Strasbourg was a quick stop — it sits right on the French-German border and looks almost nothing like Paris. More Germanic architecture, canals everywhere. Worth going. The thing is, a bad experience still teaches you something. You find out what you actually respond to by going somewhere and having a real reaction to it, not a curated one.</p>
 
-    <div class="photo-tags">
-      <button class="photo-tag no-photo">Amsterdam</button>
-      <button class="photo-tag no-photo">Paris</button>
-      <button class="photo-tag no-photo">London</button>
-      <button class="photo-tag no-photo">Zurich</button>
-      <button class="photo-tag" onclick="openLb('photos/france-1.jpg','Strasbourg · Cathédrale Notre-Dame')">Strasbourg</button>
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag no-photo">Amsterdam</button>
+        <button class="photo-tag no-photo">Paris</button>
+        <button class="photo-tag no-photo">London</button>
+        <button class="photo-tag no-photo">Zurich</button>
+        <button class="photo-tag" onclick="openGallery('strasbourg',0)">Strasbourg</button>
+      </div>
     </div>
 
     <div class="place-heading">Seoul</div>
@@ -416,8 +461,11 @@
 
     <p>Japan wins on the convenience side, though. In Seoul I had to figure out the T-card, pull out cash all the time, and download Kakao Maps because Google barely works there. In Japan I loaded Suica onto my Apple Wallet and used Google Maps the whole trip. That gap in friction is small but it adds up across a week.</p>
 
-    <div class="photo-tags">
-      <button class="photo-tag" onclick="openLb('photos/seoul-IMG_7658.jpg','Seoul')">Seoul</button>
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('seoul',0)">Seoul</button>
+      </div>
     </div>
 
     <div class="place-heading">Mexico, the Dominican Republic, Cozumel</div>
@@ -448,24 +496,71 @@
 
 </div>
 
-<div id="lb" class="lightbox" onclick="closeLb()">
+<div id="lb" class="lightbox" onclick="if(event.target===this)closeLb()">
+  <button class="lb-arrow lb-prev" id="lb-prev" onclick="event.stopPropagation();lbNav(-1)">&#8592;</button>
   <div class="lightbox-inner">
     <img id="lb-img" src="" alt="">
     <div id="lb-cap" class="lightbox-caption"></div>
+    <div id="lb-counter" class="lb-counter"></div>
   </div>
+  <button class="lb-arrow lb-next" id="lb-next" onclick="event.stopPropagation();lbNav(1)">&#8594;</button>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-function openLb(src, cap) {
-  document.getElementById('lb-img').src = src;
-  document.getElementById('lb-cap').textContent = cap;
+const galleries = {
+  hakone:     [['japan-photo.jpg','Hakone · Lake Ashi'],['photos/japan-IMG_0608-2.jpg','Hakone · Mount Fuji'],['photos/japan-IMG_6847.jpg','Hakone · Lake']],
+  tokyo:      [['photos/japan-IMG_6800.jpg','Tokyo'],['photos/japan-IMG_0408.jpg','Tokyo'],['photos/japan-IMG_0468.jpg','Tokyo']],
+  kyoto:      [['photos/japan-IMG_6888.jpg','Kyoto'],['photos/japan-IMG_0647.jpg','Kyoto']],
+  osaka:      [['photos/japan-IMG_6976.jpg','Osaka'],['photos/japan-IMG_6977.jpg','Osaka']],
+  himeji:     [['photos/japan-IMG_6945.jpg','Himeji Castle']],
+  hiroshima:  [['photos/japan-IMG_0832.jpg','Miyajima · Hiroshima']],
+  seoul:      [['photos/seoul-IMG_7658.jpg','Seoul'],['photos/seoul-IMG_7723.jpg','Seoul'],['photos/seoul-IMG_7727.jpg','Seoul · Subway']],
+  strasbourg: [['photos/france-1.jpg','Strasbourg · Cathédrale Notre-Dame']],
+};
+
+let currentGallery = [];
+let currentIndex = 0;
+
+function openGallery(key, idx) {
+  currentGallery = galleries[key] || [];
+  currentIndex = idx || 0;
+  showLbFrame();
   document.getElementById('lb').classList.add('open');
 }
+
+function openLb(src, cap) {
+  currentGallery = [[src, cap]];
+  currentIndex = 0;
+  showLbFrame();
+  document.getElementById('lb').classList.add('open');
+}
+
+function showLbFrame() {
+  const [src, cap] = currentGallery[currentIndex];
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-cap').textContent = cap;
+  const multi = currentGallery.length > 1;
+  document.getElementById('lb-prev').style.display = multi ? 'block' : 'none';
+  document.getElementById('lb-next').style.display = multi ? 'block' : 'none';
+  document.getElementById('lb-counter').textContent = multi ? (currentIndex + 1) + ' / ' + currentGallery.length : '';
+}
+
+function lbNav(dir) {
+  currentIndex = (currentIndex + dir + currentGallery.length) % currentGallery.length;
+  showLbFrame();
+}
+
 function closeLb() {
   document.getElementById('lb').classList.remove('open');
 }
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft') lbNav(-1);
+});
 
 (function () {
   const map = L.map('world-map', {
@@ -473,10 +568,15 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     zoom: 2,
     zoomSnap: 0.5,
     scrollWheelZoom: false,
+    touchZoom: true,
     minZoom: 1,
     maxZoom: 12,
     worldCopyJump: true
   });
+
+  // Enable scroll/pinch zoom while hovering over the map
+  map.on('mouseover', function () { map.scrollWheelZoom.enable(); });
+  map.on('mouseout', function () { map.scrollWheelZoom.disable(); });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -484,69 +584,66 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     maxZoom: 19
   }).addTo(map);
 
-  // freq: 1=once(blue) 2=twice(purple) 3=several(orange) 4=frequent(red)
-  const COLORS = { 1: '#93c5fd', 2: '#c084fc', 3: '#fb923c', 4: '#ef4444' };
-
   const places = [
-    // Japan (3 trips)
-    { name: 'Tokyo',             lat: 35.6762,  lng: 139.6503, freq: 3 },
-    { name: 'Kyoto',             lat: 35.0116,  lng: 135.7681, freq: 3 },
-    { name: 'Osaka',             lat: 34.6937,  lng: 135.5023, freq: 3 },
-    { name: 'Hakone',            lat: 35.2323,  lng: 139.0236, freq: 2 },
-    { name: 'Hiroshima',         lat: 34.3853,  lng: 132.4553, freq: 2 },
+    // Japan
+    { name: 'Tokyo',             lat: 35.6762,  lng: 139.6503 },
+    { name: 'Kyoto',             lat: 35.0116,  lng: 135.7681 },
+    { name: 'Osaka',             lat: 34.6937,  lng: 135.5023, fav: true },
+    { name: 'Hakone',            lat: 35.2323,  lng: 139.0236 },
+    { name: 'Hiroshima',         lat: 34.3853,  lng: 132.4553 },
     // Korea
-    { name: 'Seoul',             lat: 37.5665,  lng: 126.9780, freq: 1 },
+    { name: 'Seoul',             lat: 37.5665,  lng: 126.9780, fav: true },
     // Europe
-    { name: 'Zurich',            lat: 47.3769,  lng:   8.5417, freq: 1 },
-    { name: 'Strasbourg',        lat: 48.5734,  lng:   7.7521, freq: 1 },
-    { name: 'Amsterdam',         lat: 52.3676,  lng:   4.9041, freq: 2 },
-    { name: 'Paris',             lat: 48.8566,  lng:   2.3522, freq: 1 },
-    { name: 'London',            lat: 51.5074,  lng:  -0.1278, freq: 1 },
+    { name: 'Zurich',            lat: 47.3769,  lng:   8.5417 },
+    { name: 'Strasbourg',        lat: 48.5734,  lng:   7.7521 },
+    { name: 'Amsterdam',         lat: 52.3676,  lng:   4.9041, fav: true },
+    { name: 'Paris',             lat: 48.8566,  lng:   2.3522 },
+    { name: 'London',            lat: 51.5074,  lng:  -0.1278 },
     // Mexico / Caribbean
-    { name: 'Tulum',             lat: 20.2114,  lng: -87.4653, freq: 1 },
-    { name: 'Cancun',            lat: 21.1619,  lng: -86.8515, freq: 1 },
-    { name: 'Cabo San Lucas',    lat: 22.8905,  lng:-109.9167, freq: 1 },
-    { name: 'Cozumel',           lat: 20.5101,  lng: -86.9480, freq: 1 },
-    { name: 'Nassau',            lat: 25.0480,  lng: -77.3554, freq: 1 },
-    { name: 'Santo Domingo',     lat: 18.4861,  lng: -69.9312, freq: 1 },
+    { name: 'Tulum',             lat: 20.2114,  lng: -87.4653 },
+    { name: 'Cancun',            lat: 21.1619,  lng: -86.8515 },
+    { name: 'Cabo San Lucas',    lat: 22.8905,  lng:-109.9167 },
+    { name: 'Cozumel',           lat: 20.5101,  lng: -86.9480 },
+    { name: 'Nassau',            lat: 25.0480,  lng: -77.3554 },
+    { name: 'Santo Domingo',     lat: 18.4861,  lng: -69.9312 },
     // Pacific / Oceania
-    { name: 'Sydney',            lat:-33.8688,  lng: 151.2093, freq: 1 },
-    { name: 'Great Barrier Reef',lat:-18.2871,  lng: 147.6992, freq: 1 },
-    { name: 'Auckland',          lat:-36.8485,  lng: 174.7633, freq: 1 },
-    { name: 'Honolulu',          lat: 21.3069,  lng:-157.8583, freq: 1 },
+    { name: 'Sydney',            lat:-33.8688,  lng: 151.2093 },
+    { name: 'Great Barrier Reef',lat:-18.2871,  lng: 147.6992 },
+    { name: 'Auckland',          lat:-36.8485,  lng: 174.7633 },
+    { name: 'Honolulu',          lat: 21.3069,  lng:-157.8583 },
     // Canada
-    { name: 'Toronto',           lat: 43.6532,  lng: -79.3832, freq: 1 },
-    { name: 'Montreal',          lat: 45.5017,  lng: -73.5673, freq: 1 },
-    { name: 'Banff / Calgary',   lat: 51.1784,  lng:-115.5708, freq: 1 },
-    { name: 'Vancouver',         lat: 49.2827,  lng:-123.1207, freq: 1 },
+    { name: 'Toronto',           lat: 43.6532,  lng: -79.3832 },
+    { name: 'Montreal',          lat: 45.5017,  lng: -73.5673 },
+    { name: 'Banff / Calgary',   lat: 51.1784,  lng:-115.5708 },
+    { name: 'Vancouver',         lat: 49.2827,  lng:-123.1207 },
     // US West
-    { name: 'Seattle',           lat: 47.6062,  lng:-122.3321, freq: 1 },
-    { name: 'San Francisco',     lat: 37.7749,  lng:-122.4194, freq: 1 },
-    { name: 'Los Angeles',       lat: 34.0522,  lng:-118.2437, freq: 1 },
-    { name: 'Las Vegas',         lat: 36.1699,  lng:-115.1398, freq: 4 },
-    { name: 'Phoenix',           lat: 33.4484,  lng:-112.0740, freq: 1 },
-    { name: 'Salt Lake City',    lat: 40.7608,  lng:-111.8910, freq: 1 },
-    { name: 'Vernal, UT',        lat: 40.4555,  lng:-109.5287, freq: 1 },
-    { name: 'Albuquerque',       lat: 35.0844,  lng:-106.6504, freq: 1 },
+    { name: 'Seattle',           lat: 47.6062,  lng:-122.3321 },
+    { name: 'San Francisco',     lat: 37.7749,  lng:-122.4194 },
+    { name: 'Los Angeles',       lat: 34.0522,  lng:-118.2437 },
+    { name: 'Las Vegas',         lat: 36.1699,  lng:-115.1398 },
+    { name: 'Phoenix',           lat: 33.4484,  lng:-112.0740 },
+    { name: 'Salt Lake City',    lat: 40.7608,  lng:-111.8910 },
+    { name: 'Vernal, UT',        lat: 40.4555,  lng:-109.5287 },
+    { name: 'Albuquerque',       lat: 35.0844,  lng:-106.6504 },
     // Oregon
-    { name: 'Portland',          lat: 45.5051,  lng:-122.6750, freq: 3 },
-    { name: 'Medford',           lat: 42.3265,  lng:-122.8756, freq: 3 },
+    { name: 'Portland',          lat: 45.5051,  lng:-122.6750 },
+    { name: 'Medford',           lat: 42.3265,  lng:-122.8756 },
     // US Midwest
-    { name: 'Chicago',           lat: 41.8781,  lng: -87.6298, freq: 1 },
-    { name: 'Columbus, OH',      lat: 39.9612,  lng: -82.9988, freq: 1 },
-    { name: 'Cincinnati',        lat: 39.1031,  lng: -84.5120, freq: 1 },
+    { name: 'Chicago',           lat: 41.8781,  lng: -87.6298 },
+    { name: 'Columbus, OH',      lat: 39.9612,  lng: -82.9988 },
+    { name: 'Cincinnati',        lat: 39.1031,  lng: -84.5120 },
     // US East
-    { name: 'New York',          lat: 40.7128,  lng: -74.0060, freq: 2 },
-    { name: 'Washington, D.C.',  lat: 38.9072,  lng: -77.0369, freq: 1 },
-    { name: 'Boston',            lat: 42.3601,  lng: -71.0589, freq: 1 },
+    { name: 'New York',          lat: 40.7128,  lng: -74.0060 },
+    { name: 'Washington, D.C.',  lat: 38.9072,  lng: -77.0369 },
+    { name: 'Boston',            lat: 42.3601,  lng: -71.0589 },
     // US South
-    { name: 'Dallas',            lat: 32.7767,  lng: -96.7970, freq: 3 },
-    { name: 'Orlando',           lat: 28.5383,  lng: -81.3792, freq: 3 },
-    { name: 'Pine Bluff, AR',    lat: 34.2284,  lng: -92.0032, freq: 1 },
-    { name: 'Baton Rouge',       lat: 30.4515,  lng: -91.1871, freq: 1 },
-    { name: 'Jackson, MS',       lat: 32.2988,  lng: -90.1848, freq: 1 },
-    { name: 'Montgomery, AL',    lat: 32.3668,  lng: -86.2999, freq: 1 },
-    { name: 'Huntsville, AL',    lat: 34.7304,  lng: -86.5861, freq: 1 },
+    { name: 'Dallas',            lat: 32.7767,  lng: -96.7970 },
+    { name: 'Orlando',           lat: 28.5383,  lng: -81.3792 },
+    { name: 'Pine Bluff, AR',    lat: 34.2284,  lng: -92.0032 },
+    { name: 'Baton Rouge',       lat: 30.4515,  lng: -91.1871 },
+    { name: 'Jackson, MS',       lat: 32.2988,  lng: -90.1848 },
+    { name: 'Montgomery, AL',    lat: 32.3668,  lng: -86.2999 },
+    { name: 'Huntsville, AL',    lat: 34.7304,  lng: -86.5861 },
   ];
 
   const homes = [
@@ -556,19 +653,23 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
 
   const baseStyle = { radius: 5, color: '#fafaf9', weight: 1.5, opacity: 1, fillOpacity: 1 };
 
-  places.forEach(c => {
-    L.circleMarker([c.lat, c.lng], { ...baseStyle, fillColor: COLORS[c.freq] })
-      .bindTooltip(c.name, { direction: 'top', offset: [0, -6] })
-      .addTo(map);
-  });
-
+  const favSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e85d75"/></svg>';
   const homeSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" fill="#1c1c1c"/></svg>';
+
+  places.forEach(c => {
+    if (c.fav) {
+      const icon = L.divIcon({ className: 'fav-marker', html: favSvg, iconSize: [14, 14], iconAnchor: [7, 11], tooltipAnchor: [0, -13] });
+      L.marker([c.lat, c.lng], { icon }).bindTooltip(c.name, { direction: 'top' }).addTo(map);
+    } else {
+      L.circleMarker([c.lat, c.lng], { ...baseStyle, fillColor: '#9ca3af' })
+        .bindTooltip(c.name, { direction: 'top', offset: [0, -6] })
+        .addTo(map);
+    }
+  });
 
   homes.forEach(h => {
     const icon = L.divIcon({ className: 'home-marker', html: homeSvg, iconSize: [18, 18], iconAnchor: [9, 18], tooltipAnchor: [0, -20] });
-    L.marker([h.lat, h.lng], { icon })
-      .bindTooltip(h.name, { direction: 'top' })
-      .addTo(map);
+    L.marker([h.lat, h.lng], { icon }).bindTooltip(h.name, { direction: 'top' }).addTo(map);
   });
 }());
 </script>
