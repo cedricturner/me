@@ -471,84 +471,29 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
 }
 
-/* Base badge reset — individual category badges override everything */
+/* Base badge */
 .badge {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 3px;
-  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   line-height: 1.4;
   white-space: nowrap;
   vertical-align: middle;
 }
 
-/* food 🍜 — Permanent Marker, warm yellow */
-.badge-food {
-  font-family: 'Permanent Marker', cursive;
-  background: #fde68a;
-  color: #78350f;
-  transform: rotate(-1.5deg);
-  font-size: 11px;
-}
-
-/* anime 🎌 — Space Mono bold, salmon pink */
-.badge-anime {
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  background: #fca5a5;
-  color: #7f1d1d;
-  transform: rotate(1deg);
-  font-size: 10.5px;
-}
-
-/* shopping 🛍 — Oswald, teal */
-.badge-shopping {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 600;
-  background: #99f6e4;
-  color: #134e4a;
-  transform: rotate(-1deg);
-  font-size: 12px;
-  letter-spacing: 0.03em;
-}
-
-/* culture 🏛 — Abril Fatface, blue */
-.badge-culture {
-  font-family: 'Abril Fatface', serif;
-  background: #bfdbfe;
-  color: #1e3a5f;
-  transform: rotate(0.5deg);
-  font-size: 11px;
-}
-
-/* nightlife 🌙 — Bebas Neue, dark with white text */
-.badge-nightlife {
-  font-family: 'Bebas Neue', sans-serif;
-  background: #1e293b;
-  color: #fff;
-  transform: rotate(-1deg);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-}
-
-/* travel ✈ — Caveat, orange */
-.badge-travel {
-  font-family: 'Caveat', cursive;
-  font-weight: 700;
-  background: #fed7aa;
-  color: #7c2d12;
-  transform: rotate(1.5deg);
-  font-size: 13px;
-}
-
-/* rest 🛌 — Special Elite, lavender */
-.badge-rest {
-  font-family: 'Special Elite', serif;
-  background: #e9d5ff;
-  color: #3b0764;
-  transform: rotate(-0.5deg);
-  font-size: 11px;
-}
+/* All badges — Space Mono, uppercase, consistent */
+.badge-food     { background: #fde68a; color: #78350f; }
+.badge-anime    { background: #fca5a5; color: #7f1d1d; }
+.badge-shopping { background: #99f6e4; color: #134e4a; }
+.badge-culture  { background: #bfdbfe; color: #1e3a5f; }
+.badge-nightlife{ background: #1e293b; color: #fff; }
+.badge-travel   { background: #fed7aa; color: #7c2d12; }
+.badge-rest     { background: #e9d5ff; color: #3b0764; }
 
 /* Price badge — clean Space Mono, no background */
 .badge-cost {
@@ -1091,13 +1036,9 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="panel-body" id="exportBody">
       <div class="panel-actions" style="margin-top:12px">
-        <button class="btn btn-secondary" onclick="exportJSON()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Export JSON
-        </button>
-        <button class="btn btn-secondary" onclick="exportMarkdown()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Export Markdown
+        <button class="btn btn-secondary" onclick="copyAsText()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy as list
         </button>
         <button class="btn btn-green" onclick="togglePresentation()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -1405,13 +1346,13 @@ let isPresentationMode = false;
 // CATEGORIES CONFIG
 // =============================================
 const CATEGORIES = [
-  { key: "anime",    label: "Anime 🎌",    cls: "badge-anime" },
-  { key: "food",     label: "Food 🍜",     cls: "badge-food" },
-  { key: "shopping", label: "Shopping 🛍", cls: "badge-shopping" },
-  { key: "culture",  label: "Culture 🏛",  cls: "badge-culture" },
-  { key: "nightlife",label: "Nightlife 🌙",cls: "badge-nightlife" },
-  { key: "travel",   label: "Travel ✈",   cls: "badge-travel" },
-  { key: "rest",     label: "Rest 🛌",     cls: "badge-rest" }
+  { key: "anime",    label: "Anime",    cls: "badge-anime" },
+  { key: "food",     label: "Food",     cls: "badge-food" },
+  { key: "shopping", label: "Shopping", cls: "badge-shopping" },
+  { key: "culture",  label: "Culture",  cls: "badge-culture" },
+  { key: "nightlife",label: "Nightlife",cls: "badge-nightlife" },
+  { key: "travel",   label: "Travel",   cls: "badge-travel" },
+  { key: "rest",     label: "Rest",     cls: "badge-rest" }
 ];
 
 // =============================================
@@ -2029,34 +1970,26 @@ function loadJsonFile(event) {
 // =============================================
 // EXPORT
 // =============================================
-function exportJSON() {
-  const json = JSON.stringify(itinerary, null, 2);
-  downloadFile('japan-2026-itinerary.json', json, 'application/json');
-  showToast('JSON downloaded');
-}
-
-function exportMarkdown() {
-  let md = `# ${itinerary.tripName}\n`;
-  md += `**${itinerary.travelers}** · ${formatDateLong(itinerary.startDate)} – ${formatDateLong(itinerary.endDate)}\n\n`;
+function copyAsText() {
+  let txt = itinerary.tripName + '\n';
+  txt += itinerary.travelers + ' · ' + formatDateLong(itinerary.startDate) + ' – ' + formatDateLong(itinerary.endDate) + '\n\n';
   itinerary.days.forEach(day => {
-    md += `## ${day.label} · ${formatDateLong(day.date)}: ${day.title}\n\n`;
-    day.activities.forEach((act, i) => {
-      const time = act.time ? formatTime(act.time) : '';
-      const cats = (act.categories || []).join(', ');
-      const star = act.priority === 'must' ? ' ⭐' : act.priority === 'nice' ? ' ☆' : '';
-      md += `${i+1}. **${act.name}**${star}`;
-      if (time) md += ` · ${time}`;
-      if (act.neighborhood) md += ` · ${act.neighborhood}`;
-      if (cats) md += ` \`${cats}\``;
-      if (act.cost) md += ` · ${act.cost}`;
-      if (act.reservation) md += act.reservationDone ? ' 📅✓' : ' 📅 RESERVE';
-      md += '\n';
-      if (act.notes) md += `   > ${act.notes}\n`;
+    txt += day.label + ' · ' + formatDateLong(day.date);
+    if (day.title) txt += ' — ' + day.title;
+    txt += '\n';
+    day.activities.forEach(act => {
+      const time = act.time ? formatTime(act.time) + '  ' : '';
+      const star = act.priority === 'must' ? ' ★' : '';
+      txt += '  - ' + time + act.name + star;
+      if (act.neighborhood) txt += ' (' + act.neighborhood + ')';
+      if (act.reservation && !act.reservationDone) txt += ' [reserve]';
+      txt += '\n';
     });
-    md += '\n';
+    txt += '\n';
   });
-  downloadFile('japan-2026-itinerary.md', md, 'text/markdown');
-  showToast('Markdown downloaded');
+  navigator.clipboard.writeText(txt)
+    .then(() => showToast('Copied to clipboard!'))
+    .catch(() => showToast('Copy failed — try Print instead'));
 }
 
 function downloadFile(filename, content, type) {
