@@ -334,6 +334,114 @@
   .cta-list li:last-child { border-bottom: 1px solid var(--rule); }
   .cta-list li::before { content: "→"; color: var(--faint); flex-shrink: 0; margin-top: 1px; }
 
+  /* ── Semantic Layer popup ── */
+  .sl-trigger {
+    cursor: pointer;
+    border-bottom: 1px dashed var(--faint);
+    transition: border-color 0.15s;
+  }
+  .sl-trigger:hover { border-bottom-color: var(--text); }
+
+  .sl-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .sl-overlay.open { display: flex; }
+
+  .sl-modal {
+    background: #fff;
+    max-width: 460px;
+    width: 100%;
+    border: 1px solid var(--rule);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .sl-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sl-modal-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  .sl-modal-close {
+    font-size: 18px;
+    color: var(--faint);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+  }
+  .sl-modal-close:hover { color: var(--text); }
+
+  .sl-intro {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    padding: 16px 24px 20px;
+    border-bottom: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  .sl-group { padding: 0 24px; margin-top: 20px; }
+  .sl-group:last-child { margin-bottom: 20px; }
+
+  .sl-group-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 8px;
+  }
+
+  .sl-item {
+    display: block;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+  }
+  .sl-item:last-child { border-bottom: 1px solid var(--rule); }
+  .sl-item:hover .sl-item-name { text-decoration: underline; text-underline-offset: 3px; }
+
+  .sl-item-top { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+
+  .sl-item-name { font-size: 14px; font-weight: 500; color: var(--text); }
+
+  .sl-preferred {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #a7f3d0;
+    color: #065f46;
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+
+  .sl-item-desc { font-size: 12px; color: var(--faint); display: block; }
+
+  /* Make prose links visible */
+  .cta-list a { text-decoration: underline; text-underline-offset: 3px; }
+
   /* Closing */
   .closing {
     border-top: 1px solid var(--rule);
@@ -457,7 +565,7 @@
   <div class="section section--before">
     <div class="section-label"><span class="hl">The Process Was The Value</span></div>
 
-    <p>Leetcode, competitive interviews, prestigious programs, PhDs — people spent careers mastering the craft of execution, and that made sense. When the process was rare and hard to replicate, the person who mastered it became the most important part of the system.</p>
+    <p>Leetcode, competitive interviews, prestigious programs, PhDs: people spent careers mastering the craft of execution, and that made sense. When the process was rare and hard to replicate, the person who mastered it became the most important part of the system.</p>
 
     <div class="flow-box-row">
       <div class="flow-box-node">
@@ -544,7 +652,7 @@
     <p>When people ask whether AI will take jobs, they're asking about the process, and for a lot of process-focused roles the answer is yes: the drive-through operator, the junior coder, anyone whose job was to execute a well-defined task reliably at scale. That work is going away, not because AI is magic, but because the process stopped being the hard part. What's scarce now is not the ability to build, it's knowing what to build and why: what context do you give it, what makes a good output versus a bad one, what are you actually trying to accomplish? That's judgment, taste, preference.</p>
 
     <div class="callout">
-      <p>Worth saying: you should still verify what AI gives you. It gets things wrong, and the outputs are only as good as the context you provide. But models are improving fast, and new ones keep coming — the gap between "impressive" and "reliable" is closing with every release.</p>
+      <p>Worth saying: you should still verify what AI gives you. It gets things wrong, and the outputs are only as good as the context you provide. But models are improving fast, and new ones keep coming. The gap between "impressive" and "reliable" is closing with every release.</p>
     </div>
   </div>
 
@@ -596,7 +704,7 @@
 
     <p>Beyond the inputs, you have to know what you actually want from the results, not what you've been told to want, not the output that meets some external standard, but the one that makes sense for where you are and what you're actually trying to do, and why.</p>
 
-    <p>There's a concrete version of this already playing out in data infrastructure. The dbt <a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl" target="_blank">Semantic Layer</a> is a place where teams agree on what they want the outputs to mean before anyone builds anything — what's the canonical definition of revenue, what counts as an active user. Before it existed, every team ran their own query and got a different answer. The semantic layer is a shared location for common wants: you define what good looks like once, and every process downstream — human-built queries, AI agents, dashboards — answers the same question. That's what the shift to AI requires more broadly. Not better prompting, but clearer definitions of what you're actually after.</p>
+    <p>There's a concrete version of this already playing out in data infrastructure. The <span class="sl-trigger" onclick="openSL()">semantic layer</span> is a place where teams agree on what they want the outputs to mean before anyone builds anything: what does "revenue" mean, what counts as an active user. Before it existed, every team ran their own query and got a different answer. It's a shared location for common wants. You define what good looks like once, and every downstream process answers the same question, whether that's a human query, an AI agent, or a dashboard. That's what the shift to AI requires more broadly. Not better prompting, but clearer definitions of what you're actually after.</p>
 
     <p>What I think happens from here: the hard line between engineering decisions and business decisions starts to go away. It had to exist when the process was the hard part and you needed specialists who owned the craft, but with that gone, decision-making collapses into one thing: someone who understands the inputs, knows what outputs they're after, and can work end to end with AI to get there. The divide between manager and engineer gets smaller, more people have to think all the way through the system, and junior engineers ten years from now will ship what senior engineers ship today. The way we interact with code changes more than the output does.</p>
   </div>
@@ -611,19 +719,72 @@
 
     <ul class="cta-list">
       <li>If you're in data: spin up <a href="https://github.com/dbt-labs/dbt-core" target="_blank">dbt Core</a>, point it at something real, see what you can build</li>
-      <li>If you're in design: open Figma and try <a href="https://www.figma.com/make/" target="_blank">Figma Make</a> — you don't need a developer to ship something</li>
+      <li>If you're in design: open Figma and try <a href="https://www.figma.com/make/" target="_blank">Figma Make</a>. You don't need a developer to ship something</li>
       <li>Try a food you haven't tried, or cook something you've never made</li>
       <li>Think about the output you actually want first, then work backwards to the inputs you need</li>
-      <li>Have a preference — not just a skill, but an actual point of view on what good looks like</li>
+      <li>Have a preference, not just a skill: an actual point of view on what good looks like</li>
     </ul>
 
     <p>Preference is a muscle: you get better at knowing what you want by practicing wanting things deliberately, understanding why you want them, and working backwards from there. The people who figure out the output first will be a step ahead of the people still perfecting a process that AI is about to do for them.</p>
   </div>
 
   <div class="closing">
-    <p>have thoughts about ai. <a href="mailto:cedricbturner@gmail.com">let's talk!</a></p>
+    <p>have thoughts about ai? <a href="mailto:cedricbturner@gmail.com">let's talk!</a></p>
+    <div style="display:flex;gap:20px;margin-top:24px;align-items:center;">
+      <a href="../../" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint);text-decoration:none;letter-spacing:0.05em;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--faint)'">← cedric turner ii</a>
+      <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint);background:none;border:none;cursor:pointer;letter-spacing:0.05em;padding:0;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--faint)'">↑ back to top</button>
+    </div>
   </div>
 
 </div>
+
+<!-- SEMANTIC LAYER POPUP -->
+<div id="sl-overlay" class="sl-overlay" onclick="if(event.target===this)closeSL()">
+  <div class="sl-modal">
+    <div class="sl-modal-header">
+      <span class="sl-modal-title">Semantic Layer</span>
+      <button class="sl-modal-close" onclick="closeSL()">✕</button>
+    </div>
+    <p class="sl-intro">A semantic layer sits between your data and your tools, translating business definitions into consistent, reusable logic. Any downstream consumer — a query, a dashboard, an AI agent — gets the same answer to the same question.</p>
+
+    <div class="sl-group">
+      <div class="sl-group-label">Agnostic</div>
+      <a class="sl-item" href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl" target="_blank">
+        <div class="sl-item-top"><span class="sl-item-name">dbt Semantic Layer</span><span class="sl-preferred">preferred</span></div>
+        <span class="sl-item-desc">Define metrics in your dbt project, query them from any tool or AI agent</span>
+      </a>
+    </div>
+
+    <div class="sl-group">
+      <div class="sl-group-label">Warehouse-native</div>
+      <a class="sl-item" href="https://docs.snowflake.com/en/user-guide/views-semantic" target="_blank">
+        <div class="sl-item-top"><span class="sl-item-name">Snowflake Semantic Views</span></div>
+        <span class="sl-item-desc">Metric and dimension definitions built directly into Snowflake</span>
+      </a>
+    </div>
+
+    <div class="sl-group">
+      <div class="sl-group-label">BI layer</div>
+      <a class="sl-item" href="https://cube.dev/" target="_blank">
+        <div class="sl-item-top"><span class="sl-item-name">Cube</span></div>
+        <span class="sl-item-desc">Open source, works across warehouses and connects to most BI tools</span>
+      </a>
+      <a class="sl-item" href="https://learn.microsoft.com/en-us/power-bi/transform-model/" target="_blank">
+        <div class="sl-item-top"><span class="sl-item-name">Power BI</span></div>
+        <span class="sl-item-desc">Microsoft's semantic model, deep integration with the Microsoft stack</span>
+      </a>
+      <a class="sl-item" href="https://hex.tech/" target="_blank">
+        <div class="sl-item-top"><span class="sl-item-name">Hex</span></div>
+        <span class="sl-item-desc">Semantic layer built into the Hex analytics platform</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+function openSL() { document.getElementById('sl-overlay').classList.add('open'); }
+function closeSL() { document.getElementById('sl-overlay').classList.remove('open'); }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSL(); });
+</script>
 </body>
 </html>
