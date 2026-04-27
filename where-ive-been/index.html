@@ -514,14 +514,14 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const galleries = {
-  hakone:     [['japan-photo.jpg','Hakone · Lake Ashi'],['photos/japan-IMG_0608-2.jpg','Hakone · Mount Fuji'],['photos/japan-IMG_6847.jpg','Hakone · Lake']],
-  tokyo:      [['photos/japan-IMG_6800.jpg','Tokyo'],['photos/japan-IMG_0408.jpg','Tokyo'],['photos/japan-IMG_0468.jpg','Tokyo']],
-  kyoto:      [['photos/japan-IMG_6888.jpg','Kyoto'],['photos/japan-IMG_0647.jpg','Kyoto']],
-  osaka:      [['photos/japan-IMG_6976.jpg','Osaka'],['photos/japan-IMG_6977.jpg','Osaka']],
+  hakone:     [['japan-photo.jpg','Hakone · Lake Ashi']],
+  tokyo:      [['photos/japan-IMG_6800.jpg','Tokyo']],
+  kyoto:      [['photos/japan-IMG_0647.jpg','Kyoto'],['photos/japan-IMG_6888.jpg','Kyoto']],
+  osaka:      [['photos/japan-IMG_6976.jpg','Osaka',-90],['photos/japan-IMG_6977.jpg','Osaka',-90]],
   himeji:     [['photos/japan-IMG_6945.jpg','Himeji Castle']],
-  hiroshima:  [['photos/japan-IMG_0832.jpg','Miyajima · Hiroshima']],
-  seoul:      [['photos/seoul-IMG_7658.jpg','Seoul'],['photos/seoul-IMG_7723.jpg','Seoul'],['photos/seoul-IMG_7727.jpg','Seoul · Subway']],
-  strasbourg: [['photos/france-1.jpg','Strasbourg · Cathédrale Notre-Dame']],
+  hiroshima:  [['photos/japan-IMG_0832.jpg','Miyajima · Hiroshima',-90]],
+  seoul:      [['photos/seoul-IMG_7723.jpg','Seoul']],
+  strasbourg: [['photos/france-1.jpg','Strasbourg · Cathédrale Notre-Dame',-90]],
 };
 
 let currentGallery = [];
@@ -542,8 +542,18 @@ function openLb(src, cap) {
 }
 
 function showLbFrame() {
-  const [src, cap] = currentGallery[currentIndex];
-  document.getElementById('lb-img').src = src;
+  const [src, cap, rot] = currentGallery[currentIndex];
+  const img = document.getElementById('lb-img');
+  img.src = src;
+  if (rot) {
+    img.style.transform = `rotate(${rot}deg)`;
+    img.style.maxWidth = '80vh';
+    img.style.maxHeight = '80vw';
+  } else {
+    img.style.transform = '';
+    img.style.maxWidth = '';
+    img.style.maxHeight = '';
+  }
   document.getElementById('lb-cap').textContent = cap;
   const multi = currentGallery.length > 1;
   document.getElementById('lb-prev').style.display = multi ? 'block' : 'none';
