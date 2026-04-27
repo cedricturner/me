@@ -1564,14 +1564,57 @@ function rerenderActivityList(dayId) {
 // MAPS
 // =============================================
 
-// For flight activities (e.g. "Fly AUS → HND"), return just the destination airport
+// Extract the actual location name from free-form activity text
+function extractLocationName(text) {
+  let t = text
+    .replace(/\bat\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/gi, ' ')    // "at 10am"
+    .replace(/\baround\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/gi, ' ') // "around 3pm"
+    .replace(/(?:¥|USD?|\$)[\d,./–-]+(?:\/\w+)?/gi, ' ')            // costs
+    .replace(/\s*\([^)]*\)/g, ' ')                                    // (notes)
+    .replace(/\s*[—–]\s*.+$/, '')                                     // — trailing note
+    .replace(/\s+/g, ' ').trim();
+
+  // "at [Capitalized Location]" — e.g. "go spend money at Tokyo Skytree"
+  const atM = t.match(/\bat\s+([A-Z][^,\n]+?)(?:\s*[,+]|$)/);
+  if (atM) return atM[1].trim();
+
+  // "in [Capitalized Location]" — e.g. "Dinner: Ramen in Shinjuku"
+  const inM = t.match(/\bin\s+([A-Z]\S+(?:\s+[A-Z]\S+)*)/);
+  if (inM) return inM[1].trim();
+
+  // "near [Capitalized Location]"
+  const nearM = t.match(/\bnear\s+([A-Z]\S+(?:\s+[A-Z]\S+)*)/);
+  if (nearM) return nearM[1].trim();
+
+  // After colon — e.g. "Dinner: Ichiran Ramen"
+  const colonM = t.match(/^[^:]+:\s*(.+)$/);
+  if (colonM) return colonM[1].trim();
+
+  // Strip leading action/verb words that aren't location names
+  t = t.replace(/^(?:Fly|Visit|Go|Head|Check in|Grab|Explore|Morning|Evening|Night|Last|Possible|Live Music|Light Dinner?|Konbini Run?|Return|Depart|Pack|Train)\s*[:.]?\s*/i, '');
+
+  // Strip trailing generic non-location words
+  t = t.replace(/\s+(?:Evening|Morning|Night|Day|Trip|Walk|Run|Tour|Area|Browsing|Hangout|Meetup|Favorites|Farewell|Departure|Pass)$/i, '');
+
+  return t.trim();
+}
+
+// Resolve an activity to the best Google Maps search string
 function mapsAddress(act) {
-  const sources = [act.address || '', act.name || ''];
-  for (const s of sources) {
+  const name = act.name || '';
+  const addr = act.address || '';
+
+  // Flight route: return destination airport
+  for (const s of [addr, name]) {
     const m = s.match(/\b([A-Z]{3})\s*[→>-]+\s*([A-Z]{3})\b/);
     if (m) return m[2] + ' Airport';
   }
-  return act.address || act.name || '';
+
+  // Address was explicitly set (JSON / manual entry) and differs from name → trust it
+  if (addr && addr.toLowerCase() !== name.toLowerCase()) return addr;
+
+  // Extract location name from the activity text
+  return extractLocationName(name) || addr || name;
 }
 
 function openMaps(e, encodedQuery) {
