@@ -33,9 +33,17 @@
     margin-bottom: 6px;
   }
 
-  header p {
+  header .tagline {
     color: #888;
     font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  header .site-desc {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 420px;
   }
 
   section {
@@ -50,6 +58,13 @@
     margin-bottom: 20px;
   }
 
+  .section-desc {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
   .hl {
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
@@ -57,14 +72,17 @@
     display: inline-block;
   }
 
+  .section--notes .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
+  .section--notes .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
+
+  .section--tools .section-label { font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: #1a1a1a; }
+  .section--tools .section-label .hl { background: #fca5a5; transform: rotate(1.5deg); }
+
+  .section--travel .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
+  .section--travel .section-label .hl { background: #fde68a; transform: rotate(-1deg); }
+
   .section--me .section-label { font-family: 'Bebas Neue', cursive; font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px; color: #1a1a1a; }
   .section--me .section-label .hl { background: #166534; color: #fff; transform: rotate(-1.5deg); }
-
-  .section--writing .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
-  .section--writing .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
-
-  .section--work .section-label { font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: #1a1a1a; }
-  .section--work .section-label .hl { background: #fca5a5; transform: rotate(1.5deg); }
 
   .section--elsewhere .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
   .section--elsewhere .section-label .hl { background: #a7f3d0; transform: rotate(-1.5deg); }
@@ -101,26 +119,6 @@
     font-size: 13px;
     color: #999;
   }
-
-  .item-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-family: 'Space Mono', monospace;
-    background: #e9d5ff;
-    border: 1px solid #ddd6fe;
-    color: #7c3aed;
-    padding: 1px 6px;
-    border-radius: 2px;
-    margin-left: 8px;
-    vertical-align: middle;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-  }
-  .item-tag--blue {
-    background: #bfdbfe;
-    border-color: #93c5fd;
-    color: #1d4ed8;
-  }
 </style>
 </head>
 <body>
@@ -128,18 +126,55 @@
 
   <header>
     <h1>Cedric Turner II</h1>
-    <p>#1 german shepherd dad &middot; curious!</p>
+    <p class="tagline">#1 german shepherd dad &middot; curious!</p>
+    <p class="site-desc">A running collection of notes, tools, and observations from how I think and what I'm exploring.</p>
   </header>
 
-  <section class="section--me">
-    <div class="section-label"><span class="hl">me</span></div>
+  <section class="section--notes">
+    <div class="section-label"><span class="hl">Notes</span></div>
     <ul>
       <li>
-        <a class="item" href="./blog/27/">
-          <div class="item-title">who is cedric?</div>
-          <div class="item-meta">how I think, where it comes from</div>
+        <a class="item" href="./blog/ai-forces-preference/">
+          <div class="item-title">ai forces preference</div>
+          <div class="item-meta">AI doesn't give you answers. it forces you to know what you want.</div>
         </a>
       </li>
+      <li>
+        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/" target="_blank">
+          <div class="item-title">the script is not your enemy ↗</div>
+          <div class="item-meta">the real issue isn't the script. it's that the whole thing was built to run, not to be looked inside</div>
+        </a>
+      </li>
+      <li>
+        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank">
+          <div class="item-title">is dbt core enough in the age of ai? ↗</div>
+          <div class="item-meta">AI changed the calculus, not because of dbt Platform features, but because of what AI agents actually need from your data infrastructure</div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section--tools">
+    <div class="section-label"><span class="hl">Tools</span></div>
+    <ul>
+      <li>
+        <a class="item" href="./where-ive-been/itinerary-tool/">
+          <div class="item-title">itinerary tool</div>
+          <div class="item-meta">plan a trip without a spreadsheet</div>
+        </a>
+      </li>
+      <li>
+        <a class="item" href="https://cedricturner.github.io/dbt-artifacts/" target="_blank">
+          <div class="item-title">dbt artifacts ↗</div>
+          <div class="item-meta">interactive learning site for dbt concepts</div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section--travel">
+    <div class="section-label"><span class="hl">Where I've Been</span></div>
+    <ul>
       <li>
         <a class="item" href="./where-ive-been/">
           <div class="item-title">where i've been</div>
@@ -149,43 +184,20 @@
     </ul>
   </section>
 
-  <section class="section--writing">
-    <div class="section-label"><span class="hl">Writing</span></div>
+  <section class="section--me">
+    <div class="section-label"><span class="hl">me</span></div>
+    <p class="section-desc">I think about systems, people, and why things actually work. This site is where I write, build, and figure things out in public.</p>
     <ul>
       <li>
-        <a class="item" href="./blog/ai-forces-preference/">
-          <div class="item-title">ai forces preference</div>
-          <div class="item-meta">AI doesn't give you answers. it forces you to know what you want.</div>
+        <a class="item" href="./blog/27/">
+          <div class="item-title">who is cedric?</div>
+          <div class="item-meta">how I think, where it comes from</div>
         </a>
       </li>
-    </ul>
-  </section>
-
-  <section class="section--work">
-    <div class="section-label"><span class="hl">Work</span></div>
-    <ul>
       <li>
         <a class="item" href="./what-ive-done/">
           <div class="item-title">what i've done</div>
-          <div class="item-meta">what I've built, who I've helped, numbers that matter</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-artifacts/" target="_blank">
-          <div class="item-title">dbt artifacts ↗</div>
-          <div class="item-meta">interactive learning site for dbt concepts, built during my time as a solutions architect at dbt</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/" target="_blank">
-          <div class="item-title">the script is not your enemy ↗<span class="item-tag">writing</span></div>
-          <div class="item-meta">the real issue isn't the script. it's that the whole thing was built to run, not to be looked inside</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank">
-          <div class="item-title">is dbt core enough in the age of ai? ↗<span class="item-tag item-tag--blue">writing</span></div>
-          <div class="item-meta">AI changed the calculus, not because of dbt Platform features, but because of what AI agents actually need from your data infrastructure</div>
+          <div class="item-meta">what I've built, who I've helped</div>
         </a>
       </li>
     </ul>
