@@ -403,6 +403,7 @@
 
   <div class="map-legend">
     <div class="map-legend-item"><span class="map-legend-dot" style="background:#9ca3af"></span>visited</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#a78bfa;outline:2px solid #7c3aed;outline-offset:-1px"></span>upcoming</div>
     <div class="map-legend-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" style="flex-shrink:0"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e85d75"/></svg>favorite</div>
     <div class="map-legend-item"><svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 20 20" style="flex-shrink:0"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" fill="#1c1c1c"/></svg>home</div>
   </div>
@@ -684,7 +685,6 @@ document.addEventListener('keydown', function(e) {
     { name: 'Medford',           lat: 42.3265,  lng:-122.8756 },
     { name: 'Oregon Coast',      lat: 44.85,    lng:-124.07   },
     // US Midwest
-    { name: 'Chicago',           lat: 41.8781,  lng: -87.6298 },
     { name: 'Columbus, OH',      lat: 39.9612,  lng: -82.9988 },
     { name: 'Cincinnati',        lat: 39.1031,  lng: -84.5120 },
     // US East
@@ -702,6 +702,11 @@ document.addEventListener('keydown', function(e) {
     { name: 'Memphis',           lat: 35.1495,  lng: -90.0490 },
     { name: 'Nashville',         lat: 36.1627,  lng: -86.7816 },
     { name: 'Atlanta',           lat: 33.7490,  lng: -84.3880 },
+  ];
+
+  const upcoming = [
+    { name: 'Chicago (soon)',  lat: 41.8781, lng: -87.6298 },
+    { name: 'Tokyo (May)',     lat: 35.6762, lng: 139.6503 },
   ];
 
   const homes = [
@@ -723,6 +728,12 @@ document.addEventListener('keydown', function(e) {
         .bindTooltip(c.name, { direction: 'top', offset: [0, -6] })
         .addTo(map);
     }
+  });
+
+  upcoming.forEach(u => {
+    L.circleMarker([u.lat, u.lng], { ...baseStyle, fillColor: '#a78bfa', color: '#7c3aed', weight: 2, radius: 5 })
+      .bindTooltip(u.name, { direction: 'top', offset: [0, -6] })
+      .addTo(map);
   });
 
   homes.forEach(h => {
