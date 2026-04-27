@@ -1104,7 +1104,7 @@ a { color: inherit; text-decoration: none; }
         <input type="file" id="importFile" accept="image/*,.txt,.md,.text,.json" onchange="loadImportFile(event)">
       </label>
       <div class="import-or">or paste below</div>
-      <textarea id="importText" placeholder="Paste your itinerary here"></textarea>
+      <textarea id="importText" placeholder="Paste your itinerary here" oninput="scheduleAutoParse()"></textarea>
       <div class="import-preview" id="importPreview"></div>
       <span id="fileStatus" style="font-size:12px;color:var(--muted);display:block;margin-top:6px"></span>
       <div class="panel-actions">
@@ -2007,7 +2007,14 @@ function inferCategories(text) {
   return cats.length > 0 ? cats : ['culture'];
 }
 
+let autoParseTimer = null;
+function scheduleAutoParse() {
+  clearTimeout(autoParseTimer);
+  autoParseTimer = setTimeout(parseImport, 400);
+}
+
 function doImport() {
+  if (!parsedImportData) parseImport();
   if (!parsedImportData) return;
   if (!confirm(`Import ${parsedImportData.days.length} day(s)? This will replace your current itinerary.`)) return;
   itinerary.days = parsedImportData.days;
