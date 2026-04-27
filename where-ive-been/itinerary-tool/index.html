@@ -1,27 +1,9 @@
-<!-- DRAFT: local only, not deployed yet -->
-<!--
-  Japan 2026 Travel Itinerary
-  ============================
-  Cedric Turner & Mickey · May 19–30, 2026 · AUS → HND
-
-  Usage:
-  - Open index.html in any modern browser (no server needed)
-  - All data auto-saves to localStorage key: japan-2026-itinerary
-  - Click any activity card to edit it
-  - Drag cards to reorder within a day
-  - Green FAB (bottom-right) opens the day's Google Maps route
-  - Use Import panel to paste text/JSON itinerary data
-  - Use Export panel to download JSON/Markdown or enter presentation mode
-  - "Reset to default" restores the original seed data (with confirmation)
-
-  To edit seed data: find the SEED_DATA constant near the top of the <script> block
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Japan 2026 · Cedric & Mickey</title>
+<title>Itinerary Tool — Cedric Turner II</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Permanent+Marker&family=Oswald:wght@400;600&family=Abril+Fatface&family=Bebas+Neue&family=Caveat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
@@ -950,9 +932,59 @@ a { color: inherit; text-decoration: none; }
 }
 
 .config-modal-overlay.open .config-modal { transform: translateY(0); }
+
+/* Airport autocomplete */
+.airport-ac-wrap { position: relative; }
+.airport-ac-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e8e5e0;
+  border-radius: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 2000;
+  display: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  margin-top: 2px;
+}
+.airport-ac-dropdown.open { display: block; }
+.airport-ac-option {
+  padding: 9px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #f5f3f0;
+}
+.airport-ac-option:last-child { border-bottom: none; }
+.airport-ac-option:hover, .airport-ac-option.focused { background: #f5f3f0; }
+.airport-ac-code {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: #1c1c1c;
+  min-width: 36px;
+}
+.airport-ac-info { font-size: 12px; color: #888; line-height: 1.3; }
+.airport-ac-city { font-size: 13px; color: #1c1c1c; }
+
+/* Back nav */
+.tool-back-nav {
+  padding: 12px 20px;
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.03em;
+}
+.tool-back-nav a { color: #888; text-decoration: none; }
+.tool-back-nav a:hover { color: #1c1c1c; }
 </style>
 </head>
 <body>
+
+<div class="tool-back-nav"><a href="/me/where-ive-been/">← where i've been</a></div>
 
 <div class="app" id="app">
 
@@ -1074,15 +1106,25 @@ a { color: inherit; text-decoration: none; }
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">From Airport</label>
-        <input type="text" class="form-input" id="cfgFromCode" placeholder="AUS" maxlength="4" style="text-transform:uppercase;font-weight:700;font-size:18px;">
+        <div class="airport-ac-wrap">
+          <input type="text" class="form-input" id="cfgFromCode" placeholder="AUS or city name" autocomplete="off"
+            style="text-transform:uppercase;font-weight:700;font-size:18px;"
+            oninput="acInput('from',this.value)" onkeydown="acKey(event,'from')" onblur="acBlur('from')">
+          <div class="airport-ac-dropdown" id="acDropFrom"></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">To Airport</label>
-        <input type="text" class="form-input" id="cfgToCode" placeholder="HND" maxlength="4" style="text-transform:uppercase;font-weight:700;font-size:18px;">
+        <div class="airport-ac-wrap">
+          <input type="text" class="form-input" id="cfgToCode" placeholder="HND or city name" autocomplete="off"
+            style="text-transform:uppercase;font-weight:700;font-size:18px;"
+            oninput="acInput('to',this.value)" onkeydown="acKey(event,'to')" onblur="acBlur('to')">
+          <div class="airport-ac-dropdown" id="acDropTo"></div>
+        </div>
       </div>
     </div>
 
-    <div class="form-row">
+    <div class="form-row" id="cfgCityRow">
       <div class="form-group">
         <label class="form-label">From City</label>
         <input type="text" class="form-input" id="cfgFromCity" placeholder="Austin">
@@ -1208,128 +1250,15 @@ a { color: inherit; text-decoration: none; }
 // SEED DATA — edit this to change default itinerary
 // =============================================
 const SEED_DATA = {
-  tripName: "Japan 2026",
-  travelers: "Cedric & Mickey",
-  origin: "AUS",
-  destination: "HND",
-  startDate: "2026-05-19",
-  endDate: "2026-05-30",
-  days: [
-    {
-      id: "d1", label: "Day 1", date: "2026-05-19", title: "Arrive Tokyo",
-      activities: [
-        { id: "a1", name: "Fly AUS → HND", time: "08:00", neighborhood: "Austin → Tokyo", address: "Haneda Airport, Tokyo", categories: ["travel"], priority: "must", cost: "", reservation: false, reservationDone: false, notes: "Depart Austin, arrive Tokyo next day. ~15 hr flight." },
-        { id: "a2", name: "Check in: Shinjuku Hotel", time: "20:00", neighborhood: "Shinjuku, Tokyo", address: "Shinjuku, Tokyo, Japan", categories: ["rest"], priority: "must", cost: "¥15,000/night", reservation: true, reservationDone: false, notes: "Grab shuttle from HND. Check in, freshen up." },
-        { id: "a3", name: "Shibuya Evening Walk", time: "21:00", neighborhood: "Shibuya, Tokyo", address: "Shibuya Crossing, Tokyo", categories: ["culture"], priority: "must", cost: "Free", reservation: false, reservationDone: false, notes: "Iconic crossing at night. Grab a coffee, soak in the vibe." },
-        { id: "a4", name: "Dinner: Ramen in Shinjuku", time: "22:00", neighborhood: "Shinjuku, Tokyo", address: "Ichiran Ramen Shinjuku, Tokyo", categories: ["food"], priority: "must", cost: "¥1,500", reservation: false, reservationDone: false, notes: "Ichiran or Fuunji. Late-night ramen is a rite of passage." }
-      ]
-    },
-    {
-      id: "d2", label: "Day 2", date: "2026-05-20", title: "Akihabara",
-      activities: [
-        { id: "a5", name: "Akihabara Electric Town", time: "11:00", neighborhood: "Akihabara, Tokyo", address: "Akihabara Electric Town, Tokyo", categories: ["anime","shopping"], priority: "must", cost: "Free to browse", reservation: false, reservationDone: false, notes: "Walk from the station. Multi-floor arcades, figures, electronics." },
-        { id: "a6", name: "Yodobashi Camera Akihabara", time: "12:00", neighborhood: "Akihabara, Tokyo", address: "Yodobashi Camera Akihabara, Tokyo", categories: ["shopping"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "Huge electronics & gaming mega-store. Tax-free with passport." },
-        { id: "a7", name: "Animate Akihabara", time: "13:00", neighborhood: "Akihabara, Tokyo", address: "Animate Akihabara, Tokyo", categories: ["anime"], priority: "must", cost: "Varies", reservation: false, reservationDone: false, notes: "Japan's biggest Animate. Tons of merch, manga, figures." },
-        { id: "a8", name: "Lunch in Akihabara", time: "14:00", neighborhood: "Akihabara, Tokyo", address: "AKB48 Café Akihabara, Tokyo", categories: ["food"], priority: "optional", cost: "¥1,500", reservation: false, reservationDone: false, notes: "" },
-        { id: "a9", name: "Gundam Café", time: "15:30", neighborhood: "Akihabara, Tokyo", address: "Gundam Café Akihabara, Tokyo", categories: ["food","anime"], priority: "nice", cost: "¥2,000", reservation: false, reservationDone: false, notes: "Themed drinks & snacks. Fun photo ops." },
-        { id: "a10", name: "Dinner: Izakaya", time: "19:00", neighborhood: "Akihabara, Tokyo", address: "Yurakucho Izakaya, Tokyo", categories: ["food"], priority: "must", cost: "¥3,000", reservation: false, reservationDone: false, notes: "Relax, beer, yakitori. Try a standing bar." }
-      ]
-    },
-    {
-      id: "d3", label: "Day 3", date: "2026-05-21", title: "Ikebukuro",
-      activities: [
-        { id: "a11", name: "Sunshine City", time: "10:00", neighborhood: "Ikebukuro, Tokyo", address: "Sunshine City Ikebukuro, Tokyo", categories: ["shopping","anime"], priority: "nice", cost: "Free entry", reservation: false, reservationDone: false, notes: "Massive complex. Namco arcade, aquarium, Pokémon Center inside." },
-        { id: "a12", name: "Pokémon Center Mega Tokyo", time: "11:00", neighborhood: "Ikebukuro, Tokyo", address: "Pokémon Center Mega Tokyo, Sunshine City, Ikebukuro", categories: ["anime"], priority: "must", cost: "Varies", reservation: true, reservationDone: false, notes: "Might need timed entry. Buy plushies, limited items. HUGE." },
-        { id: "a13", name: "Animate Ikebukuro (Main Store)", time: "13:00", neighborhood: "Ikebukuro, Tokyo", address: "Animate Ikebukuro Main Store, Tokyo", categories: ["anime"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "The Animate flagship. Multiple floors of merch." },
-        { id: "a14", name: "Lunch: Ikebukuro", time: "14:30", neighborhood: "Ikebukuro, Tokyo", address: "Ikebukuro, Tokyo", categories: ["food"], priority: "optional", cost: "¥1,200", reservation: false, reservationDone: false, notes: "" },
-        { id: "a15", name: "Evening: Explore Ikebukuro", time: "17:00", neighborhood: "Ikebukuro, Tokyo", address: "Ikebukuro West Gate Park, Tokyo", categories: ["culture"], priority: "optional", cost: "Free", reservation: false, reservationDone: false, notes: "West Gate Park, Tokyu Hands, Bunkamura area." }
-      ]
-    },
-    {
-      id: "d4", label: "Day 4", date: "2026-05-22", title: "Ghibli + Kichijoji",
-      activities: [
-        { id: "a16", name: "Ghibli Museum", time: "10:00", neighborhood: "Mitaka, Tokyo", address: "Ghibli Museum Mitaka, Tokyo", categories: ["culture"], priority: "must", cost: "¥1,000", reservation: true, reservationDone: false, notes: "MUST book well in advance at ghibli-museum.jp. Timed entry. No photos inside." },
-        { id: "a17", name: "Kichijoji: Shopping & Cafés", time: "13:00", neighborhood: "Kichijoji, Tokyo", address: "Kichijoji Station, Tokyo", categories: ["shopping","food"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "Inokashira Park nearby. Great thrift/vintage shops. Lovely vibe." },
-        { id: "a18", name: "Lunch near Nakano", time: "15:00", neighborhood: "Nakano, Tokyo", address: "Nakano, Tokyo", categories: ["food"], priority: "optional", cost: "¥1,500", reservation: false, reservationDone: false, notes: "" },
-        { id: "a19", name: "Nakano Broadway", time: "15:30", neighborhood: "Nakano, Tokyo", address: "Nakano Broadway, Tokyo", categories: ["anime","shopping"], priority: "must", cost: "Varies", reservation: false, reservationDone: false, notes: "Vintage collectibles, rare figures, doujin. More authentic than Akihabara for some." }
-      ]
-    },
-    {
-      id: "d5", label: "Day 5", date: "2026-05-23", title: "Yokohama Day Trip",
-      activities: [
-        { id: "a20", name: "Train to Yokohama", time: "09:30", neighborhood: "Yokohama", address: "Yokohama Station, Yokohama", categories: ["travel"], priority: "must", cost: "¥700", reservation: false, reservationDone: false, notes: "~30 min from Shinjuku on the Shonan-Shinjuku Line." },
-        { id: "a21", name: "Chinatown", time: "10:30", neighborhood: "Chukagai, Yokohama", address: "Yokohama Chinatown, Yokohama", categories: ["food","culture"], priority: "must", cost: "¥2,000", reservation: false, reservationDone: false, notes: "Largest Chinatown in Japan. Dim sum, dumplings, street food." },
-        { id: "a22", name: "Gundam Factory Yokohama", time: "13:00", neighborhood: "Yamashita, Yokohama", address: "Gundam Factory Yokohama", categories: ["anime"], priority: "nice", cost: "¥1,650", reservation: false, reservationDone: false, notes: "Life-size moveable Gundam. Check if still running — worth it!" },
-        { id: "a23", name: "Yokohama Harbor Walk", time: "15:00", neighborhood: "Minato Mirai, Yokohama", address: "Minato Mirai, Yokohama", categories: ["culture"], priority: "nice", cost: "Free", reservation: false, reservationDone: false, notes: "Osanbashi Pier, waterfront views, Landmark Tower area." },
-        { id: "a24", name: "Return to Tokyo", time: "18:00", neighborhood: "Yokohama → Shinjuku", address: "Yokohama Station, Yokohama", categories: ["travel"], priority: "must", cost: "¥700", reservation: false, reservationDone: false, notes: "" }
-      ]
-    },
-    {
-      id: "d6", label: "Day 6", date: "2026-05-24", title: "Harajuku + Shinjuku",
-      activities: [
-        { id: "a25", name: "Harajuku / Takeshita Street", time: "10:30", neighborhood: "Harajuku, Tokyo", address: "Takeshita Street, Harajuku, Tokyo", categories: ["shopping","culture"], priority: "must", cost: "Varies", reservation: false, reservationDone: false, notes: "Crepe shops, quirky fashion, arcades. Go early before crowds." },
-        { id: "a26", name: "Omotesando Browsing", time: "12:00", neighborhood: "Omotesando, Tokyo", address: "Omotesando Hills, Tokyo", categories: ["shopping"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "High-end brands + architecture. Spiral building, Prada building." },
-        { id: "a27", name: "Lunch: Harajuku", time: "13:30", neighborhood: "Harajuku, Tokyo", address: "Gyukatsu Motomura Harajuku, Tokyo", categories: ["food"], priority: "optional", cost: "¥1,800", reservation: false, reservationDone: false, notes: "" },
-        { id: "a28", name: "Possible Shibuya Meetup with Friend", time: "15:00", neighborhood: "Shibuya, Tokyo", address: "Shibuya, Tokyo", categories: ["culture"], priority: "nice", cost: "Free", reservation: false, reservationDone: false, notes: "TBD — coordinate with friend." },
-        { id: "a29", name: "Shinjuku Golden Gai Evening", time: "20:00", neighborhood: "Shinjuku, Tokyo", address: "Golden Gai, Shinjuku, Tokyo", categories: ["nightlife"], priority: "must", cost: "¥2,000–4,000", reservation: false, reservationDone: false, notes: "Tiny atmospheric bars. Most bars are foreigner-friendly. Cover charges vary." },
-        { id: "a29b", name: "Live Music: Shibuya Club (Mickey's pick)", time: "22:30", neighborhood: "Shibuya, Tokyo", address: "Shibuya, Tokyo, Japan", categories: ["nightlife"], priority: "nice", cost: "¥2,000–3,000", reservation: false, reservationDone: false, notes: "Mickey wants to catch a live set here — TBD on venue/artist. Shibuya has great small clubs and live houses (Club Quattro, WWW, Circus Tokyo). Worth coordinating in advance." }
-      ]
-    },
-    {
-      id: "d7", label: "Day 7", date: "2026-05-25", title: "Asakusa + Skytree",
-      activities: [
-        { id: "a30", name: "Senso-ji Temple, Asakusa", time: "09:00", neighborhood: "Asakusa, Tokyo", address: "Senso-ji Temple, Asakusa, Tokyo", categories: ["culture"], priority: "must", cost: "Free", reservation: false, reservationDone: false, notes: "Go early. Nakamise-dori shopping street. Rickshaw rides available." },
-        { id: "a31", name: "Tokyo Skytree + Solamachi", time: "11:30", neighborhood: "Oshiage, Tokyo", address: "Tokyo Skytree, Oshiage, Tokyo", categories: ["culture","shopping"], priority: "must", cost: "¥2,100–3,400", reservation: false, reservationDone: false, notes: "Book tower entry online. Solamachi mall below has great food options." },
-        { id: "a32", name: "Possible Kirby Café", time: "14:00", neighborhood: "Tokyo Skytree Town", address: "Kirby Café Tokyo Skytree Town", categories: ["food","anime"], priority: "nice", cost: "¥4,000", reservation: true, reservationDone: false, notes: "RESERVATION REQUIRED — book at kirbycafe.jp very early. Inside Solamachi." },
-        { id: "a33", name: "Dinner near Asakusa", time: "19:00", neighborhood: "Asakusa, Tokyo", address: "Asakusa, Tokyo", categories: ["food"], priority: "must", cost: "¥2,500", reservation: false, reservationDone: false, notes: "Try Sometaro (okonomiyaki) or Daikokuya (tempura)." }
-      ]
-    },
-    {
-      id: "d8", label: "Day 8", date: "2026-05-26", title: "teamLab + Roppongi",
-      activities: [
-        { id: "a34", name: "teamLab Borderless", time: "10:00", neighborhood: "Azabudai Hills, Tokyo", address: "teamLab Borderless, Azabudai Hills, Tokyo", categories: ["culture"], priority: "must", cost: "¥3,200", reservation: true, reservationDone: false, notes: "MUST BOOK in advance at borderless.teamlab.art. New location at Azabudai Hills. Wear white or light colors!" },
-        { id: "a35", name: "Tokyo Tower", time: "14:30", neighborhood: "Shiba-koen, Tokyo", address: "Tokyo Tower, Minato, Tokyo", categories: ["culture"], priority: "nice", cost: "¥1,200", reservation: false, reservationDone: false, notes: "Close to teamLab area. Iconic view. Main Deck or Top Deck." },
-        { id: "a36", name: "Roppongi Area Evening", time: "19:00", neighborhood: "Roppongi, Tokyo", address: "Roppongi Hills, Tokyo", categories: ["nightlife"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "Clubs, rooftop bars. Mori Art Museum is open late." },
-        { id: "a37", name: "Dinner: Roppongi", time: "20:00", neighborhood: "Roppongi, Tokyo", address: "Roppongi, Tokyo", categories: ["food"], priority: "must", cost: "¥3,000", reservation: false, reservationDone: false, notes: "" }
-      ]
-    },
-    {
-      id: "d9", label: "Day 9", date: "2026-05-27", title: "Osaka",
-      activities: [
-        { id: "a38", name: "Shinkansen Tokyo → Osaka", time: "08:00", neighborhood: "Tokyo → Osaka", address: "Shin-Osaka Station, Osaka", categories: ["travel"], priority: "must", cost: "¥13,000–14,000", reservation: true, reservationDone: false, notes: "Book reserved seats on Nozomi. Shin-Osaka to Dotonbori ~30 min." },
-        { id: "a39", name: "Check in Osaka Hotel", time: "11:00", neighborhood: "Namba, Osaka", address: "Namba, Osaka", categories: ["rest"], priority: "must", cost: "¥10,000/night", reservation: true, reservationDone: false, notes: "Store bags if too early to check in; hotel usually holds luggage." },
-        { id: "a40", name: "Dotonbori", time: "13:00", neighborhood: "Dotonbori, Osaka", address: "Dotonbori, Namba, Osaka", categories: ["food","culture"], priority: "must", cost: "¥3,000+", reservation: false, reservationDone: false, notes: "Glico Man sign! Street food: takoyaki, taiyaki, kushikatsu. Insane energy." },
-        { id: "a41", name: "Den Den Town", time: "16:00", neighborhood: "Nipponbashi, Osaka", address: "Den Den Town, Nipponbashi, Osaka", categories: ["anime","shopping"], priority: "must", cost: "Varies", reservation: false, reservationDone: false, notes: "Osaka's Akihabara. Retro games, manga, figures. More relaxed crowd." },
-        { id: "a42", name: "Takoyaki Dinner", time: "19:00", neighborhood: "Dotonbori, Osaka", address: "Wanaka Takoyaki, Dotonbori, Osaka", categories: ["food"], priority: "must", cost: "¥800", reservation: false, reservationDone: false, notes: "Takoyaki is Osaka-born. Wanaka or Aizuya are classics." }
-      ]
-    },
-    {
-      id: "d10", label: "Day 10", date: "2026-05-28", title: "USJ",
-      activities: [
-        { id: "a43", name: "Universal Studios Japan — Super Nintendo World", time: "08:00", neighborhood: "Sakurajima, Osaka", address: "Universal Studios Japan, Osaka", categories: ["culture","anime"], priority: "must", cost: "¥8,600+", reservation: true, reservationDone: false, notes: "BOOK EARLY — usj.co.jp. Get Express Pass or Super Nintendo World Area pass. Arrive at open!" },
-        { id: "a44", name: "USJ — Harry Potter, Minion Park etc.", time: "12:00", neighborhood: "USJ, Osaka", address: "Universal Studios Japan, Osaka", categories: ["culture"], priority: "nice", cost: "Included", reservation: false, reservationDone: false, notes: "Butterbeer, Minion rides, Hollywood Dream roller coaster." },
-        { id: "a45", name: "Shinkansen Back to Tokyo Evening", time: "18:00", neighborhood: "Osaka → Tokyo", address: "Shin-Osaka Station, Osaka", categories: ["travel"], priority: "must", cost: "¥13,000", reservation: true, reservationDone: false, notes: "Book a Nozomi back. ~2h 30min. Get ekiben (station bento) for dinner." },
-        { id: "a46", name: "Light Dinner on Arrival", time: "21:30", neighborhood: "Shinjuku, Tokyo", address: "Shinjuku, Tokyo", categories: ["food"], priority: "optional", cost: "¥1,500", reservation: false, reservationDone: false, notes: "Convenience store or ramen near hotel." }
-      ]
-    },
-    {
-      id: "d11", label: "Day 11", date: "2026-05-29", title: "Tokyo Favorites & Farewell",
-      activities: [
-        { id: "a47", name: "Morning: Last Gifts & Favorites", time: "10:00", neighborhood: "Tokyo", address: "Shinjuku, Tokyo", categories: ["shopping"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "Don Quijote, Loft, or any missed spots. Hit the duty-free stores." },
-        { id: "a48", name: "Friend Hangout", time: "13:00", neighborhood: "Tokyo", address: "Tokyo, Japan", categories: ["culture"], priority: "nice", cost: "Varies", reservation: false, reservationDone: false, notes: "TBD — coordinate with local friend." },
-        { id: "a49", name: "Last Dinner — Somewhere Special", time: "19:00", neighborhood: "Tokyo", address: "Narisawa Restaurant, Tokyo", categories: ["food"], priority: "must", cost: "¥10,000+", reservation: true, reservationDone: false, notes: "Make it count! Splurge on a kaiseki or sushi omakase. Book well in advance." },
-        { id: "a50", name: "Pack for Departure", time: "22:00", neighborhood: "Hotel, Shinjuku", address: "Shinjuku, Tokyo", categories: ["rest"], priority: "must", cost: "Free", reservation: false, reservationDone: false, notes: "Weigh bags. Use luggage forwarding service (Yamato) if needed — can send bags to HND." }
-      ]
-    },
-    {
-      id: "d12", label: "Day 12", date: "2026-05-30", title: "Departure",
-      activities: [
-        { id: "a51", name: "Last-Minute Konbini Run", time: "07:00", neighborhood: "Shinjuku, Tokyo", address: "7-Eleven Shinjuku, Tokyo", categories: ["food"], priority: "must", cost: "¥1,000", reservation: false, reservationDone: false, notes: "Stock up on snacks for the flight: onigiri, chips, Pocky, drinks." },
-        { id: "a52", name: "Depart HND", time: "11:00", neighborhood: "Haneda, Tokyo", address: "Haneda Airport Tokyo International, Tokyo", categories: ["travel"], priority: "must", cost: "", reservation: true, reservationDone: false, notes: "Keikyu Line from Shinjuku area, or Airport Limousine Bus. Allow 2h before departure." }
-      ]
-    }
-  ]
+  tripName: "My Trip",
+  travelers: "",
+  origin: "",
+  destination: "",
+  startDate: "",
+  endDate: "",
+  days: []
 };
+
 
 // =============================================
 // STATE
@@ -1359,7 +1288,7 @@ const CATEGORIES = [
 // INIT
 // =============================================
 function init() {
-  const saved = localStorage.getItem('japan-2026-itinerary');
+  const saved = localStorage.getItem('itinerary-tool');
   if (saved) {
     try { itinerary = JSON.parse(saved); }
     catch(e) { itinerary = deepClone(SEED_DATA); }
@@ -1372,7 +1301,7 @@ function init() {
 function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
 
 function save() {
-  localStorage.setItem('japan-2026-itinerary', JSON.stringify(itinerary));
+  localStorage.setItem('itinerary-tool', JSON.stringify(itinerary));
 }
 
 // =============================================
@@ -2118,7 +2047,7 @@ const TRIP_CONFIG_DEFAULTS = {
 let tripConfig = TRIP_CONFIG_DEFAULTS;
 
 function loadTripConfig() {
-  const saved = localStorage.getItem('japan-trip-config');
+  const saved = localStorage.getItem('itinerary-trip-config');
   if (saved) {
     try { tripConfig = { ...TRIP_CONFIG_DEFAULTS, ...JSON.parse(saved) }; }
     catch(e) { tripConfig = { ...TRIP_CONFIG_DEFAULTS }; }
@@ -2129,7 +2058,7 @@ function loadTripConfig() {
 }
 
 function saveTripConfigToStorage() {
-  localStorage.setItem('japan-trip-config', JSON.stringify(tripConfig));
+  localStorage.setItem('itinerary-trip-config', JSON.stringify(tripConfig));
 }
 
 function applyTripConfig() {
@@ -2228,6 +2157,389 @@ function saveTripConfig() {
 // =============================================
 loadTripConfig();
 init();
+
+// =============================================
+// AIRPORT AUTOCOMPLETE
+// =============================================
+const AIRPORTS = [
+  // United States
+  {c:'ATL',city:'Atlanta',name:'Hartsfield-Jackson Atlanta Intl',country:'US'},
+  {c:'LAX',city:'Los Angeles',name:'Los Angeles Intl',country:'US'},
+  {c:'ORD',city:'Chicago',name:"O'Hare Intl",country:'US'},
+  {c:'DFW',city:'Dallas',name:'Dallas/Fort Worth Intl',country:'US'},
+  {c:'DEN',city:'Denver',name:'Denver Intl',country:'US'},
+  {c:'JFK',city:'New York',name:'John F. Kennedy Intl',country:'US'},
+  {c:'SFO',city:'San Francisco',name:'San Francisco Intl',country:'US'},
+  {c:'SEA',city:'Seattle',name:'Seattle-Tacoma Intl',country:'US'},
+  {c:'LAS',city:'Las Vegas',name:'Harry Reid Intl',country:'US'},
+  {c:'MCO',city:'Orlando',name:'Orlando Intl',country:'US'},
+  {c:'EWR',city:'Newark',name:'Newark Liberty Intl',country:'US'},
+  {c:'MIA',city:'Miami',name:'Miami Intl',country:'US'},
+  {c:'PHX',city:'Phoenix',name:'Phoenix Sky Harbor Intl',country:'US'},
+  {c:'IAH',city:'Houston',name:'George Bush Intercontinental',country:'US'},
+  {c:'HOU',city:'Houston',name:'William P. Hobby Airport',country:'US'},
+  {c:'BOS',city:'Boston',name:'Logan Intl',country:'US'},
+  {c:'MSP',city:'Minneapolis',name:'Minneapolis-St. Paul Intl',country:'US'},
+  {c:'DTW',city:'Detroit',name:'Detroit Metropolitan Wayne County',country:'US'},
+  {c:'FLL',city:'Fort Lauderdale',name:'Fort Lauderdale-Hollywood Intl',country:'US'},
+  {c:'PHL',city:'Philadelphia',name:'Philadelphia Intl',country:'US'},
+  {c:'LGA',city:'New York',name:'LaGuardia Airport',country:'US'},
+  {c:'BWI',city:'Baltimore',name:'Baltimore/Washington Intl',country:'US'},
+  {c:'MDW',city:'Chicago',name:'Chicago Midway Intl',country:'US'},
+  {c:'SLC',city:'Salt Lake City',name:'Salt Lake City Intl',country:'US'},
+  {c:'DCA',city:'Washington',name:'Ronald Reagan Washington National',country:'US'},
+  {c:'IAD',city:'Washington',name:'Washington Dulles Intl',country:'US'},
+  {c:'SAN',city:'San Diego',name:'San Diego Intl',country:'US'},
+  {c:'MSY',city:'New Orleans',name:'Louis Armstrong New Orleans Intl',country:'US'},
+  {c:'PDX',city:'Portland',name:'Portland Intl',country:'US'},
+  {c:'HNL',city:'Honolulu',name:'Daniel K. Inouye Intl',country:'US'},
+  {c:'AUS',city:'Austin',name:'Austin-Bergstrom Intl',country:'US'},
+  {c:'STL',city:'St. Louis',name:"St. Louis Lambert Intl",country:'US'},
+  {c:'BNA',city:'Nashville',name:'Nashville Intl',country:'US'},
+  {c:'CLE',city:'Cleveland',name:'Cleveland Hopkins Intl',country:'US'},
+  {c:'PIT',city:'Pittsburgh',name:'Pittsburgh Intl',country:'US'},
+  {c:'MEM',city:'Memphis',name:'Memphis Intl',country:'US'},
+  {c:'OAK',city:'Oakland',name:'Oakland Intl',country:'US'},
+  {c:'SJC',city:'San Jose',name:'Norman Y. Mineta San José Intl',country:'US'},
+  {c:'RDU',city:'Raleigh',name:'Raleigh-Durham Intl',country:'US'},
+  {c:'SAT',city:'San Antonio',name:'San Antonio Intl',country:'US'},
+  {c:'SMF',city:'Sacramento',name:'Sacramento Intl',country:'US'},
+  {c:'ANC',city:'Anchorage',name:'Ted Stevens Anchorage Intl',country:'US'},
+  {c:'BUR',city:'Burbank',name:'Hollywood Burbank Airport',country:'US'},
+  {c:'COS',city:'Colorado Springs',name:'Colorado Springs Airport',country:'US'},
+  {c:'ABQ',city:'Albuquerque',name:'Albuquerque Intl Sunport',country:'US'},
+  {c:'OKC',city:'Oklahoma City',name:'Will Rogers World Airport',country:'US'},
+  {c:'TUL',city:'Tulsa',name:'Tulsa Intl',country:'US'},
+  {c:'MCI',city:'Kansas City',name:'Kansas City Intl',country:'US'},
+  {c:'CVG',city:'Cincinnati',name:'Cincinnati/Northern Kentucky Intl',country:'US'},
+  {c:'IND',city:'Indianapolis',name:'Indianapolis Intl',country:'US'},
+  {c:'CMH',city:'Columbus',name:'John Glenn Columbus Intl',country:'US'},
+  {c:'JAX',city:'Jacksonville',name:'Jacksonville Intl',country:'US'},
+  {c:'TPA',city:'Tampa',name:'Tampa Intl',country:'US'},
+  {c:'RSW',city:'Fort Myers',name:'Southwest Florida Intl',country:'US'},
+  {c:'PBI',city:'West Palm Beach',name:'Palm Beach Intl',country:'US'},
+  {c:'ELP',city:'El Paso',name:'El Paso Intl',country:'US'},
+  {c:'LIT',city:'Little Rock',name:'Bill and Hillary Clinton Natl',country:'US'},
+  {c:'DAL',city:'Dallas',name:'Dallas Love Field',country:'US'},
+  {c:'HRL',city:'Harlingen',name:'Valley Intl',country:'US'},
+  {c:'DSM',city:'Des Moines',name:'Des Moines Intl',country:'US'},
+  {c:'MKE',city:'Milwaukee',name:'Milwaukee Mitchell Intl',country:'US'},
+  {c:'RIC',city:'Richmond',name:'Richmond Intl',country:'US'},
+  {c:'ORF',city:'Norfolk',name:'Norfolk Intl',country:'US'},
+  {c:'GSO',city:'Greensboro',name:'Piedmont Triad Intl',country:'US'},
+  {c:'CLT',city:'Charlotte',name:'Charlotte Douglas Intl',country:'US'},
+  {c:'ATW',city:'Green Bay',name:'Austin Straubel Intl',country:'US'},
+  {c:'GRR',city:'Grand Rapids',name:'Gerald R. Ford Intl',country:'US'},
+  {c:'TUS',city:'Tucson',name:'Tucson Intl',country:'US'},
+  {c:'OGG',city:'Maui',name:'Kahului Airport',country:'US'},
+  {c:'KOA',city:'Kailua-Kona',name:'Ellison Onizuka Kona Intl',country:'US'},
+  {c:'LIH',city:'Lihue',name:'Lihue Airport',country:'US'},
+  // Canada
+  {c:'YYZ',city:'Toronto',name:'Toronto Pearson Intl',country:'CA'},
+  {c:'YVR',city:'Vancouver',name:'Vancouver Intl',country:'CA'},
+  {c:'YUL',city:'Montreal',name:'Montréal-Trudeau Intl',country:'CA'},
+  {c:'YYC',city:'Calgary',name:'Calgary Intl',country:'CA'},
+  {c:'YEG',city:'Edmonton',name:'Edmonton Intl',country:'CA'},
+  {c:'YOW',city:'Ottawa',name:'Ottawa Macdonald-Cartier Intl',country:'CA'},
+  {c:'YHZ',city:'Halifax',name:'Halifax Stanfield Intl',country:'CA'},
+  {c:'YWG',city:'Winnipeg',name:'Winnipeg James Armstrong Richardson Intl',country:'CA'},
+  {c:'YXE',city:'Saskatoon',name:'Saskatoon John G. Diefenbaker Intl',country:'CA'},
+  // Mexico & Caribbean
+  {c:'MEX',city:'Mexico City',name:'Benito Juárez Intl',country:'MX'},
+  {c:'CUN',city:'Cancun',name:'Cancún Intl',country:'MX'},
+  {c:'GDL',city:'Guadalajara',name:'Miguel Hidalgo y Costilla Intl',country:'MX'},
+  {c:'MTY',city:'Monterrey',name:'General Mariano Escobedo Intl',country:'MX'},
+  {c:'TIJ',city:'Tijuana',name:'General Abelardo L. Rodríguez Intl',country:'MX'},
+  {c:'SJD',city:'Los Cabos',name:'Los Cabos Intl',country:'MX'},
+  {c:'PVR',city:'Puerto Vallarta',name:'Licenciado Gustavo Díaz Ordaz Intl',country:'MX'},
+  {c:'MID',city:'Mérida',name:'Manuel Crescencio Rejón Intl',country:'MX'},
+  {c:'OAX',city:'Oaxaca',name:'Xoxocotlán Intl',country:'MX'},
+  {c:'TLC',city:'Toluca',name:'Adolfo López Mateos Intl',country:'MX'},
+  {c:'NAS',city:'Nassau',name:'Lynden Pindling Intl',country:'BS'},
+  {c:'SDQ',city:'Santo Domingo',name:'Las Américas Intl',country:'DO'},
+  {c:'PUJ',city:'Punta Cana',name:'Punta Cana Intl',country:'DO'},
+  {c:'MBJ',city:'Montego Bay',name:'Sangster Intl',country:'JM'},
+  {c:'SJU',city:'San Juan',name:'Luis Muñoz Marín Intl',country:'PR'},
+  {c:'CZM',city:'Cozumel',name:'Cozumel Intl',country:'MX'},
+  // South America
+  {c:'GRU',city:'São Paulo',name:'Guarulhos Intl',country:'BR'},
+  {c:'GIG',city:'Rio de Janeiro',name:'Galeão Intl',country:'BR'},
+  {c:'EZE',city:'Buenos Aires',name:'Ministro Pistarini Intl (Ezeiza)',country:'AR'},
+  {c:'SCL',city:'Santiago',name:'Arturo Merino Benítez Intl',country:'CL'},
+  {c:'BOG',city:'Bogotá',name:'El Dorado Intl',country:'CO'},
+  {c:'LIM',city:'Lima',name:'Jorge Chávez Intl',country:'PE'},
+  {c:'PTY',city:'Panama City',name:'Tocumen Intl',country:'PA'},
+  {c:'UIO',city:'Quito',name:'Mariscal Sucre Intl',country:'EC'},
+  {c:'CCS',city:'Caracas',name:'Simón Bolívar Intl',country:'VE'},
+  {c:'MVD',city:'Montevideo',name:'Carrasco Intl',country:'UY'},
+  {c:'ASU',city:'Asunción',name:'Silvio Pettirossi Intl',country:'PY'},
+  {c:'VVI',city:'Santa Cruz',name:'Viru Viru Intl',country:'BO'},
+  // UK & Ireland
+  {c:'LHR',city:'London',name:'London Heathrow',country:'GB'},
+  {c:'LGW',city:'London',name:'London Gatwick',country:'GB'},
+  {c:'STN',city:'London',name:'London Stansted',country:'GB'},
+  {c:'LTN',city:'London',name:'London Luton',country:'GB'},
+  {c:'LCY',city:'London',name:'London City',country:'GB'},
+  {c:'MAN',city:'Manchester',name:'Manchester Airport',country:'GB'},
+  {c:'BHX',city:'Birmingham',name:'Birmingham Airport',country:'GB'},
+  {c:'EDI',city:'Edinburgh',name:'Edinburgh Airport',country:'GB'},
+  {c:'GLA',city:'Glasgow',name:'Glasgow Airport',country:'GB'},
+  {c:'DUB',city:'Dublin',name:'Dublin Airport',country:'IE'},
+  // Western Europe
+  {c:'CDG',city:'Paris',name:'Charles de Gaulle',country:'FR'},
+  {c:'ORY',city:'Paris',name:'Orly Airport',country:'FR'},
+  {c:'AMS',city:'Amsterdam',name:'Amsterdam Airport Schiphol',country:'NL'},
+  {c:'FRA',city:'Frankfurt',name:'Frankfurt Airport',country:'DE'},
+  {c:'MUC',city:'Munich',name:'Munich Airport',country:'DE'},
+  {c:'BER',city:'Berlin',name:'Berlin Brandenburg Airport',country:'DE'},
+  {c:'HAM',city:'Hamburg',name:'Hamburg Airport',country:'DE'},
+  {c:'DUS',city:'Düsseldorf',name:'Düsseldorf Airport',country:'DE'},
+  {c:'MAD',city:'Madrid',name:'Adolfo Suárez Madrid-Barajas',country:'ES'},
+  {c:'BCN',city:'Barcelona',name:'Josep Tarradellas Barcelona-El Prat',country:'ES'},
+  {c:'FCO',city:'Rome',name:'Leonardo da Vinci Intl (Fiumicino)',country:'IT'},
+  {c:'MXP',city:'Milan',name:'Milan Malpensa',country:'IT'},
+  {c:'LIN',city:'Milan',name:'Milan Linate',country:'IT'},
+  {c:'VCE',city:'Venice',name:'Marco Polo Airport',country:'IT'},
+  {c:'NAP',city:'Naples',name:'Naples Intl',country:'IT'},
+  {c:'ZRH',city:'Zurich',name:'Zurich Airport',country:'CH'},
+  {c:'GVA',city:'Geneva',name:'Geneva Airport',country:'CH'},
+  {c:'VIE',city:'Vienna',name:'Vienna Intl Airport',country:'AT'},
+  {c:'BRU',city:'Brussels',name:'Brussels Airport',country:'BE'},
+  {c:'LIS',city:'Lisbon',name:'Humberto Delgado Airport',country:'PT'},
+  {c:'OPO',city:'Porto',name:'Francisco Sá Carneiro Airport',country:'PT'},
+  {c:'ATH',city:'Athens',name:'Athens Intl Eleftherios Venizelos',country:'GR'},
+  {c:'SKG',city:'Thessaloniki',name:'Macedonia Intl',country:'GR'},
+  {c:'HER',city:'Heraklion',name:'Heraklion Intl Nikos Kazantzakis',country:'GR'},
+  {c:'CPH',city:'Copenhagen',name:'Copenhagen Airport',country:'DK'},
+  {c:'ARN',city:'Stockholm',name:'Stockholm Arlanda',country:'SE'},
+  {c:'OSL',city:'Oslo',name:'Oslo Airport Gardermoen',country:'NO'},
+  {c:'HEL',city:'Helsinki',name:'Helsinki-Vantaa Airport',country:'FI'},
+  {c:'WAW',city:'Warsaw',name:'Warsaw Chopin Airport',country:'PL'},
+  {c:'KRK',city:'Krakow',name:'John Paul II Intl',country:'PL'},
+  {c:'PRG',city:'Prague',name:'Václav Havel Airport Prague',country:'CZ'},
+  {c:'BUD',city:'Budapest',name:'Budapest Ferenc Liszt Intl',country:'HU'},
+  {c:'SXF',city:'Berlin',name:'Berlin Schönefeld',country:'DE'},
+  {c:'NCE',city:'Nice',name:'Nice Côte d\'Azur Airport',country:'FR'},
+  {c:'MRS',city:'Marseille',name:'Marseille Provence Airport',country:'FR'},
+  {c:'LYS',city:'Lyon',name:'Lyon-Saint-Exupéry Airport',country:'FR'},
+  {c:'TLS',city:'Toulouse',name:'Toulouse-Blagnac Airport',country:'FR'},
+  {c:'SVQ',city:'Seville',name:'Sevilla Airport',country:'ES'},
+  {c:'AGP',city:'Malaga',name:'Málaga-Costa del Sol Airport',country:'ES'},
+  {c:'IBZ',city:'Ibiza',name:'Ibiza Airport',country:'ES'},
+  {c:'PMI',city:'Palma',name:'Palma de Mallorca Airport',country:'ES'},
+  {c:'SBS',city:'Strasbourg',name:'Strasbourg Airport',country:'FR'},
+  {c:'SXB',city:'Strasbourg',name:'Strasbourg Airport',country:'FR'},
+  // Eastern Europe
+  {c:'OTP',city:'Bucharest',name:'Henri Coandă Intl',country:'RO'},
+  {c:'SOF',city:'Sofia',name:'Sofia Airport',country:'BG'},
+  {c:'BEG',city:'Belgrade',name:'Nikola Tesla Airport',country:'RS'},
+  {c:'ZAG',city:'Zagreb',name:'Zagreb Airport',country:'HR'},
+  {c:'DBV',city:'Dubrovnik',name:'Dubrovnik Airport',country:'HR'},
+  {c:'SPU',city:'Split',name:'Split Airport',country:'HR'},
+  {c:'LJU',city:'Ljubljana',name:'Ljubljana Jože Pučnik Airport',country:'SI'},
+  {c:'SKP',city:'Skopje',name:'Skopje Intl',country:'MK'},
+  {c:'TIA',city:'Tirana',name:'Tirana Intl Nënë Tereza',country:'AL'},
+  {c:'KIV',city:'Chisinau',name:'Chișinău Intl',country:'MD'},
+  {c:'RIX',city:'Riga',name:'Riga Intl',country:'LV'},
+  {c:'TLL',city:'Tallinn',name:'Tallinn Airport',country:'EE'},
+  {c:'VNO',city:'Vilnius',name:'Vilnius Airport',country:'LT'},
+  {c:'KBP',city:'Kyiv',name:'Boryspil Intl',country:'UA'},
+  // Russia & Central Asia
+  {c:'SVO',city:'Moscow',name:'Sheremetyevo Intl',country:'RU'},
+  {c:'DME',city:'Moscow',name:'Domodedovo Intl',country:'RU'},
+  {c:'LED',city:'St. Petersburg',name:'Pulkovo Airport',country:'RU'},
+  {c:'ALA',city:'Almaty',name:'Almaty Intl',country:'KZ'},
+  {c:'NQZ',city:'Nur-Sultan',name:'Nursultan Nazarbayev Intl',country:'KZ'},
+  // Middle East
+  {c:'DXB',city:'Dubai',name:'Dubai Intl',country:'AE'},
+  {c:'AUH',city:'Abu Dhabi',name:'Zayed Intl',country:'AE'},
+  {c:'DOH',city:'Doha',name:'Hamad Intl',country:'QA'},
+  {c:'RUH',city:'Riyadh',name:'King Khalid Intl',country:'SA'},
+  {c:'JED',city:'Jeddah',name:'King Abdulaziz Intl',country:'SA'},
+  {c:'KWI',city:'Kuwait City',name:'Kuwait Intl',country:'KW'},
+  {c:'BAH',city:'Bahrain',name:'Bahrain Intl',country:'BH'},
+  {c:'MCT',city:'Muscat',name:'Muscat Intl',country:'OM'},
+  {c:'AMM',city:'Amman',name:'Queen Alia Intl',country:'JO'},
+  {c:'BEY',city:'Beirut',name:'Beirut-Rafic Hariri Intl',country:'LB'},
+  {c:'TLV',city:'Tel Aviv',name:'Ben Gurion Intl',country:'IL'},
+  {c:'CAI',city:'Cairo',name:'Cairo Intl',country:'EG'},
+  {c:'IST',city:'Istanbul',name:'Istanbul Airport',country:'TR'},
+  {c:'SAW',city:'Istanbul',name:'Sabiha Gökçen Intl',country:'TR'},
+  {c:'ESB',city:'Ankara',name:'Ankara Esenboğa Intl',country:'TR'},
+  {c:'AYT',city:'Antalya',name:'Antalya Airport',country:'TR'},
+  {c:'IKA',city:'Tehran',name:'Imam Khomeini Intl',country:'IR'},
+  // Asia-Pacific (Japan)
+  {c:'HND',city:'Tokyo',name:'Haneda Airport',country:'JP'},
+  {c:'NRT',city:'Tokyo',name:'Narita Intl',country:'JP'},
+  {c:'KIX',city:'Osaka',name:'Kansai Intl',country:'JP'},
+  {c:'ITM',city:'Osaka',name:'Itami Airport',country:'JP'},
+  {c:'NGO',city:'Nagoya',name:'Chubu Centrair Intl',country:'JP'},
+  {c:'CTS',city:'Sapporo',name:'New Chitose Airport',country:'JP'},
+  {c:'FUK',city:'Fukuoka',name:'Fukuoka Airport',country:'JP'},
+  {c:'OKA',city:'Okinawa',name:'Naha Airport',country:'JP'},
+  {c:'HIJ',city:'Hiroshima',name:'Hiroshima Airport',country:'JP'},
+  // Asia-Pacific (Korea)
+  {c:'ICN',city:'Seoul',name:'Incheon Intl',country:'KR'},
+  {c:'GMP',city:'Seoul',name:'Gimpo Intl',country:'KR'},
+  {c:'PUS',city:'Busan',name:'Gimhae Intl',country:'KR'},
+  // Asia-Pacific (China)
+  {c:'PEK',city:'Beijing',name:'Beijing Capital Intl',country:'CN'},
+  {c:'PKX',city:'Beijing',name:'Beijing Daxing Intl',country:'CN'},
+  {c:'PVG',city:'Shanghai',name:'Shanghai Pudong Intl',country:'CN'},
+  {c:'SHA',city:'Shanghai',name:'Shanghai Hongqiao Intl',country:'CN'},
+  {c:'CAN',city:'Guangzhou',name:'Guangzhou Baiyun Intl',country:'CN'},
+  {c:'SZX',city:'Shenzhen',name:'Shenzhen Bao\'an Intl',country:'CN'},
+  {c:'CTU',city:'Chengdu',name:'Chengdu Tianfu Intl',country:'CN'},
+  {c:'HGH',city:'Hangzhou',name:'Hangzhou Xiaoshan Intl',country:'CN'},
+  {c:'XIY',city:'Xi\'an',name:'Xi\'an Xianyang Intl',country:'CN'},
+  {c:'CKG',city:'Chongqing',name:'Chongqing Jiangbei Intl',country:'CN'},
+  {c:'WUH',city:'Wuhan',name:'Wuhan Tianhe Intl',country:'CN'},
+  {c:'NKG',city:'Nanjing',name:'Nanjing Lukou Intl',country:'CN'},
+  // Hong Kong, Macau, Taiwan
+  {c:'HKG',city:'Hong Kong',name:'Hong Kong Intl',country:'HK'},
+  {c:'MFM',city:'Macau',name:'Macau Intl',country:'MO'},
+  {c:'TPE',city:'Taipei',name:'Taiwan Taoyuan Intl',country:'TW'},
+  {c:'TSA',city:'Taipei',name:'Taipei Songshan Airport',country:'TW'},
+  // Southeast Asia
+  {c:'BKK',city:'Bangkok',name:'Suvarnabhumi Airport',country:'TH'},
+  {c:'DMK',city:'Bangkok',name:'Don Mueang Intl',country:'TH'},
+  {c:'CNX',city:'Chiang Mai',name:'Chiang Mai Intl',country:'TH'},
+  {c:'HKT',city:'Phuket',name:'Phuket Intl',country:'TH'},
+  {c:'SIN',city:'Singapore',name:'Singapore Changi Airport',country:'SG'},
+  {c:'KUL',city:'Kuala Lumpur',name:'Kuala Lumpur Intl',country:'MY'},
+  {c:'CGK',city:'Jakarta',name:'Soekarno-Hatta Intl',country:'ID'},
+  {c:'DPS',city:'Bali',name:'Ngurah Rai Intl',country:'ID'},
+  {c:'SUB',city:'Surabaya',name:'Juanda Intl',country:'ID'},
+  {c:'MNL',city:'Manila',name:'Ninoy Aquino Intl',country:'PH'},
+  {c:'CEB',city:'Cebu',name:'Mactan-Cebu Intl',country:'PH'},
+  {c:'SGN',city:'Ho Chi Minh City',name:'Tan Son Nhat Intl',country:'VN'},
+  {c:'HAN',city:'Hanoi',name:'Noi Bai Intl',country:'VN'},
+  {c:'DAD',city:'Da Nang',name:'Da Nang Intl',country:'VN'},
+  {c:'REP',city:'Siem Reap',name:'Siem Reap-Angkor Intl',country:'KH'},
+  {c:'PNH',city:'Phnom Penh',name:'Phnom Penh Intl',country:'KH'},
+  {c:'VTE',city:'Vientiane',name:'Wattay Intl',country:'LA'},
+  {c:'RGN',city:'Yangon',name:'Yangon Intl',country:'MM'},
+  {c:'BWN',city:'Bandar Seri Begawan',name:'Brunei Intl',country:'BN'},
+  // South Asia
+  {c:'DEL',city:'New Delhi',name:'Indira Gandhi Intl',country:'IN'},
+  {c:'BOM',city:'Mumbai',name:'Chhatrapati Shivaji Maharaj Intl',country:'IN'},
+  {c:'BLR',city:'Bengaluru',name:'Kempegowda Intl',country:'IN'},
+  {c:'MAA',city:'Chennai',name:'Chennai Intl',country:'IN'},
+  {c:'CCU',city:'Kolkata',name:'Netaji Subhash Chandra Bose Intl',country:'IN'},
+  {c:'HYD',city:'Hyderabad',name:'Rajiv Gandhi Intl',country:'IN'},
+  {c:'CMB',city:'Colombo',name:'Bandaranaike Intl',country:'LK'},
+  {c:'DAC',city:'Dhaka',name:'Hazrat Shahjalal Intl',country:'BD'},
+  {c:'KTM',city:'Kathmandu',name:'Tribhuvan Intl',country:'NP'},
+  {c:'KHI',city:'Karachi',name:'Jinnah Intl',country:'PK'},
+  {c:'LHE',city:'Lahore',name:'Allama Iqbal Intl',country:'PK'},
+  {c:'ISB',city:'Islamabad',name:'Islamabad Intl',country:'PK'},
+  // Central Asia
+  {c:'TAS',city:'Tashkent',name:'Tashkent Intl',country:'UZ'},
+  {c:'TBZ',city:'Tabriz',name:'Tabriz Intl',country:'IR'},
+  // Africa
+  {c:'JNB',city:'Johannesburg',name:'O.R. Tambo Intl',country:'ZA'},
+  {c:'CPT',city:'Cape Town',name:'Cape Town Intl',country:'ZA'},
+  {c:'DUR',city:'Durban',name:'King Shaka Intl',country:'ZA'},
+  {c:'NBO',city:'Nairobi',name:'Jomo Kenyatta Intl',country:'KE'},
+  {c:'ADD',city:'Addis Ababa',name:'Bole Intl',country:'ET'},
+  {c:'LOS',city:'Lagos',name:'Murtala Muhammed Intl',country:'NG'},
+  {c:'ABV',city:'Abuja',name:'Nnamdi Azikiwe Intl',country:'NG'},
+  {c:'ACC',city:'Accra',name:'Kotoka Intl',country:'GH'},
+  {c:'DKR',city:'Dakar',name:'Blaise Diagne Intl',country:'SN'},
+  {c:'CMN',city:'Casablanca',name:'Mohammed V Intl',country:'MA'},
+  {c:'RAK',city:'Marrakesh',name:'Marrakesh Menara Airport',country:'MA'},
+  {c:'ALG',city:'Algiers',name:'Houari Boumediene Airport',country:'DZ'},
+  {c:'TUN',city:'Tunis',name:'Tunis-Carthage Intl',country:'TN'},
+  {c:'TRN',city:'Tripoli',name:'Mitiga Intl',country:'LY'},
+  {c:'DAR',city:'Dar es Salaam',name:'Julius Nyerere Intl',country:'TZ'},
+  {c:'EBB',city:'Kampala',name:'Entebbe Intl',country:'UG'},
+  {c:'KGL',city:'Kigali',name:'Kigali Intl',country:'RW'},
+  {c:'LUN',city:'Lusaka',name:'Kenneth Kaunda Intl',country:'ZM'},
+  {c:'HRE',city:'Harare',name:'Robert Gabriel Mugabe Intl',country:'ZW'},
+  {c:'MPM',city:'Maputo',name:'Maputo Intl',country:'MZ'},
+  {c:'WDH',city:'Windhoek',name:'Hosea Kutako Intl',country:'NA'},
+  {c:'GBE',city:'Gaborone',name:'Sir Seretse Khama Intl',country:'BW'},
+  {c:'MBA',city:'Mombasa',name:'Moi Intl',country:'KE'},
+  // Oceania
+  {c:'SYD',city:'Sydney',name:'Sydney Airport (Kingsford Smith)',country:'AU'},
+  {c:'MEL',city:'Melbourne',name:'Melbourne Airport (Tullamarine)',country:'AU'},
+  {c:'BNE',city:'Brisbane',name:'Brisbane Airport',country:'AU'},
+  {c:'PER',city:'Perth',name:'Perth Airport',country:'AU'},
+  {c:'ADL',city:'Adelaide',name:'Adelaide Airport',country:'AU'},
+  {c:'OOL',city:'Gold Coast',name:'Gold Coast Airport',country:'AU'},
+  {c:'CNS',city:'Cairns',name:'Cairns Airport',country:'AU'},
+  {c:'AKL',city:'Auckland',name:'Auckland Airport',country:'NZ'},
+  {c:'CHC',city:'Christchurch',name:'Christchurch Airport',country:'NZ'},
+  {c:'WLG',city:'Wellington',name:'Wellington Airport',country:'NZ'},
+  {c:'NAN',city:'Nadi',name:'Nadi Intl',country:'FJ'},
+  {c:'PPT',city:'Papeete',name:'Faa\'a Intl',country:'PF'},
+];
+
+let acFocusIndex = { from: -1, to: -1 };
+let acResults = { from: [], to: [] };
+
+function acInput(side, raw) {
+  const q = raw.toUpperCase().trim();
+  if (q.length < 1) { acClose(side); return; }
+  const matches = AIRPORTS.filter(a =>
+    a.c.startsWith(q) ||
+    a.city.toUpperCase().includes(q) ||
+    a.name.toUpperCase().includes(q) ||
+    a.country.toUpperCase() === q
+  ).slice(0, 10);
+  acResults[side] = matches;
+  acFocusIndex[side] = -1;
+  const drop = document.getElementById(side === 'from' ? 'acDropFrom' : 'acDropTo');
+  if (!matches.length) { acClose(side); return; }
+  drop.innerHTML = matches.map((a, i) =>
+    `<div class="airport-ac-option" data-i="${i}" onmousedown="acSelect('${side}',${i})">
+      <span class="airport-ac-code">${a.c}</span>
+      <span class="airport-ac-info"><span class="airport-ac-city">${a.city}</span>, ${a.country} · <span style="font-size:11px">${a.name}</span></span>
+    </div>`
+  ).join('');
+  drop.classList.add('open');
+}
+
+function acSelect(side, i) {
+  const a = acResults[side][i];
+  if (!a) return;
+  const codeEl = document.getElementById(side === 'from' ? 'cfgFromCode' : 'cfgToCode');
+  const cityEl = document.getElementById(side === 'from' ? 'cfgFromCity' : 'cfgToCity');
+  codeEl.value = a.c;
+  cityEl.value = a.city;
+  acClose(side);
+}
+
+function acClose(side) {
+  const drop = document.getElementById(side === 'from' ? 'acDropFrom' : 'acDropTo');
+  drop.classList.remove('open');
+  drop.innerHTML = '';
+  acFocusIndex[side] = -1;
+}
+
+function acBlur(side) {
+  setTimeout(() => acClose(side), 150);
+}
+
+function acKey(e, side) {
+  const drop = document.getElementById(side === 'from' ? 'acDropFrom' : 'acDropTo');
+  const opts = drop.querySelectorAll('.airport-ac-option');
+  if (!opts.length) return;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    acFocusIndex[side] = Math.min(acFocusIndex[side] + 1, opts.length - 1);
+    opts.forEach((o, i) => o.classList.toggle('focused', i === acFocusIndex[side]));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    acFocusIndex[side] = Math.max(acFocusIndex[side] - 1, 0);
+    opts.forEach((o, i) => o.classList.toggle('focused', i === acFocusIndex[side]));
+  } else if (e.key === 'Enter' && acFocusIndex[side] >= 0) {
+    e.preventDefault();
+    acSelect(side, acFocusIndex[side]);
+  } else if (e.key === 'Escape') {
+    acClose(side);
+  }
+}
 </script>
 </body>
 </html>

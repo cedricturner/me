@@ -1,0 +1,65 @@
+{
+  "tripName": "My Trip",
+  "travelers": "Cedric",
+  "origin": "AUS",
+  "destination": "HND",
+  "startDate": "2026-05-01",
+  "endDate": "2026-05-10",
+  "days": [
+    {
+      "id": "d1",
+      "label": "Day 1",
+      "date": "2026-05-01",
+      "title": "Arrive",
+      "activities": [
+        {
+          "id": "a1",
+          "name": "Flight",
+          "time": "08:00",
+          "neighborhood": "",
+          "address": "",
+          "categories": ["travel"],
+          "priority": "must",
+          "cost": "",
+          "reservation": true,
+          "reservationDone": false,
+          "notes": ""
+        },
+        {
+          "id": "a2",
+          "name": "Check in",
+          "time": "18:00",
+          "neighborhood": "",
+          "address": "",
+          "categories": ["rest"],
+          "priority": "must",
+          "cost": "",
+          "reservation": true,
+          "reservationDone": false,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "label": "Day 2",
+      "date": "2026-05-02",
+      "title": "Day 2",
+      "activities": [
+        {
+          "id": "a3",
+          "name": "Activity",
+          "time": "10:00",
+          "neighborhood": "",
+          "address": "",
+          "categories": ["culture"],
+          "priority": "must",
+          "cost": "",
+          "reservation": false,
+          "reservationDone": false,
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}
