@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>data systems / Cedric Turner II</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text: #1a1a1a;
+    --muted: #777;
+    --faint: #aaa;
+    --bg: #faf9f7;
+    --rule: #e4e0da;
+    --callout-bg: #f2efeb;
+    --callout-border: #c8c3bc;
+    --table-border: #dedad4;
+    --table-head-bg: #eceae5;
+    --flow-bg: #ececea;
+    --flow-box-bg: #ffffff;
+    --flow-box-border: #ccc9c3;
+    --flow-arrow: #999;
+    --crumb-here-bg: #e4e1dc;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    padding: 0 24px 120px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* nav */
+  .back-nav {
+    padding: 40px 0 52px;
+    font-size: 13px;
+  }
+  .back-nav a { color: var(--muted); text-decoration: none; }
+  .back-nav a:hover { color: var(--text); }
+
+  /* hero */
+  .hero {
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 72px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  .hero .intro {
+    color: #505050;
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 660px;
+  }
+
+  /* section */
+  .section { margin-bottom: 84px; }
+
+  .section-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .section-num {
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* mini breadcrumb */
+  .crumb {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .crumb::-webkit-scrollbar { display: none; }
+
+  .crumb-node {
+    font-size: 11px;
+    color: var(--faint);
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 2px 0;
+  }
+  .crumb-node.here {
+    color: var(--text);
+    font-weight: 700;
+    background: var(--crumb-here-bg);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .crumb-arr {
+    font-size: 11px;
+    color: var(--faint);
+    padding: 0 5px;
+    flex-shrink: 0;
+  }
+
+  .section h2 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+
+  .section p {
+    color: #454545;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    max-width: 660px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* sub-section (nested concept inside a stage) */
+  .sub {
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+  .sub-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 8px;
+  }
+  .sub h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .sub p {
+    color: #454545;
+    font-size: 14.5px;
+    line-height: 1.75;
+    margin-bottom: 14px;
+    max-width: 660px;
+  }
+  .sub p:last-child { margin-bottom: 0; }
+
+  /* callout */
+  .callout {
+    background: var(--callout-bg);
+    border-left: 3px solid var(--callout-border);
+    padding: 14px 18px;
+    margin-top: 22px;
+    border-radius: 0 4px 4px 0;
+    max-width: 660px;
+  }
+  .callout p {
+    font-size: 14px;
+    color: #505050;
+    margin: 0;
+    line-height: 1.75;
+  }
+
+  /* ── HERO FLOW ─────────────────────────────── */
+  .hero-flow-wrap {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin: 32px 0;
+  }
+  .hero-flow-wrap::-webkit-scrollbar { display: none; }
+
+  .hero-flow {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    min-width: min-content;
+    padding: 20px 20px;
+    background: var(--flow-bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+  }
+
+  .hf-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .hf-box {
+    background: var(--flow-box-bg);
+    border: 1px solid var(--flow-box-border);
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .hf-sub {
+    font-size: 10px;
+    color: var(--faint);
+    text-align: center;
+    line-height: 1.4;
+    max-width: 80px;
+  }
+  .hf-arr {
+    font-size: 15px;
+    color: var(--flow-arrow);
+    padding: 0 8px;
+    flex-shrink: 0;
+    margin-top: 12px;
+  }
+
+  /* ── SYSTEM MAP ─────────────────────────────── */
+  .sysmap-wrap {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin: 28px 0;
+  }
+  .sysmap-wrap::-webkit-scrollbar { display: none; }
+
+  .sysmap {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    min-width: min-content;
+    padding: 24px;
+    background: var(--flow-bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+  }
+
+  .sm-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .sm-box {
+    background: var(--flow-box-bg);
+    border: 1px solid var(--flow-box-border);
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    text-align: center;
+  }
+  .sm-sub {
+    font-size: 10px;
+    color: var(--faint);
+    text-align: center;
+    line-height: 1.4;
+    max-width: 100px;
+  }
+  .sm-arr {
+    font-size: 15px;
+    color: var(--flow-arrow);
+    padding: 0 10px;
+    flex-shrink: 0;
+    margin-top: 14px;
+  }
+
+  /* ── INLINE FLOW (smaller, used in sub-sections) */
+  .flow-wrap {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin: 18px 0;
+  }
+  .flow-wrap::-webkit-scrollbar { display: none; }
+
+  .flow {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    min-width: min-content;
+    padding: 14px 16px;
+    background: var(--flow-bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+  .f-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .f-box {
+    background: var(--flow-box-bg);
+    border: 1px solid var(--flow-box-border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .f-sub {
+    font-size: 10px;
+    color: var(--faint);
+    text-align: center;
+    line-height: 1.35;
+    max-width: 80px;
+  }
+  .f-arr {
+    font-size: 14px;
+    color: var(--flow-arrow);
+    padding: 0 7px;
+    flex-shrink: 0;
+    margin-top: 10px;
+  }
+
+  /* tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 18px 0;
+    max-width: 660px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--table-head-bg);
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    border: 1px solid var(--table-border);
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid var(--table-border);
+    color: #454545;
+    line-height: 1.6;
+    vertical-align: top;
+  }
+  td:first-child {
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* two-col cards */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+    max-width: 660px;
+  }
+  .card {
+    background: var(--callout-bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 7px;
+  }
+  .card p {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.65;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* footer */
+  .footer-note {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  @media (max-width: 560px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="back-nav"><a href="./">← back</a></div>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <div class="hero">
+    <h1>data systems</h1>
+    <div class="subtitle">notes on data, AI, and the shape of modern systems</div>
+    <p class="intro">
+      I'm working through how modern data systems fit together. Not as a glossary of tools, not as a tutorial. More like a map. Every system in this space exists to solve a specific part of the same problem, and understanding the problem first makes every piece easier to place.
+    </p>
+
+    <div class="hero-flow-wrap">
+      <div class="hero-flow">
+        <div class="hf-node">
+          <div class="hf-box">something happens</div>
+          <div class="hf-sub">an event in the real world</div>
+        </div>
+        <div class="hf-arr">→</div>
+        <div class="hf-node">
+          <div class="hf-box">gets recorded</div>
+          <div class="hf-sub">a system captures it</div>
+        </div>
+        <div class="hf-arr">→</div>
+        <div class="hf-node">
+          <div class="hf-box">lives somewhere</div>
+          <div class="hf-sub">stored and held</div>
+        </div>
+        <div class="hf-arr">→</div>
+        <div class="hf-node">
+          <div class="hf-box">becomes useful</div>
+          <div class="hf-sub">cleaned, shaped, defined</div>
+        </div>
+        <div class="hf-arr">→</div>
+        <div class="hf-node">
+          <div class="hf-box">reaches someone</div>
+          <div class="hf-sub">a person or system</div>
+        </div>
+        <div class="hf-arr">→</div>
+        <div class="hf-node">
+          <div class="hf-box">a decision gets made</div>
+          <div class="hf-sub">the whole point</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="intro">
+      Everything below is just a closer look at one part of that chain.
+    </p>
+  </div>
+
+
+  <!-- ── 01: THE FULL SYSTEM ──────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta"><span class="section-num">01</span></div>
+    <h2>the full system</h2>
+    <p>
+      Every data system, no matter how many tools it involves, maps onto four stages. Data originates somewhere, lands somewhere, gets shaped into something trustworthy, and then gets used.
+    </p>
+
+    <div class="sysmap-wrap">
+      <div class="sysmap">
+        <div class="sm-node">
+          <div class="sm-box">sources</div>
+          <div class="sm-sub">where data originates</div>
+        </div>
+        <div class="sm-arr">→</div>
+        <div class="sm-node">
+          <div class="sm-box">storage</div>
+          <div class="sm-sub">where it lives and how it gets processed</div>
+        </div>
+        <div class="sm-arr">→</div>
+        <div class="sm-node">
+          <div class="sm-box">transformation</div>
+          <div class="sm-sub">how raw becomes trustworthy and defined</div>
+        </div>
+        <div class="sm-arr">→</div>
+        <div class="sm-node">
+          <div class="sm-box">consumption</div>
+          <div class="sm-sub">how data reaches people and systems</div>
+        </div>
+        <div class="sm-arr">→</div>
+        <div class="sm-node">
+          <div class="sm-box">decision</div>
+          <div class="sm-sub">the goal</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The sections below walk through each stage. Within each one, I try to explain what it is doing, why it exists, and where the interesting tradeoffs show up.
+    </p>
+    <p>
+      The tools change constantly. The four stages do not.
+    </p>
+  </div>
+
+
+  <!-- ── 02: SOURCES ──────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta">
+      <span class="section-num">02</span>
+      <div class="crumb">
+        <span class="crumb-node here">sources</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">storage</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">transformation</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">consumption</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">decision</span>
+      </div>
+    </div>
+    <h2>sources</h2>
+    <p>
+      Before any analysis, any dashboard, any AI answer, something has to happen in the real world and get recorded somewhere. Sources are the origin point. They are the systems where data first exists.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>source type</th><th>what it is</th><th>examples</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>operational databases</td>
+            <td>live databases behind products and services</td>
+            <td>Postgres, MySQL backing a web app or SaaS product</td>
+          </tr>
+          <tr>
+            <td>event streams</td>
+            <td>continuous records of actions as they happen</td>
+            <td>user clicks, page views, server logs, IoT sensors</td>
+          </tr>
+          <tr>
+            <td>third-party platforms</td>
+            <td>data from external systems via APIs or connectors</td>
+            <td>Salesforce, Stripe, Google Ads, HubSpot</td>
+          </tr>
+          <tr>
+            <td>files and batch exports</td>
+            <td>manual or scheduled data drops</td>
+            <td>CSV exports, FTP transfers, flat files from vendors</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      This is where most of the messiness starts. Each source produces data in its own shape, at its own speed, with its own guarantees about reliability. A lot of data engineering is just dealing with that inconsistency before anything useful can happen downstream.
+    </p>
+
+    <!-- SUB: operational systems (OLTP) -->
+    <div class="sub">
+      <div class="sub-label">within sources</div>
+      <h3>operational systems (OLTP)</h3>
+      <p>
+        The most common source is an operational database: the live system running a business or product. These are often called OLTP systems, short for online transaction processing.
+      </p>
+      <p>
+        OLTP systems are built for one thing: handling many small operations very fast, without making mistakes. When a customer places an order, a payment clears, or a record gets updated, that goes through an OLTP system. Latency matters here in a way it does not anywhere else in the stack. A slow checkout is a broken experience.
+      </p>
+      <p>
+        OLTP databases are optimized for writing and looking up individual records quickly, not for running large analytical queries across millions of rows. That is why data almost always has to move out of the operational system before any serious analysis can happen.
+      </p>
+    </div>
+
+    <!-- SUB: batch vs streaming -->
+    <div class="sub">
+      <div class="sub-label">within sources</div>
+      <h3>batch vs streaming</h3>
+      <p>
+        Data leaves its source in two fundamentally different modes, and the rest of the system has to be designed around whichever one you are working with.
+      </p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">batch</div>
+          <p>data is collected over a period of time and moved all at once. a nightly export, a file drop, a scheduled pipeline run. simpler to build, adds latency between when something happens and when the data is available.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">streaming</div>
+          <p>data is processed as it arrives, event by event. lower latency, closer to real time. more complex to build and operate. tools like Kafka, Kinesis, and Flink sit in this layer.</p>
+        </div>
+      </div>
+      <p>
+        Most organizations run both. Streaming for the things that need to be current. Batch for everything where a few hours of lag is fine.
+      </p>
+    </div>
+
+    <div class="callout">
+      <p>The quality of everything downstream depends on what comes in here. A well-understood, clean source makes every stage after it easier. A messy or undocumented source creates problems that compound at every step.</p>
+    </div>
+  </div>
+
+
+  <!-- ── 03: STORAGE ──────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta">
+      <span class="section-num">03</span>
+      <div class="crumb">
+        <span class="crumb-node">sources</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node here">storage</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">transformation</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">consumption</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">decision</span>
+      </div>
+    </div>
+    <h2>storage</h2>
+    <p>
+      Once data leaves a source, it has to live somewhere. Storage is where data is held at rest. It does not do anything by itself. It just holds data until something needs it.
+    </p>
+    <p>
+      The analogy that makes sense to me: storage is the boxes in a warehouse. The boxes hold the contents. They do not sort themselves, answer questions, or do any work. That is what compute is for.
+    </p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">storage</div>
+        <p>where data lives. boxes in a warehouse. holds records at rest. cheap to keep, designed to persist.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">compute</div>
+        <p>what does the work. workers reading the boxes. reads data, runs queries, aggregates results. active while running, costs money while it runs.</p>
+      </div>
+    </div>
+
+    <p>
+      Separating storage from compute is one of the ideas that makes modern cloud data architecture work. When they are decoupled, you can scale compute up when you need fast answers and scale it back down when you do not, without touching the stored data. Multiple teams can also run different compute engines against the same storage.
+    </p>
+
+    <!-- SUB: formats and storage types -->
+    <div class="sub">
+      <div class="sub-label">within storage</div>
+      <h3>storage formats and where data lands</h3>
+      <p>
+        Not all storage is the same. The format data is stored in determines what kinds of queries are fast and what kinds are slow.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>storage type</th><th>what it is</th><th>optimized for</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>object storage</td>
+              <td>flat files in a cloud bucket (S3, GCS, Azure Blob)</td>
+              <td>cheap long-term storage, raw data lakes, parquet files</td>
+            </tr>
+            <tr>
+              <td>row-oriented databases</td>
+              <td>records stored row by row</td>
+              <td>transactional reads and writes, operational systems</td>
+            </tr>
+            <tr>
+              <td>columnar storage</td>
+              <td>records stored column by column</td>
+              <td>analytical queries that scan many rows but few columns</td>
+            </tr>
+            <tr>
+              <td>vector stores</td>
+              <td>stores embeddings that represent meaning numerically</td>
+              <td>semantic search, AI retrieval (RAG)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Columnar storage is significantly faster for analytical queries because you only read the columns a query touches. Row storage is faster for transactional work because you usually need a complete record all at once.
+      </p>
+    </div>
+
+    <!-- SUB: data warehouse / lake / lakehouse -->
+    <div class="sub">
+      <div class="sub-label">within storage</div>
+      <h3>data warehouse, data lake, and lakehouse</h3>
+      <p>
+        Three terms that come up constantly, each representing a different answer to the question of where analytical data should live.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>approach</th><th>what it is</th><th>tradeoff</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>data warehouse</td>
+              <td>a structured analytical database with managed storage and compute (Snowflake, BigQuery, Redshift)</td>
+              <td>easy to query, governed, more expensive, less flexible with raw or semi-structured data</td>
+            </tr>
+            <tr>
+              <td>data lake</td>
+              <td>raw files in object storage, often parquet or JSON, with compute run separately on top</td>
+              <td>cheap and flexible, but querying it requires more engineering work and discipline</td>
+            </tr>
+            <tr>
+              <td>lakehouse</td>
+              <td>combines lake storage with warehouse-style query capabilities (Delta Lake, Apache Iceberg)</td>
+              <td>tries to get the best of both, still a more complex architecture to operate</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SUB: OLAP -->
+    <div class="sub">
+      <div class="sub-label">within storage</div>
+      <h3>analytical systems (OLAP)</h3>
+      <p>
+        OLAP stands for online analytical processing. Where OLTP (in sources) is optimized for writing many small records quickly, OLAP is optimized for reading large amounts of data to answer analytical questions.
+      </p>
+      <p>
+        This is where data warehouses live. When an analyst runs a query to calculate revenue by region for the last quarter, that is OLAP work. Large scans, aggregations across millions of rows, slower but deeper.
+      </p>
+      <p>
+        Most analytical data flows from OLTP to OLAP before it can be used. The OLTP system runs the business. The OLAP system helps understand it. They need very different things from the infrastructure underneath them.
+      </p>
+    </div>
+
+    <!-- SUB: types of databases -->
+    <div class="sub">
+      <div class="sub-label">within storage</div>
+      <h3>types of databases</h3>
+      <p>
+        Not all databases are trying to do the same thing. The category a database sits in determines what it is fast at, what it is bad at, and where it belongs in the system.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>category</th><th>what it optimizes for</th><th>examples</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>transactional (OLTP)</td>
+              <td>fast individual writes and lookups. row-oriented. built to run applications.</td>
+              <td>Postgres, MySQL, SQLite</td>
+            </tr>
+            <tr>
+              <td>cloud data warehouse</td>
+              <td>large-scale analytical queries across many rows. managed infrastructure, scalable compute.</td>
+              <td>Snowflake, BigQuery, Redshift</td>
+            </tr>
+            <tr>
+              <td>fast analytical (OLAP)</td>
+              <td>extremely fast columnar queries, often at real-time or near-real-time scale. self-hosted or cloud.</td>
+              <td>ClickHouse, Apache Druid, StarRocks</td>
+            </tr>
+            <tr>
+              <td>embedded / in-process</td>
+              <td>runs inside your application or script, no server required. queries local files directly.</td>
+              <td>DuckDB, SQLite</td>
+            </tr>
+            <tr>
+              <td>object storage</td>
+              <td>cheap, durable file storage. not a database itself, but where raw data often lives before it gets queried.</td>
+              <td>S3, GCS, Azure Blob (parquet, JSON, CSV files)</td>
+            </tr>
+            <tr>
+              <td>vector databases</td>
+              <td>stores embeddings and retrieves semantically similar records. built for AI and search use cases.</td>
+              <td>Pinecone, Weaviate, pgvector (Postgres extension)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The reason this landscape is fragmented is that each category makes a different tradeoff. A transactional database that is also fast at analytical queries would require compromises that make both worse. Most organizations end up using more than one type, moving data between them depending on what they need to do with it.
+      </p>
+    </div>
+
+    <!-- SUB: cloud offerings -->
+    <div class="sub">
+      <div class="sub-label">within storage</div>
+      <h3>cloud offerings on top</h3>
+      <p>
+        Many of these database categories have a managed cloud version that sits on top of the core engine. The pattern is consistent: take something that is powerful but requires infrastructure to run, and wrap it in a service that handles the operational work for you.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>base engine</th><th>cloud offering</th><th>what the cloud layer adds</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DuckDB</td>
+              <td>MotherDuck</td>
+              <td>shared access, persistence, collaboration, and cloud storage without giving up local speed</td>
+            </tr>
+            <tr>
+              <td>ClickHouse</td>
+              <td>ClickHouse Cloud</td>
+              <td>managed infrastructure, autoscaling, backups, and a web UI on top of the same fast engine</td>
+            </tr>
+            <tr>
+              <td>Postgres</td>
+              <td>Neon, Supabase, AlloyDB</td>
+              <td>serverless scaling, branching, built-in auth and APIs, removing the need to manage a database server</td>
+            </tr>
+            <tr>
+              <td>open table formats (Iceberg, Delta)</td>
+              <td>Databricks, Snowflake, AWS Glue</td>
+              <td>query engines and governance layers on top of files that live in your own object storage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        What cloud offerings typically add across the board: managed infrastructure so you do not run servers, autoscaling so you are not paying for idle capacity, access controls and audit logging, web UIs for collaboration, and pay-as-you-go pricing. The core query engine stays the same. The operational burden disappears.
+      </p>
+      <div class="callout">
+        <p>The tradeoff with managed cloud offerings is usually cost and control. You give up some flexibility and pay a premium over running it yourself, in exchange for not having to think about infrastructure. For most teams, that trade is worth it until the scale or specific requirements make self-hosting the better answer.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 04: TRANSFORMATION ───────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta">
+      <span class="section-num">04</span>
+      <div class="crumb">
+        <span class="crumb-node">sources</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">storage</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node here">transformation</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">consumption</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">decision</span>
+      </div>
+    </div>
+    <h2>transformation</h2>
+    <p>
+      Raw data from sources is almost never ready to answer a question directly. It is inconsistent across systems, missing context, and carries no shared definitions. Transformation is the stage where raw data gets shaped into something a person or system can actually trust.
+    </p>
+    <p>
+      This is also the stage with the most moving parts. It involves moving data between systems, modeling it, scheduling the pipelines that keep everything current, and building in the quality checks that make downstream consumers confident in what they are seeing.
+    </p>
+
+    <!-- SUB: ingestion -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>ingestion</h3>
+      <p>
+        Before any transformation can happen, data has to move from its source into the storage layer. That movement is called ingestion. It sounds simple but is where a lot of operational complexity lives: handling API rate limits, schema changes, deduplication, and keeping data fresh.
+      </p>
+      <p>
+        Tools like Fivetran, Airbyte, and Stitch are built to manage this. They connect to hundreds of source systems and land data into a warehouse or lake on a schedule, without requiring custom engineering for every connector.
+      </p>
+    </div>
+
+    <!-- SUB: modeling -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>modeling</h3>
+      <p>
+        Once raw data is in storage, it needs to be structured into something reliable. Modeling is the process of building layered SQL transformations that take messy source tables and produce clean, documented, tested outputs.
+      </p>
+
+      <div class="flow-wrap">
+        <div class="flow">
+          <div class="f-node">
+            <div class="f-box">raw source</div>
+            <div class="f-sub">exactly as it landed</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">staging</div>
+            <div class="f-sub">cleaned and renamed</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">intermediate</div>
+            <div class="f-sub">joined and enriched</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">mart</div>
+            <div class="f-sub">defined, tested, ready</div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        The output of modeling is not just data. It is data with definitions attached: a revenue metric that says exactly what it counts, how it is calculated, and which tests confirm it is correct. dbt is the tool most commonly used for this work today.
+      </p>
+
+      <div class="callout">
+        <p>Without modeling, every downstream consumer makes their own assumptions about what the numbers mean. Different dashboards produce different answers to the same question. Modeling is where those assumptions get written down and enforced in one place.</p>
+      </div>
+    </div>
+
+    <!-- SUB: orchestration -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>orchestration</h3>
+      <p>
+        Transformation pipelines do not run once. They run on a schedule: nightly, hourly, or triggered by upstream events. Orchestration is the layer that manages the timing and order of all these jobs, handles failures, and makes sure dependencies run in the right sequence.
+      </p>
+      <p>
+        If ingestion has to complete before modeling can start, and modeling has to complete before a dashboard can refresh, something has to coordinate that chain. Tools like Apache Airflow, Dagster, and Prefect sit in this layer.
+      </p>
+      <p>
+        Bad orchestration shows up as stale dashboards, silent failures, and pipelines that succeed individually but produce wrong answers when combined.
+      </p>
+    </div>
+
+    <!-- SUB: data quality -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>data quality and observability</h3>
+      <p>
+        Pipelines break. Schemas change upstream without warning. A column that was always populated suddenly has nulls. Data quality is about detecting these problems before they reach the people relying on the data.
+      </p>
+      <p>
+        This happens at two levels. Tests that run as part of the pipeline (checking expected row counts, uniqueness, referential integrity) and observability tools that monitor data health in production (Monte Carlo, Soda, Elementary). Together they answer: did this pipeline run correctly, and does the output look right?
+      </p>
+    </div>
+
+    <!-- SUB: semantic layer -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>the semantic layer</h3>
+      <p>
+        Even after data is modeled and tested, there is one more problem: different teams define the same metric differently. Finance calculates revenue one way, sales calculates it another. When the numbers do not match, people stop trusting any of them.
+      </p>
+      <p>
+        The semantic layer is where metric definitions get locked in: what revenue means, what churn counts, how active users are calculated. Once defined there, any downstream tool, whether a dashboard, an analyst running a query, or an AI agent, gets the same answer.
+      </p>
+      <p>
+        dbt's Semantic Layer and MetricFlow sit in this space. They let you define a metric once and expose it consistently across every consumer.
+      </p>
+    </div>
+
+    <!-- SUB: machine learning -->
+    <div class="sub">
+      <div class="sub-label">within transformation</div>
+      <h3>machine learning</h3>
+      <p>
+        Machine learning is mostly a transformation-stage concern on the input side. Before a model can be trained, data has to be cleaned, features have to be engineered, and training datasets have to be assembled from the same trusted models that power dashboards.
+      </p>
+      <p>
+        Feature engineering is where domain knowledge gets encoded into the inputs a model will learn from. Which signals matter, how they are normalized, what time windows to use: these decisions live here, and they are often the biggest driver of model quality.
+      </p>
+      <p>
+        Once a model is trained, it shifts stages. The trained model becomes a consumer and a producer: it takes data in, produces predictions, and those predictions often flow back into storage to be used downstream. That part shows up in the consumption stage.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ── 05: CONSUMPTION ──────────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta">
+      <span class="section-num">05</span>
+      <div class="crumb">
+        <span class="crumb-node">sources</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">storage</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">transformation</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node here">consumption</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">decision</span>
+      </div>
+    </div>
+    <h2>consumption</h2>
+    <p>
+      Consumption is how data reaches a person or a downstream system. The transformation stage produces trusted, defined data. Consumption is everything that sits on top of it: the interfaces, the tools, and the systems that turn that data into answers.
+    </p>
+    <p>
+      There are a few different access patterns here, each suited to a different kind of question.
+    </p>
+
+    <!-- SUB: BI and dashboards -->
+    <div class="sub">
+      <div class="sub-label">within consumption</div>
+      <h3>BI and dashboards</h3>
+      <p>
+        The most familiar form of consumption. A BI tool (Tableau, Looker, Sigma, Metabase) connects to the storage and transformation layer, runs queries, and displays the results visually. An analyst or business user navigates to a dashboard, finds the number they need, and interprets it.
+      </p>
+      <p>
+        Dashboards are good at answering questions that were anticipated. Someone built the chart because they knew people would need that view. The limitation is that the data can only answer the questions someone thought to ask in advance.
+      </p>
+    </div>
+
+    <!-- SUB: AI as interface layer -->
+    <div class="sub">
+      <div class="sub-label">within consumption</div>
+      <h3>AI as the interface layer</h3>
+      <p>
+        AI sits between the transformation output and the person asking the question. Instead of a fixed dashboard, a person describes what they want in plain language and the model figures out which data to retrieve, how to interpret it, and what to say back.
+      </p>
+
+      <div class="flow-wrap">
+        <div class="flow">
+          <div class="f-node">
+            <div class="f-box">person asks</div>
+            <div class="f-sub">plain language</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">AI reasons</div>
+            <div class="f-sub">decides what to do</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">calls tools or data</div>
+            <div class="f-sub">retrieves what it needs</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">interprets result</div>
+            <div class="f-sub">shapes the answer</div>
+          </div>
+          <div class="f-arr">→</div>
+          <div class="f-node">
+            <div class="f-box">responds</div>
+            <div class="f-sub">person decides</div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Three patterns show up in how AI systems interact with data:
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>pattern</th><th>what it means</th><th>tradeoff</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RAG</td>
+              <td>before answering, the model looks up relevant documents or records from a data source</td>
+              <td>more grounded answers using current or private data, more moving parts</td>
+            </tr>
+            <tr>
+              <td>tool calling</td>
+              <td>the model calls a database, API, or calculator instead of guessing from memory</td>
+              <td>more accurate and verifiable, more system complexity</td>
+            </tr>
+            <tr>
+              <td>agents</td>
+              <td>the model loops through observe, decide, act until a multi-step task is complete</td>
+              <td>handles complex tasks end to end, harder to predict and control</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        RAG is worth understanding on its own. An LLM has a knowledge cutoff and no access to your private data. RAG solves this by retrieving relevant records before the model generates its answer. Think of it as letting the model open the textbook before answering the question, rather than answering from memory.
+      </p>
+
+      <div class="callout">
+        <p>AI does not change the underlying data problems. It changes the interface to the data. For an AI to answer well, the data still has to be clean, defined, and trustworthy. A confident wrong answer is worse than no answer, and that is exactly what happens when an AI agent hits undocumented or inconsistent data.</p>
+      </div>
+    </div>
+
+    <!-- SUB: ML inference -->
+    <div class="sub">
+      <div class="sub-label">within consumption</div>
+      <h3>ML models in production</h3>
+      <p>
+        Trained machine learning models are also a form of consumption. They take data from the storage and transformation layer, run inference, and produce predictions that flow somewhere else: a recommendation in a product, a churn score in a CRM, a fraud flag on a transaction.
+      </p>
+      <p>
+        This is often called model serving or inference. The model was trained offline in the transformation stage. In production, it consumes data continuously and produces outputs that other systems act on.
+      </p>
+      <p>
+        A key challenge here is model drift: the world changes, but the model does not update automatically. Monitoring model performance in production, retraining on fresh data, and managing versions of deployed models is its own discipline, sometimes called MLOps.
+      </p>
+    </div>
+
+    <!-- SUB: data products and APIs -->
+    <div class="sub">
+      <div class="sub-label">within consumption</div>
+      <h3>data products and APIs</h3>
+      <p>
+        Not all data consumption is human-facing. Some of the most important consumers of a data platform are other systems: a recommendation engine reading a feature table, an application enriching user records with model outputs, a partner system receiving a data feed.
+      </p>
+      <p>
+        Data products treat trusted datasets as first-class outputs, with defined schemas, ownership, and SLAs. Data APIs expose that data programmatically, letting other systems query or subscribe to it without needing direct warehouse access.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ── 06: THE DECISION ─────────────────────────────────── -->
+  <div class="section">
+    <div class="section-meta">
+      <span class="section-num">06</span>
+      <div class="crumb">
+        <span class="crumb-node">sources</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">storage</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">transformation</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node">consumption</span>
+        <span class="crumb-arr">→</span>
+        <span class="crumb-node here">decision</span>
+      </div>
+    </div>
+    <h2>the decision</h2>
+    <p>
+      The whole system exists to produce a better decision than someone could make without it. That is the same goal from the beginning, and it is worth coming back to at the end.
+    </p>
+    <p>
+      For a decision to be trustworthy, the data behind it has to earn that trust at every stage.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>property</th><th>what it means in practice</th><th>where it gets established</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>accurate</td>
+            <td>the numbers reflect what actually happened</td>
+            <td>source quality, data quality testing</td>
+          </tr>
+          <tr>
+            <td>defined</td>
+            <td>everyone using a metric agrees on what it counts</td>
+            <td>modeling, semantic layer</td>
+          </tr>
+          <tr>
+            <td>timely</td>
+            <td>the data is fresh enough to be relevant</td>
+            <td>orchestration, streaming vs batch choices</td>
+          </tr>
+          <tr>
+            <td>accessible</td>
+            <td>the right people or systems can reach it</td>
+            <td>consumption layer, access controls</td>
+          </tr>
+          <tr>
+            <td>traceable</td>
+            <td>you can follow a number back to where it came from</td>
+            <td>lineage, documentation across every stage</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>The pattern I keep coming back to: tools change faster than the underlying questions do. Where does the data live? Where does compute happen? Who can trust the result? How does a human make a better decision because of it? Those questions were true before AI and they are still true now. The systems that answer them well are the ones worth understanding.</p>
+    </div>
+  </div>
+
+
+  <div class="footer-note">last updated May 2026</div>
+
+</div>
+</body>
+</html>
