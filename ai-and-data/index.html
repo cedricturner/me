@@ -582,13 +582,16 @@
 
   <div class="section" style="margin-top: 80px;">
     <p>
-      A chef without recipes is just guessing. They might be talented, they might get it right sometimes, but the meal is different every time and nobody can explain why. That's what AI looks like without a context layer. It's reading whatever it can find and doing its best with it.
+      A great chef can cook from memory. The dish might even be excellent. But if every chef in the same restaurant uses their own version of the recipe, the customer experience depends on who's working that night. It's not a skill problem. It's a consistency problem. The recipes need to exist somewhere that everyone can read from.
     </p>
     <p>
-      The context layer is where your org's knowledge lives: what [metric] means, how it's calculated, who owns it, and what can be trusted. That layer needs to exist somewhere. It needs to be consistent. It needs to be shared across every tool that needs it.
+      The question is where. And this is where it matters.
     </p>
     <p>
-      That's why it belongs in dbt. Not because dbt is the only tool that can hold a definition, but because dbt is already where your data gets shaped, tested, and made trustworthy. Putting the context layer there means it lives next to the logic that produces the data, not downstream in a BI tool or inside someone's head. It makes the most sense for it to live where the work is already happening.
+      The recipes shouldn't live at the farm or the butcher. That's where the raw ingredients come from, not where the cooking happens. If you switch suppliers, you lose everything tied to them. The recipes shouldn't live with the chef either. If the chef leaves or changes direction, those recipes walk out the door too. The right place for the recipes is the prep kitchen: the layer in between, where the ingredients get turned into something usable and where the logic of cooking actually lives.
+    </p>
+    <p>
+      That's dbt. Defining your context layer in a source system like Snowflake's semantic views means your recipes live at the farm. Defining them inside a BI tool or an AI layer means they live with the chef. Either way, you're one switch away from losing them. dbt sits in the middle, which is exactly where the recipes belong: close to the data that feeds them, independent of whatever tool is consuming them.
     </p>
   </div>
 
