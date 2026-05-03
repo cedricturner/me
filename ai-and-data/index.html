@@ -591,7 +591,7 @@
       The recipes shouldn't live at the farm or the butcher. That's where the raw ingredients come from, not where the cooking happens. If you switch suppliers, you lose everything tied to them. The recipes shouldn't live with the chef either. If the chef leaves or changes direction, those recipes walk out the door too. The right place for the recipes is the prep kitchen: the layer in between, where the ingredients get turned into something usable and where the logic of cooking actually lives.
     </p>
     <p>
-      That's dbt. Defining your context layer in a source system like Snowflake's semantic views means your recipes live at the farm. Defining them inside a BI tool or an AI layer means they live with the chef. Either way, you're one switch away from losing them. dbt sits in the middle, which is exactly where the recipes belong: close to the data that feeds them, independent of whatever tool is consuming them.
+      That's dbt. Defining your context layer in the warehouse layer means your recipes live at the farm. Defining them inside a BI tool or an AI layer means they live with the chef. Either way, you're one switch away from losing them. dbt sits in the middle, which is exactly where the recipes belong: close to the data that feeds them, independent of whatever tool is consuming them.
     </p>
   </div>
 
