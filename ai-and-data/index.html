@@ -399,10 +399,11 @@
         <div class="sys-arrow">→</div>
 
         <div class="sys-node">
-          <div class="sys-box">
-            <div class="sys-name">context</div>
+          <div class="sys-box dbt">
+            <div class="sys-name">semantic layer</div>
             <div class="sys-analogy">the recipe cards</div>
-            <div class="sys-desc">metrics and definitions. "revenue" means exactly this. "churn" is calculated exactly this way.</div>
+            <div class="sys-desc">define "revenue" once. every tool that asks — dashboards, AI, apps — gets the exact same answer.</div>
+            <div class="sys-dbt-tag">also dbt</div>
           </div>
         </div>
 
@@ -499,8 +500,15 @@
       AI doesn't write its own definitions, it reads the ones that already exist. dbt is where those definitions get written and enforced, and that's why it matters.
     </p>
 
+    <p>
+      There's a second layer to this that matters a lot: the semantic layer. If transformation is the prep kitchen, the semantic layer is where you write the recipe cards — the standardized instructions that any chef can follow and get the same dish every time. dbt's semantic layer lets you define "revenue" or "churn" once, centrally, and then broadcast that definition to every tool that needs it. Your BI dashboard reads it. Your AI agent reads it. A data product reads it. They all get the same answer because they're all reading the same recipe card.
+    </p>
+    <p>
+      This is what prevents the scenario where your AI and your dashboard disagree. It's not a model problem. It's a definitions problem, and the semantic layer is the fix.
+    </p>
+
     <div class="callout">
-      <p>When someone buys an AI product, they're buying the chef, and dbt is the prep kitchen. You need both, and most teams figure that out after the chef shows up and there's nothing ready to cook.</p>
+      <p>When someone buys an AI product, they're buying the chef, and dbt is the prep kitchen and the recipe book. The recipe book is what stops two chefs from making the same dish two different ways.</p>
     </div>
     <p class="go-deeper">For the longer argument on why dbt Core alone isn't enough once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
@@ -547,6 +555,11 @@
         <li class="talk-item">
           <div class="talk-line">"Every AI vendor is selling you the chef. dbt is the prep kitchen. You need both."</div>
           <div class="talk-context">Use after you've explained the system. Makes the kitchen analogy stick and makes the dependency clear.</div>
+        </li>
+
+        <li class="talk-item">
+          <div class="talk-line">"dbt's semantic layer means 'revenue' is defined once. Your dashboard reads it. Your AI reads it. They match."</div>
+          <div class="talk-context">Use when they've experienced AI and dashboards giving different numbers. Makes the semantic layer concrete without getting into the technical details.</div>
         </li>
 
         <li class="talk-item">
