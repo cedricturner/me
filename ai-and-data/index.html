@@ -326,7 +326,7 @@
   <!-- 1. THE SHIFT -->
   <div class="section">
     <div class="section-label">01 / the shift</div>
-    <h2>the interface changed. the problem didn't.</h2>
+    <h2>the interface changed, the problem didn't</h2>
 
     <p>
       A few years ago, when someone had a question about the business, they'd pull up a dashboard or ask an analyst to build one.
@@ -365,7 +365,7 @@
   <!-- 2. THE SYSTEM -->
   <div class="section">
     <div class="section-label">02 / the system</div>
-    <h2>there is a system. most people only see the top of it.</h2>
+    <h2>there is a system, most people only see the top of it</h2>
 
     <p>
       Think of it like a restaurant kitchen. Before a chef can cook, someone has to bring in the ingredients, do all the prep work, and write out the recipes. The chef, no matter how talented, can only work with what's in front of them.
@@ -433,7 +433,7 @@
   <!-- 3. WHERE THINGS BREAK -->
   <div class="section">
     <div class="section-label">03 / where things break</div>
-    <h2>most AI problems are actually data problems.</h2>
+    <h2>most AI problems are actually data problems</h2>
 
     <p>
       When AI gives a bad answer, the instinct is to blame the model, switch to a different one, tune the prompts, or try a different product. But usually that's not where the problem is.
@@ -470,7 +470,7 @@
   <!-- 4. WHERE dbt FITS -->
   <div class="section">
     <div class="section-label">04 / where dbt fits</div>
-    <h2>dbt is the prep kitchen.</h2>
+    <h2>dbt is the prep kitchen</h2>
 
     <p>
       dbt sits between raw data and everything that uses it. Its job is to take scattered, inconsistent source data and turn it into something reliable.
@@ -517,10 +517,10 @@
   <!-- 5. HOW TO TALK ABOUT THIS -->
   <div class="section">
     <div class="section-label">05 / how to talk about this</div>
-    <h2>lines you can actually use.</h2>
+    <h2>questions that open the room</h2>
 
     <p>
-      These are reframes and openers, not scripts. Use whichever ones fit the conversation.
+      Use these when the conversation stalls or when you want to pull the real problem to the surface. Ask one, then listen.
     </p>
 
     <div class="talk-card">
@@ -528,48 +528,43 @@
       <ul class="talk-list">
 
         <li class="talk-item">
-          <div class="talk-line">"You don't have an AI problem. You have a data trust problem."</div>
-          <div class="talk-context">Use this when they're frustrated that AI gives them different answers to the same question. It reframes where the real fix needs to happen.</div>
+          <div class="talk-line">"If you brought in an LLM today, how many different versions of [metric] would it see?"</div>
+          <div class="talk-context">Opens up the definition consistency problem without making it an accusation. Let them do the math out loud.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"AI is only as smart as the data it's reading. Right now, is that data defined the same way everywhere?"</div>
-          <div class="talk-context">Good discovery question. Most people pause here. Opens a real conversation about where their definitions live.</div>
+          <div class="talk-line">"If I walked into your org as an AI right now, where would I even start looking?"</div>
+          <div class="talk-context">Makes data fragmentation feel immediate and real. Works especially well when they have a lot of disconnected systems.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"Think of AI like a really fast new hire. If you give them bad instructions, they execute bad instructions really fast."</div>
-          <div class="talk-context">Works with any audience, technical or not. Immediately makes data quality feel urgent instead of abstract.</div>
+          <div class="talk-line">"Would you know where to pull all the context your AI would need, across every system it touches?"</div>
+          <div class="talk-context">Opens up the conversation about connectors, access, and data coverage without listing technical requirements.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"When your AI and your dashboard show different numbers, that's not an AI problem. That's a definitions problem."</div>
-          <div class="talk-context">Very specific. If they've experienced this (they almost always have), it lands immediately.</div>
+          <div class="talk-line">"If AI worked exactly the way you wanted it to today, what would the outcome look like? What would actually change?"</div>
+          <div class="talk-context">Surfaces what they actually want before going deeper on infrastructure. Gets them invested in the outcome, not the tooling.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"Most companies are trying to build the AI layer before they've built the data layer. dbt is the data layer."</div>
-          <div class="talk-context">Positions dbt as the foundation, not an add-on. Changes the framing from "do we need this?" to "we need this first."</div>
+          <div class="talk-line">"Where does [metric] live in your org right now? How many places is it defined?"</div>
+          <div class="talk-context">Diagnostic. Ask this and wait. If they pause or start listing systems, the problem is already visible.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"Every AI vendor is selling you the chef. dbt is the prep kitchen. You need both."</div>
-          <div class="talk-context">Use after you've explained the system. Makes the kitchen analogy stick and makes the dependency clear.</div>
+          <div class="talk-line">"If your AI and your dashboard gave two different answers to the same question tomorrow, would you know why?"</div>
+          <div class="talk-context">Most people have experienced this or are quietly afraid of it. Naming it makes the stakes concrete.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"dbt's semantic layer means 'revenue' is defined once. Your dashboard reads it. Your AI reads it. They match."</div>
-          <div class="talk-context">Use when they've experienced AI and dashboards giving different numbers. Makes the semantic layer concrete without getting into the technical details.</div>
+          <div class="talk-line">"Who owns the definition of [metric] in your org? What happens when two teams are working from different numbers?"</div>
+          <div class="talk-context">Exposes governance gaps. Especially common in orgs that have grown quickly or through acquisitions.</div>
         </li>
 
         <li class="talk-item">
-          <div class="talk-line">"The question isn't whether you're using AI. It's what your AI is actually reading."</div>
-          <div class="talk-context">Good for executive conversations where the focus is on AI adoption. Shifts attention to the foundation underneath.</div>
-        </li>
-
-        <li class="talk-item">
-          <div class="talk-line">"Where does 'revenue' live in your system right now? How many places is it defined?"</div>
-          <div class="talk-context">Ask this and wait. If they can't answer quickly, the problem is real. This is discovery, not a pitch.</div>
+          <div class="talk-line">"If an AI agent had to explain how it arrived at that number, could your data back it up?"</div>
+          <div class="talk-context">Good for compliance-conscious orgs or anyone who's been asked "where did this number come from?" and couldn't answer.</div>
         </li>
 
       </ul>
