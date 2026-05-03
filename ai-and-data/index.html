@@ -501,7 +501,10 @@
     </p>
 
     <p>
-      There's a second layer to this that matters a lot: the semantic layer. If transformation is the prep kitchen, the semantic layer is where you write the recipe cards: standardized instructions that any chef can follow and get the same dish every time. dbt's semantic layer lets you define "revenue" or "churn" once, centrally, and then broadcast that definition to every tool that needs it. Your BI dashboard reads it. Your AI agent reads it. A data product reads it. They all get the same answer because they're all reading the same recipe card.
+      There's a second layer to this that matters a lot: the semantic layer. If transformation is the prep kitchen, the semantic layer is where you write the recipe cards. Think about what happens when every chef uses their own recipe. The dish is called the same thing on the menu, but it tastes different every time depending on who's working that night. Customers notice. Trust breaks down. Now replace the chefs with your tools: a dashboard, an AI agent, a data product. If each one is calculating [metric] its own way, the answer you get depends on which one you ask. Same question, different meal.
+    </p>
+    <p>
+      The semantic layer is how you give every chef the same recipe. dbt lets you define "revenue" or "churn" once, centrally, and broadcast that definition to every tool that needs it. Less variance. Consistent answers. It doesn't matter which chef is working or which tool you ask.
     </p>
     <p>
       This is what prevents the scenario where your AI and your dashboard disagree. It's not a model problem. It's a definitions problem, and the semantic layer is the fix.
