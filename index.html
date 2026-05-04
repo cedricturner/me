@@ -107,21 +107,11 @@
 
   a.item:hover .item-title { text-decoration: underline; text-underline-offset: 3px; }
 
-  .item-locked {
-    display: block;
-    color: inherit;
-    cursor: default;
-  }
-
   .item-title {
     font-size: 15px;
     font-weight: 500;
     color: #1a1a1a;
     margin-bottom: 3px;
-  }
-
-  .item-locked .item-title {
-    color: #888;
   }
 
   .item-meta {
@@ -150,10 +140,6 @@
     font-weight: 400;
   }
 
-  .item-tag--request {
-    background: #e0e7ff;
-    color: #3730a3;
-  }
 </style>
 </head>
 <body>
@@ -182,11 +168,11 @@
     <div class="section-label"><span class="hl">Strategy &amp; Narrative</span></div>
     <ul>
       <li>
-        <div class="item-locked">
-          <div class="item-title">how to talk about dbt + AI <span class="item-tag item-tag--request">by request</span></div>
-          <div class="item-meta">how AI uses data, where things break, and where dbt fits. for anyone who needs to talk about it.</div>
-          <div class="item-why">the framing I'd want someone to walk into a meeting with. available internally, reach out to get it.</div>
-        </div>
+        <a class="item" href="./ai-and-data/">
+          <div class="item-title">the prep kitchen problem</div>
+          <div class="item-meta">why AI breaks one layer below the model, and where your definitions actually need to live</div>
+          <div class="item-why">the argument i'd want anyone evaluating data infrastructure to read before they buy a model</div>
+        </a>
       </li>
       <li>
         <a class="item" href="./blog/ai-forces-preference/">
