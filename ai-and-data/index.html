@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>what AI actually runs on / Cedric Turner II</title>
+<title>how to talk about dbt + AI / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -306,16 +306,115 @@
     font-size: 12px;
     color: var(--faint);
   }
+
+  /* gate */
+  #gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #fafaf9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+  }
+  #gate-inner {
+    width: 280px;
+    text-align: left;
+  }
+  #gate-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 4px;
+  }
+  #gate-sub {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 28px;
+    letter-spacing: 0.03em;
+  }
+  #gate-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1.5px solid #e8e5e0;
+    background: #fff;
+    color: #1c1c1c;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  #gate-input:focus { border-color: #93c5fd; }
+  #gate-btn {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    background: #1c1c1c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  #gate-btn:hover { background: #333; }
+  #gate-error {
+    font-size: 12px;
+    color: #991b1b;
+    margin-top: 8px;
+    display: none;
+  }
 </style>
 </head>
 <body>
+
+<div id="gate">
+  <div id="gate-inner">
+    <div id="gate-title">how to talk about dbt + AI</div>
+    <div id="gate-sub">internal · by request</div>
+    <input id="gate-input" type="password" placeholder="password" autocomplete="current-password">
+    <button id="gate-btn">enter</button>
+    <div id="gate-error">incorrect password</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (sessionStorage.getItem('gate_auth') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    return;
+  }
+  document.body.style.overflow = 'hidden';
+  var input = document.getElementById('gate-input');
+  var error = document.getElementById('gate-error');
+  function tryUnlock() {
+    if (input.value === 'accessgranted') {
+      sessionStorage.setItem('gate_auth', '1');
+      var gate = document.getElementById('gate');
+      gate.style.opacity = '0';
+      setTimeout(function () {
+        gate.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 300);
+    } else {
+      error.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') tryUnlock(); });
+  document.getElementById('gate-btn').addEventListener('click', tryUnlock);
+})();
+</script>
+
 <div class="wrap">
 
   <nav><a href="/me/">← cedric turner ii</a></nav>
 
   <!-- HERO -->
   <div class="hero">
-    <h1>what AI actually runs on</h1>
+    <h1>how to talk about dbt + AI</h1>
     <span class="tag">for anyone in a conversation about AI + data</span>
     <p class="lede">
       AI isn't magic. It reads data. And if the data underneath it is inconsistent, undefined, or scattered across a dozen systems, the AI will be too. This is a quick explanation of what's actually going on, and how to talk about it.
