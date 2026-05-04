@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>how to talk about dbt + AI / Cedric Turner II</title>
+<title>the prep kitchen problem / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -236,44 +236,26 @@
     font-style: italic;
   }
 
-  /* ── HOW TO TALK ABOUT THIS ─────────────────────── */
+  /* ── DIAGNOSTIC ─────────────────────────────────── */
 
-  .talk-card {
-    background: var(--bg-lift);
-    border: 1.5px solid var(--rule);
-    padding: 28px;
+  .diagnostic-list {
     margin: 28px 0;
-  }
-
-  .talk-card-label {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--faint);
-    margin-bottom: 24px;
-  }
-
-  .talk-list { list-style: none; }
-
-  .talk-item {
-    padding: 16px 0;
     border-top: 1px solid var(--rule);
   }
-  .talk-item:first-child { border-top: none; padding-top: 0; }
 
-  .talk-line {
-    font-size: 15.5px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.45;
-    margin-bottom: 5px;
+  .diagnostic-item {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 14px;
   }
 
-  .talk-context {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.55;
+  .diagnostic-q {
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+    flex: 1;
   }
 
   /* callout */
@@ -306,118 +288,19 @@
     font-size: 12px;
     color: var(--faint);
   }
-
-  /* gate */
-  #gate {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #fafaf9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.3s;
-  }
-  #gate-inner {
-    width: 280px;
-    text-align: left;
-  }
-  #gate-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1c1c1c;
-    margin-bottom: 4px;
-  }
-  #gate-sub {
-    font-size: 12px;
-    color: #aaa;
-    margin-bottom: 28px;
-    letter-spacing: 0.03em;
-  }
-  #gate-input {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    border: 1.5px solid #e8e5e0;
-    background: #fff;
-    color: #1c1c1c;
-    outline: none;
-    margin-bottom: 10px;
-  }
-  #gate-input:focus { border-color: #93c5fd; }
-  #gate-btn {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 13px;
-    font-family: inherit;
-    font-weight: 500;
-    background: #1c1c1c;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-  }
-  #gate-btn:hover { background: #333; }
-  #gate-error {
-    font-size: 12px;
-    color: #991b1b;
-    margin-top: 8px;
-    display: none;
-  }
 </style>
 </head>
 <body>
-
-<div id="gate">
-  <div id="gate-inner">
-    <div id="gate-title">how to talk about dbt + AI</div>
-    <div id="gate-sub">internal · by request</div>
-    <input id="gate-input" type="password" placeholder="password" autocomplete="current-password">
-    <button id="gate-btn">enter</button>
-    <div id="gate-error">incorrect password</div>
-  </div>
-</div>
-
-<script>
-(function () {
-  if (sessionStorage.getItem('gate_auth') === '1') {
-    document.getElementById('gate').style.display = 'none';
-    return;
-  }
-  document.body.style.overflow = 'hidden';
-  var input = document.getElementById('gate-input');
-  var error = document.getElementById('gate-error');
-  function tryUnlock() {
-    if (input.value === 'accessgranted') {
-      sessionStorage.setItem('gate_auth', '1');
-      var gate = document.getElementById('gate');
-      gate.style.opacity = '0';
-      setTimeout(function () {
-        gate.style.display = 'none';
-        document.body.style.overflow = '';
-      }, 300);
-    } else {
-      error.style.display = 'block';
-      input.value = '';
-      input.focus();
-    }
-  }
-  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') tryUnlock(); });
-  document.getElementById('gate-btn').addEventListener('click', tryUnlock);
-})();
-</script>
-
 <div class="wrap">
 
   <nav><a href="/me/">← cedric turner ii</a></nav>
 
   <!-- HERO -->
   <div class="hero">
-    <h1>how to talk about dbt + AI</h1>
-    <span class="tag">for anyone in a conversation about AI + data</span>
+    <h1>the prep kitchen problem</h1>
+    <span class="tag">a point of view on AI and data infrastructure</span>
     <p class="lede">
-      AI isn't magic. It reads data. And if the data underneath it is inconsistent, undefined, or scattered across a dozen systems, the AI will be too. This is a quick explanation of what's actually going on, and how to talk about it.
+      Everyone is talking about AI. Most of that conversation is about the model: which one, how fast, what it can do. The real leverage is one layer below the model, in how your data is shaped and defined before AI ever reads it. That's the part most teams are getting wrong.
     </p>
   </div>
 
@@ -575,7 +458,7 @@
       dbt sits between raw data and everything that uses it. Its job is to take scattered, inconsistent source data and turn it into something reliable.
     </p>
     <p>
-      It's not a BI tool or a database, it doesn't store your data or show you charts. It does one thing: makes raw data usable and trustworthy.
+      It's not a BI tool or a database. It doesn't store your data or show you charts. It does one thing: makes raw data usable and trustworthy.
     </p>
 
     <div class="before-after">
@@ -596,86 +479,55 @@
     </div>
 
     <p>
-      AI doesn't write its own definitions, it reads the ones that already exist. dbt is where those definitions get written and enforced, and that's why it matters.
+      AI doesn't write its own definitions, it reads the ones that already exist. dbt is where those definitions get written and enforced. That's why it matters.
     </p>
 
     <p>
-      There's a second layer to this that matters a lot: the semantic layer. If transformation is the prep kitchen, the semantic layer is where you write the recipe cards. Think about what happens when every chef uses their own recipe. The dish is called the same thing on the menu, but it tastes different every time depending on who's working that night. Customers notice. Trust breaks down. Now replace the chefs with your tools: a dashboard, an AI agent, a data product. If each one is calculating [metric] its own way, the answer you get depends on which one you ask. Same question, different meal.
+      There's a second layer worth understanding: the context layer, or semantic layer. If transformation is the prep kitchen, the context layer is where you write the recipe cards. Think about what happens when every chef uses their own recipe. The dish is called the same thing on the menu, but it tastes different every time depending on who's working that night. Now replace the chefs with your tools: a dashboard, an AI agent, a data product. If each one calculates a metric its own way, the answer depends on which tool you ask. Same question, different meal.
     </p>
     <p>
-      The semantic layer is how you give every chef the same recipe. dbt lets you define "revenue" or "churn" once, centrally, and broadcast that definition to every tool that needs it. Less variance. Consistent answers. It doesn't matter which chef is working or which tool you ask.
-    </p>
-    <p>
-      This is what prevents the scenario where your AI and your dashboard disagree. It's not a model problem. It's a definitions problem, and the semantic layer is the fix.
+      The context layer is how you give every tool the same recipe. dbt lets you define "revenue" or "churn" once, centrally, and serve that definition to everything that needs it. It doesn't matter which tool you ask. The answer is the same.
     </p>
 
     <div class="callout">
-      <p>When someone buys an AI product, they're buying the chef, and dbt is the prep kitchen and the recipe book. The recipe book is what stops two chefs from making the same dish two different ways.</p>
+      <p>When someone invests in an AI product, they're buying the chef. dbt is the prep kitchen and the recipe book. The recipe book is what stops two chefs from making the same dish two different ways.</p>
     </div>
-    <p class="go-deeper">For the longer argument on why dbt Core alone isn't enough once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
+    <p class="go-deeper">For the longer argument on why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
 
 
-  <!-- 5. HOW TO TALK ABOUT THIS -->
+  <!-- 5. HOW TO TELL -->
   <div class="section">
-    <div class="section-label">05 / how to talk about this</div>
-    <h2>questions that open the room</h2>
+    <div class="section-label">05 / how to tell</div>
+    <h2>a few questions worth asking about your own stack</h2>
 
     <p>
-      These are questions from how I actually think about this. They're not scripts. Use them to see how I'd open the conversation, then find your own version. Ask one, then listen.
+      Before evaluating AI products, it's worth checking the layer below. These aren't rhetorical. If any of them are hard to answer, the definitions don't live in the right place yet.
     </p>
 
-    <div class="talk-card">
-      <div class="talk-card-label">pull these out as needed</div>
-      <ul class="talk-list">
+    <div class="diagnostic-list">
 
-        <li class="talk-item">
-          <div class="talk-line">"If you get the wrong answer, does that even matter?"</div>
-          <div class="talk-context">Start here. If it matters, the conversation shifts to trust and accuracy. If they pause, they haven't thought through the stakes yet. That pause is the real discovery. Softer version: "If you get the wrong answer, what happens?"</div>
-        </li>
+      <div class="diagnostic-item">
+        <div class="diagnostic-q">If your AI and your BI tool gave different answers to the same question, would you be able to explain why?</div>
+      </div>
 
-        <li class="talk-item">
-          <div class="talk-line">"What decision actually changes if you get the right answer?"</div>
-          <div class="talk-context">Forces them to connect AI output to an actual business outcome. If they can't name one, the use case isn't real yet. If they can, you know exactly what you're solving for.</div>
-        </li>
+      <div class="diagnostic-item">
+        <div class="diagnostic-q">Where is your most important metric actually defined? Is it one definition in one place, or a slightly different version in every tool that uses it?</div>
+      </div>
 
-        <li class="talk-item">
-          <div class="talk-line">"If AI disappeared tomorrow, would anyone do this the old-fashioned way?"</div>
-          <div class="talk-context">Gets at whether the use case has real value or only exists because AI makes it possible. If they'd do it without AI, the outcome matters. If not, it's worth understanding why they're doing it at all.</div>
-        </li>
+      <div class="diagnostic-item">
+        <div class="diagnostic-q">If you switched AI providers tomorrow, would your business logic come with you? Or is it locked inside the current tool?</div>
+      </div>
 
-        <li class="talk-item">
-          <div class="talk-line">"If you brought in [AI tool] today, how many different versions of [metric] would it see?"</div>
-          <div class="talk-context">Let them do the math out loud. Every system they name is another version of the truth. dbt's semantic layer collapses that to one.</div>
-        </li>
+      <div class="diagnostic-item">
+        <div class="diagnostic-q">Can you trace an answer from what the AI returned all the way back to the source data it read?</div>
+      </div>
 
-        <li class="talk-item">
-          <div class="talk-line">"If I walked into your org as AI right now, where would I start looking?"</div>
-          <div class="talk-context">Makes the input problem real and immediate. If they struggle to answer, that fragmentation is exactly what dbt's transformation layer is built to solve.</div>
-        </li>
-
-        <li class="talk-item">
-          <div class="talk-line">"Can you trace the answer all the way back, from where the data started to what the AI returned?"</div>
-          <div class="talk-context">Input to process to output. If they can't trace it, they can't trust it. dbt's lineage makes that trace possible.</div>
-        </li>
-
-        <li class="talk-item">
-          <div class="talk-line">"Where does [metric] live in your org right now? How many places is it defined?"</div>
-          <div class="talk-context">Diagnostic. Ask it and wait. If they pause or start listing systems, the problem is already visible. The semantic layer is the answer.</div>
-        </li>
-
-        <li class="talk-item">
-          <div class="talk-line">"If your AI and your dashboard gave two different answers to the same question, would you know why?"</div>
-          <div class="talk-context">Most people have been here or are afraid of it. It's a process problem, not a model problem. dbt's semantic layer ensures both read from the same definition.</div>
-        </li>
-
-        <li class="talk-item">
-          <div class="talk-line">"Who owns the definition of [metric] in your org? What happens when two teams are working from different numbers?"</div>
-          <div class="talk-context">Governance question. If nobody owns it, it lives everywhere and means nothing. dbt puts that definition in code, versioned, with a clear owner.</div>
-        </li>
-
-      </ul>
     </div>
+
+    <p>
+      The teams that can answer these clearly have done the prep work. The ones that can't are usually one bad answer away from a trust problem.
+    </p>
   </div>
 
 
@@ -690,7 +542,7 @@
       The recipes shouldn't live at the farm or the butcher. That's where the raw ingredients come from, not where the cooking happens. If you switch suppliers, you lose everything tied to them. The recipes shouldn't live with the chef either. If the chef leaves or changes direction, those recipes walk out the door too. The right place for the recipes is the prep kitchen: the layer in between, where the ingredients get turned into something usable and where the logic of cooking actually lives.
     </p>
     <p>
-      That's dbt. Defining your context layer in the warehouse layer means your recipes live at the farm. Defining them inside a BI tool or an AI layer means they live with the chef. Either way, you're one switch away from losing them. dbt sits in the middle, which is exactly where the recipes belong: close to the data that feeds them, independent of whatever tool is consuming them.
+      That's the transformation layer. And dbt is one of the best ways to build it.
     </p>
   </div>
 
