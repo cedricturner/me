@@ -142,6 +142,24 @@
     margin-top: 0;
   }
 
+  /* Continent-level headings */
+  .continent-heading {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+    font-weight: 700;
+    margin-top: 52px;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8e5e0;
+  }
+
+  .continent-heading:first-child {
+    margin-top: 0;
+  }
+
   /* Galveston polaroid joke */
   .polaroid {
     display: block;
@@ -437,6 +455,65 @@
   <section class="section section--stuck">
     <div class="section-label"><span class="hl">The places that stuck</span></div>
 
+    <!-- NORTH AMERICA -->
+    <div class="continent-heading">North America</div>
+
+    <div class="place-heading">The United States</div>
+    <p>The US is big enough to be multiple countries. New York has transit. The West Coast has kombucha. The South has its own history, humor, food, and way of showing up for people. People are warmer down there. Not performatively. Actually warmer.</p>
+    <p>The food alone is worth the internal travel. Memphis BBQ is not Carolina BBQ is not California BBQ, and all of them wish they were Texas BBQ. Hawaii doesn't fit anywhere in my mental model of what the US is supposed to look like.</p>
+
+    <div class="place-heading">Mexico, the Dominican Republic, Cozumel</div>
+    <p>Tulum, Cancun, Cabo, the Dominican Republic, Cozumel. All kind of the same experience. Good for two or three days before you've seen enough of the pool. None of them show you the real version of where you are, the whole economy is built around not doing that. Best lesson in supply and demand I ever got was being quoted $60 for three bead bracelets. You come back more rested than you left, which isn't nothing.</p>
+
+    <!-- EUROPE -->
+    <div class="continent-heading">Europe</div>
+
+    <p>European cities weren't built around cars and you feel that immediately. You're inside the city instead of passing through it. American cities, especially in the South, feel like they were designed for you to leave as fast as possible.</p>
+
+    <div class="place-heading">Amsterdam</div>
+    <p>I could have stayed longer. Something about the canals and the density — it's one of those cities that keeps giving the longer you walk it.</p>
+
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('amsterdam',0)">Amsterdam</button>
+      </div>
+    </div>
+
+    <div class="place-heading">Paris & London</div>
+    <p>The two you're supposed to go to. Both deliver. Paris is exactly what the pictures suggest, which is rare. London is easier to orient in than it should be for a city that size.</p>
+
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('paris',0)">Paris</button>
+        <button class="photo-tag" onclick="openGallery('london',0)">London</button>
+      </div>
+    </div>
+
+    <div class="place-heading">Zurich</div>
+    <p>Expensive in a way I wasn't prepared for. I could barely afford to eat. Beautiful, immaculately organized, completely unsustainable on a normal budget.</p>
+
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('zurich',0)">Zurich</button><span class="photo-note">way too expensive</span>
+      </div>
+    </div>
+
+    <div class="place-heading">Strasbourg</div>
+    <p>Doesn't look like France. The architecture is German. That's not an accident — the city changed hands four times between France and Germany between 1681 and 1945. You can read the whole thing in the buildings.</p>
+
+    <div class="photo-tags-row">
+      <span class="photos-label">photos! →</span>
+      <div class="photo-tags">
+        <button class="photo-tag" onclick="openGallery('strasbourg',0)">Strasbourg</button>
+      </div>
+    </div>
+
+    <!-- ASIA -->
+    <div class="continent-heading">Asia</div>
+
     <div class="place-heading">Japan</div>
     <p>Been twice. There's an obvious reason everyone is drawn to Japan: the anime, the food, the aesthetic, and one more thing I'm not putting in writing that explains a disproportionate number of very enthusiastic guys. What actually gets you is how functional it is. Like New York in the sense that everything is at your fingertips, except it's clean and there's no part of the city where I'd feel like I need a gun. Most places are either organized or beautiful. Japan is both. That's almost rude.</p>
 
@@ -452,29 +529,9 @@
       </div>
     </div>
 
-    <div class="place-heading">Australia and New Zealand</div>
-    <p>Went at 12 on a student ambassador trip with no parents. Sydney, Great Barrier Reef, Auckland. First time somewhere that didn't feel like a version of home, and I didn't have the framework to understand what was different. Still not sure you're supposed to.</p>
-
-    <div class="place-heading">Europe</div>
-    <p>Amsterdam, Paris, London, Zurich, Strasbourg. European cities weren't built around cars and you feel that immediately. You're inside the city instead of passing through it. American cities, especially in the South, feel like they were designed for you to leave as fast as possible.</p>
-
-    <p>Zurich was expensive in a way I wasn't prepared for — I could barely afford to eat. Amsterdam I could have stayed longer. Strasbourg doesn't look like France. The architecture is German. That's not an accident.</p>
-
-    <div class="photo-tags-row">
-      <span class="photos-label">photos! →</span>
-      <div class="photo-tags">
-        <button class="photo-tag" onclick="openGallery('amsterdam',0)">Amsterdam</button>
-        <button class="photo-tag" onclick="openGallery('paris',0)">Paris</button>
-        <button class="photo-tag" onclick="openGallery('london',0)">London</button>
-        <button class="photo-tag" onclick="openGallery('zurich',0)">Zurich</button><span class="photo-note">way too expensive</span>
-        <button class="photo-tag" onclick="openGallery('strasbourg',0)">Strasbourg</button>
-      </div>
-    </div>
-
     <div class="place-heading">Seoul</div>
     <p>Went with a coworker, Minjae, who grew up there. I didn't know a single word of Korean, not even hello, so having someone who also knew which places were for tourists and which weren't changed every decision. Best way to describe Seoul: Tokyo if New York got involved. I liked the people there more than anywhere I've been.</p>
-
-    <p>In Seoul I had to figure out the T-card, pull out cash, and download Kakao Maps because Google barely works there. In Japan I loaded Suica onto my Apple Wallet and used Google Maps the whole trip. Small gap, adds up.</p>
+    <p>The practical gap between the two tells you something. In Seoul I had to figure out the T-card, pull out cash, and download Kakao Maps because Google barely works there. In Japan I loaded Suica onto my Apple Wallet and used Google Maps the whole trip. Small gap, adds up.</p>
 
     <div class="photo-tags-row">
       <span class="photos-label">photos! →</span>
@@ -483,17 +540,11 @@
       </div>
     </div>
 
-    <div class="place-heading">Mexico, the Dominican Republic, Cozumel</div>
-    <p>Tulum, Cancun, Cabo, the Dominican Republic, Cozumel. All kind of the same experience. Good for two or three days before you've seen enough of the pool. None of them show you the real version of where you are, the whole economy is built around not doing that. Best lesson in supply and demand I ever got was being quoted $60 for three bead bracelets. You come back more rested than you left, which isn't nothing.</p>
-  </section>
+    <!-- OCEANIA -->
+    <div class="continent-heading">Oceania</div>
 
-  <!-- Close to home -->
-  <section class="section section--home">
-    <div class="section-label"><span class="hl">Close to home</span></div>
-
-    <p>The US is big enough to be multiple countries. New York has transit. The West Coast has kombucha. The South has its own history, humor, food, and way of showing up for people. People are warmer down there. Not performatively. Actually warmer.</p>
-
-    <p>The food alone is worth the internal travel. Memphis BBQ is not Carolina BBQ is not California BBQ, and all of them wish they were Texas BBQ. Hawaii doesn't fit anywhere in my mental model of what the US is supposed to look like.</p>
+    <div class="place-heading">Australia & New Zealand</div>
+    <p>Went at 12 on a student ambassador trip with no parents. Sydney, Great Barrier Reef, Auckland. First time somewhere that didn't feel like a version of home, and I didn't have the framework to understand what was different. Still not sure you're supposed to.</p>
   </section>
 
   <!-- Up next -->
@@ -685,6 +736,7 @@ document.addEventListener('keydown', function(e) {
     { name: 'Medford',           lat: 42.3265,  lng:-122.8756 },
     { name: 'Oregon Coast',      lat: 44.85,    lng:-124.07   },
     // US Midwest
+    { name: 'Chicago',           lat: 41.8781,  lng: -87.6298 },
     { name: 'Columbus, OH',      lat: 39.9612,  lng: -82.9988 },
     { name: 'Cincinnati',        lat: 39.1031,  lng: -84.5120 },
     // US East
@@ -705,7 +757,6 @@ document.addEventListener('keydown', function(e) {
   ];
 
   const upcoming = [
-    { name: 'Chicago (soon)',  lat: 41.8781, lng: -87.6298 },
     { name: 'Tokyo (May)',     lat: 35.6762, lng: 139.6503 },
   ];
 
