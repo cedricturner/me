@@ -72,8 +72,11 @@
     display: inline-block;
   }
 
-  .section--notes .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
-  .section--notes .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
+  .section--systems .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
+  .section--systems .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
+
+  .section--strategy .section-label { font-family: 'Bebas Neue', cursive; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; font-size: 18px; color: #1a1a1a; }
+  .section--strategy .section-label .hl { background: #c7d2fe; transform: rotate(1deg); }
 
   .section--tools .section-label { font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: #1a1a1a; }
   .section--tools .section-label .hl { background: #fca5a5; transform: rotate(1.5deg); }
@@ -86,9 +89,6 @@
 
   .section--elsewhere .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
   .section--elsewhere .section-label .hl { background: #a7f3d0; transform: rotate(-1.5deg); }
-
-  .section--vision .section-label { font-family: 'Bebas Neue', cursive; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; font-size: 18px; color: #1a1a1a; }
-  .section--vision .section-label .hl { background: #fed7aa; transform: rotate(1deg); }
 
   ul { list-style: none; }
 
@@ -107,11 +107,21 @@
 
   a.item:hover .item-title { text-decoration: underline; text-underline-offset: 3px; }
 
+  .item-locked {
+    display: block;
+    color: inherit;
+    cursor: default;
+  }
+
   .item-title {
     font-size: 15px;
     font-weight: 500;
     color: #1a1a1a;
     margin-bottom: 3px;
+  }
+
+  .item-locked .item-title {
+    color: #888;
   }
 
   .item-meta {
@@ -139,6 +149,11 @@
     letter-spacing: 0.03em;
     font-weight: 400;
   }
+
+  .item-tag--request {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
 </style>
 </head>
 <body>
@@ -147,11 +162,11 @@
   <header>
     <h1>Cedric Turner II</h1>
     <p class="tagline">#1 german shepherd dad &middot; solutions @ dbt</p>
-    <p class="site-desc">a running collection of notes, tools, and observations from how i think and what i'm exploring.</p>
+    <p class="site-desc">I work at the intersection of technical systems and how people talk about them. Most of the time, the real problem is one level deeper than where the conversation is. This is where I work it out.</p>
   </header>
 
-  <section class="section--notes">
-    <div class="section-label"><span class="hl">Notes</span></div>
+  <section class="section--systems">
+    <div class="section-label"><span class="hl">Systems</span></div>
     <ul>
       <li>
         <a class="item" href="./data-systems/">
@@ -159,6 +174,19 @@
           <div class="item-meta">a map of how modern data systems fit together, from sources to decisions</div>
           <div class="item-why">trying to understand the full stack by starting with the goal and working through each layer</div>
         </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section--strategy">
+    <div class="section-label"><span class="hl">Strategy &amp; Narrative</span></div>
+    <ul>
+      <li>
+        <div class="item-locked">
+          <div class="item-title">what AI actually runs on <span class="item-tag item-tag--request">by request</span></div>
+          <div class="item-meta">how AI uses data, where things break, and where dbt fits. for anyone who needs to talk about it.</div>
+          <div class="item-why">the framing I'd want someone to walk into a meeting with. available internally, reach out to get it.</div>
+        </div>
       </li>
       <li>
         <a class="item" href="./blog/ai-forces-preference/">
@@ -176,22 +204,9 @@
       </li>
       <li>
         <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank">
-          <div class="item-title">is dbt core enough in the age of ai? ↗ <span class="item-tag">dbt</span></div>
+          <div class="item-title">is dbt core enough in the age of AI? ↗ <span class="item-tag">dbt</span></div>
           <div class="item-meta">AI changed the calculus, not because of dbt Platform features, but because of what AI agents actually need from your data infrastructure</div>
           <div class="item-why">the answer depends entirely on what you think AI is actually going to do with your data</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--vision">
-    <div class="section-label"><span class="hl">The Vision</span></div>
-    <ul>
-      <li>
-        <a class="item" href="./ai-and-data/">
-          <div class="item-title">what AI actually runs on</div>
-          <div class="item-meta">how AI uses data, where things break, and where dbt fits. for anyone who needs to talk about it.</div>
-          <div class="item-why">written for the conversation, not the textbook. the framing i'd want someone to walk into a meeting with.</div>
         </a>
       </li>
     </ul>
