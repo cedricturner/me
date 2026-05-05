@@ -200,38 +200,57 @@
   }
   .quantum-block p:last-child { margin-bottom: 0; }
 
-  /* hero flow */
-  .hero-flow-wrap {
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin: 32px 0;
-  }
-  .hero-flow-wrap::-webkit-scrollbar { display: none; }
-  .hero-flow {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    gap: 0;
-    min-width: min-content;
-    padding: 20px;
+  /* cycle flow diagram */
+  .cycle-track {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
     background: var(--flow-bg);
     border: 1px solid var(--rule);
     border-radius: 8px;
+    padding: 20px;
+    margin: 32px 0;
   }
-  .hf-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
-  .hf-box {
+  .cycle-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 4px;
+  }
+  .cycle-box {
     background: var(--flow-box-bg);
     border: 1px solid var(--flow-box-border);
     border-radius: 5px;
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 8px 12px;
+    font-size: 12.5px;
     font-weight: 500;
     color: var(--text);
     white-space: nowrap;
+    text-align: center;
   }
-  .hf-sub { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.4; max-width: 80px; }
-  .hf-arr { font-size: 15px; color: var(--flow-arrow); padding: 0 8px; flex-shrink: 0; margin-top: 12px; }
+  .cycle-sub {
+    font-size: 10px;
+    color: var(--faint);
+    text-align: center;
+    line-height: 1.4;
+    max-width: 90px;
+  }
+  .cycle-h-arr {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 13px;
+    font-size: 13px;
+    color: var(--flow-arrow);
+  }
+  .cycle-v-conn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--flow-arrow);
+    padding: 10px 0;
+  }
 
   /* sysmap */
   .sysmap-wrap {
@@ -384,7 +403,10 @@
     <h1>what the data stack becomes</h1>
     <div class="subtitle">the infrastructure <span class="hl-ac">AC</span> runs on</div>
     <p class="intro">
-      I wrote about two things that constrain intelligence: compute and context. <a href="/me/ai-and-data/">The data problem AI can't solve</a> makes the argument that compute is being worked on and context is the part nobody has figured out yet. This is the other side of that. The data stack has always existed to produce better decisions. When the thing making the decision is <span class="hl-ac">AC</span>, the four stages don't go away. They become the infrastructure AC runs on. What they need to produce changes completely.
+      <span class="hl-ac">AC</span> is the all-knowing intelligence from Asimov's 1956 story: a system that never guesses and is only limited by what it knows and how much it can process. Not a chatbot, not a copilot. Something that has complete context and never has to make up the difference. That is the target.
+    </p>
+    <p class="intro">
+      I wrote about two things that constrain intelligence: compute and context. <a href="/me/ai-and-data/">The data problem AI can't solve</a> explains what stands between today and AC. This is the infrastructure that has to exist for it to be possible. The data stack has always existed to produce better decisions. When the thing making those decisions is AC, the four stages don't go away. They become what it runs on. What they need to produce changes completely.
     </p>
 
     <div class="quantum-block">
@@ -393,37 +415,40 @@
       <p>That creates a forcing function for every layer of this stack. Compute and context move together. When compute takes a step-change, context has to match it or the additional processing power goes to waste. <span class="hl-ac">AC</span> only gets smarter if both sides improve. The cycle of better compute demanding better context, better context enabling better compute to do more, is what drives toward AC. This page is about what each layer has to become for that cycle to keep moving.</p>
     </div>
 
-    <div class="hero-flow-wrap">
-      <div class="hero-flow">
-        <div class="hf-node">
-          <div class="hf-box">something happens</div>
-          <div class="hf-sub">an event in the real world</div>
-        </div>
-        <div class="hf-arr">→</div>
-        <div class="hf-node">
-          <div class="hf-box">gets recorded</div>
-          <div class="hf-sub">a system captures it</div>
-        </div>
-        <div class="hf-arr">→</div>
-        <div class="hf-node">
-          <div class="hf-box">lives somewhere</div>
-          <div class="hf-sub">stored and held</div>
-        </div>
-        <div class="hf-arr">→</div>
-        <div class="hf-node">
-          <div class="hf-box">becomes useful</div>
-          <div class="hf-sub">cleaned, shaped, defined</div>
-        </div>
-        <div class="hf-arr">→</div>
-        <div class="hf-node">
-          <div class="hf-box">reaches someone</div>
-          <div class="hf-sub">a person or agent</div>
-        </div>
-        <div class="hf-arr">→</div>
-        <div class="hf-node">
-          <div class="hf-box">a decision gets made</div>
-          <div class="hf-sub">the goal, same as before</div>
-        </div>
+    <div class="cycle-track">
+      <!-- top row: left to right -->
+      <div class="cycle-node">
+        <div class="cycle-box">something happens</div>
+        <div class="cycle-sub">an event in the real world</div>
+      </div>
+      <div class="cycle-h-arr">→</div>
+      <div class="cycle-node">
+        <div class="cycle-box">gets recorded</div>
+        <div class="cycle-sub">a system captures it</div>
+      </div>
+      <div class="cycle-h-arr">→</div>
+      <div class="cycle-node">
+        <div class="cycle-box">lives somewhere</div>
+        <div class="cycle-sub">stored and held</div>
+      </div>
+      <!-- side connectors -->
+      <div class="cycle-v-conn">↑</div>
+      <div></div><div></div><div></div>
+      <div class="cycle-v-conn">↓</div>
+      <!-- bottom row: right to left -->
+      <div class="cycle-node">
+        <div class="cycle-box">a decision gets made</div>
+        <div class="cycle-sub">cycle restarts</div>
+      </div>
+      <div class="cycle-h-arr">←</div>
+      <div class="cycle-node">
+        <div class="cycle-box">reaches someone</div>
+        <div class="cycle-sub">a person or agent</div>
+      </div>
+      <div class="cycle-h-arr">←</div>
+      <div class="cycle-node">
+        <div class="cycle-box">becomes useful</div>
+        <div class="cycle-sub">cleaned, shaped, defined</div>
       </div>
     </div>
 
