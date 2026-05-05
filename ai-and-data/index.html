@@ -543,6 +543,7 @@
         <div class="constraint-desc">how much it can process at once, and how fast it can find the answer</div>
       </div>
     </div>
+    <p style="margin-top: 28px; font-size: 15px; color: #444; max-width: 540px; line-height: 1.75;">The AI race is not just a model race. It is a race to build the memory layer those models can trust.</p>
   </div>
 
 
@@ -622,13 +623,35 @@
     </div>
 
     <p>
-      <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a>, <a href="https://azure.microsoft.com/en-us/solutions/quantum-computing" target="_blank" rel="noopener">Microsoft</a>, and a growing wave of startups are all racing toward commercial quantum systems, mostly out of the public eye because there is no commercial use case to ship yet. The breakthroughs are happening in labs, not product launches. But that is exactly how transformative technology tends to move, quietly, until it does not. When it arrives, the ripple effects will not be limited to AI: drug discovery and clinical trials will run at a scale that compresses decades into months, encryption standards that currently take millions of years to crack become solvable in minutes, and entire financial systems built on cryptographic assumptions will need to be rethought overnight. The field of <span class="term" data-tip="Quantum Machine Learning applies quantum computing to AI and machine learning tasks. The idea is that quantum speedup could dramatically accelerate how models train and reason, getting us much closer to AC. Still early, but growing fast.">quantum machine learning</span> sits at the center of all of it, because the intersection of unlimited compute and AI is where the next real leap in reasoning lives. When compute approaches unlimited, AC's first constraint starts to disappear. What remains is the harder one, and it is the one nobody is going to solve for you.
+      <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a>, <a href="https://azure.microsoft.com/en-us/solutions/quantum-computing" target="_blank" rel="noopener">Microsoft</a>, and a growing wave of startups are all racing toward commercial quantum systems, mostly out of the public eye because there is no commercial use case to ship yet. The breakthroughs are happening in labs, not product launches. But that is exactly how transformative technology tends to move, quietly, until it does not. Quantum is best understood as the next major acceleration layer: the way GPUs reshaped what AI could process, applied to a different class of problems. Anything that benefits from evaluating many possibilities at once gets dramatically faster. It will not instantly replace every piece of existing infrastructure, but when it reaches commercial scale it will raise the ceiling on how much a model can reason through at a time.
+    </p>
+    <p>
+      Quantum may raise the ceiling on what machines can reason through. But it does not fix whether the information they reason over is true, complete, governed, or meaningful. When compute gets faster, the context problem does not get easier. It gets more exposed.
     </p>
   </div>
 
 
   <div class="section">
-    <div class="section-label">04 / the agent era</div>
+    <div class="section-label">04 / what does not disappear</div>
+    <h2>better compute changes the job. it does not end it.</h2>
+
+    <p>
+      When compute gets cheaper and faster, moving and processing data gets easier. That part has been true through every wave of infrastructure change, from on-premise to cloud to serverless. The plumbing gets simpler. You need fewer people to operate it and less time to maintain it.
+    </p>
+    <p>
+      But the plumbing was never the hard part. The hard part is whether the data being moved means anything. Whether the definition of "revenue" in your data warehouse matches what finance means when they say it. Whether the lineage behind a number an agent surfaces can be traced back to something real. Whether access controls are in place so agents do not read things they should not. Whether shared definitions hold up across teams and systems that were never designed to agree.
+    </p>
+    <p>
+      Those problems do not get easier when compute accelerates. They get more consequential. An agent with faster reasoning, working from undefined or inconsistent data, does not produce better answers. It produces wrong answers faster.
+    </p>
+    <p>
+      Data engineering does not disappear. It moves up the stack: from plumbing and optimization toward something closer to context engineering, structuring information so the systems consuming it can reason over it, trust it, and trace it. Agents will need structured context, not just more tokens or faster chips.
+    </p>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">05 / the agent era</div>
     <h2>the stakes just got higher</h2>
 
     <p>
@@ -647,7 +670,7 @@
 
 
   <div class="section">
-    <div class="section-label">05 / the context side</div>
+    <div class="section-label">06 / the context side</div>
     <h2>and most companies have not solved it</h2>
 
     <p>
@@ -683,7 +706,7 @@
 
 
   <div class="section">
-    <div class="section-label">06 / what dbt and fivetran build</div>
+    <div class="section-label">07 / what dbt and fivetran build</div>
     <h2>the infrastructure <span class="hl-ac">AC</span> would have needed from the start</h2>
 
     <p>
@@ -765,7 +788,7 @@
 
 
   <div class="section">
-    <div class="section-label">07 / the prediction</div>
+    <div class="section-label">08 / the prediction</div>
     <h2>when both constraints lift</h2>
 
     <p>
@@ -827,6 +850,10 @@
       </div>
 
     </div>
+
+    <p>
+      <span class="hl-ac">AC</span> is not the product. It is the test: can your system answer without guessing?
+    </p>
 
     <p>
       <span class="hl-ac">AC</span> is not a fantasy. It is a direction, and every piece of infrastructure built toward clean, centralized, trustworthy data is a step toward it. <span class="hl-fivetran">Fivetran</span> makes sure AC has access to everything. <span class="hl-dbt">dbt</span> makes sure AC can trust what it reads, reason against what it knows, and answer with receipts. That is the entire problem Asimov spent the story trying to solve, and it is solvable, with the right foundation underneath it.
