@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>insufficient data / Cedric Turner II</title>
+<title>the data problem AI can't solve / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,7 +25,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap { max-width: 620px; margin: 0 auto; }
+  .wrap { max-width: 740px; margin: 0 auto; }
 
   nav { padding: 40px 0 60px; font-size: 13px; }
   nav a { color: var(--muted); text-decoration: none; }
@@ -36,7 +36,7 @@
   .hero .tag { display: inline-block; font-size: 11px; color: var(--faint); letter-spacing: 0.04em; margin-bottom: 20px; }
   .hero .lede { font-size: 16px; color: #555; line-height: 1.75; max-width: 540px; }
 
-  .section { margin-bottom: 72px; }
+  .section { margin-bottom: 64px; }
   .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--faint); margin-bottom: 18px; }
   .section h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.3; }
 
@@ -60,23 +60,100 @@
   .callout p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.7; }
 
   .asimov-quote {
-    margin: 32px 0;
-    padding: 20px 24px;
+    margin: 28px 0;
+    padding: 18px 22px;
     background: #f4f1ed;
     border-radius: 2px;
   }
-  .asimov-quote .quote-text {
-    font-size: 15px;
-    color: #444;
-    line-height: 1.7;
-    font-style: italic;
-    margin-bottom: 8px;
+  .asimov-quote .quote-text { font-size: 15px; color: #444; line-height: 1.7; font-style: italic; margin-bottom: 8px; }
+  .asimov-quote .quote-attr { font-size: 11px; color: var(--faint); letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* ── compute visual ───────────────────────────────── */
+  .compute-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--rule);
+    margin: 28px 0;
+    overflow: hidden;
   }
-  .asimov-quote .quote-attr {
-    font-size: 11px;
-    color: var(--faint);
-    letter-spacing: 0.04em;
+
+  .cv-col { padding: 20px; }
+  .cv-col + .cv-col { border-left: 1.5px solid var(--rule); }
+
+  .cv-label {
+    font-size: 10px;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 6px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cv-analogy {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 12px 0 16px;
+  }
+
+  .cv-steps { display: flex; flex-direction: column; gap: 6px; }
+
+  .cv-step {
+    font-size: 13px;
+    color: #555;
+    background: #f9f8f6;
+    border: 1px solid var(--rule);
+    padding: 7px 10px;
+    line-height: 1.4;
+  }
+
+  .cv-simultaneous { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
+
+  .cv-arrow {
+    font-size: 12px;
+    color: var(--faint);
+    padding: 2px 0;
+  }
+
+  .cv-result {
+    font-size: 13px;
+    font-weight: 600;
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    padding: 7px 10px;
+  }
+
+  /* ── dbt features ─────────────────────────────────── */
+  .dbt-features {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .dbt-feature {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+  }
+
+  .dbt-feature-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #1d4ed8;
+    padding-top: 2px;
+  }
+
+  .dbt-feature-desc {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.65;
   }
 
   .go-deeper { font-size: 13px; color: var(--muted); margin-top: 20px; }
@@ -89,9 +166,182 @@
     color: var(--faint);
   }
 
-  /* tooltips */
-  .term { border-bottom: 1.5px dashed #bbb; cursor: help; }
+  /* ── constraint cards (hero) ─────────────────────── */
+  .constraint-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .constraint-card {
+    border: 1.5px solid var(--rule);
+    padding: 16px 18px;
+    background: #fff;
+  }
+  .constraint-num {
+    font-size: 10px;
+    font-family: monospace;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    margin-bottom: 6px;
+  }
+  .constraint-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    text-transform: lowercase;
+  }
+  .constraint-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
 
+  /* ── scattered data visual (section 04) ──────────── */
+  .scattered-data { margin: 28px 0; }
+
+  .scattered-sources {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .scattered-source {
+    border: 1.5px solid var(--rule);
+    padding: 12px;
+    background: #fff;
+  }
+  .ss-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    margin-bottom: 5px;
+  }
+  .ss-value {
+    font-size: 13px;
+    color: #444;
+    font-family: monospace;
+  }
+  .scatter-arrow {
+    font-size: 12px;
+    color: var(--faint);
+    text-align: center;
+    padding: 6px 0;
+  }
+  .scatter-result {
+    border: 1.5px solid #fca5a5;
+    background: #fff1f2;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-style: italic;
+    color: #991b1b;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── architecture flow (section 05) ──────────────── */
+  .arch-flow { margin: 28px 0; }
+
+  .arch-sources {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .arch-source {
+    border: 1.5px solid var(--rule);
+    padding: 9px 10px;
+    background: #fff;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+  }
+  .arch-arrow {
+    font-size: 12px;
+    color: var(--faint);
+    padding: 4px 0 4px 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .arch-tool {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .arch-tool-fivetran { background: #a7f3d0; color: #065f46; }
+  .arch-tool-dbt      { background: #fed7aa; color: #92400e; }
+  .arch-tool-mcp      { background: #dbeafe; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.08em; }
+  .arch-box {
+    border: 1.5px solid var(--rule);
+    padding: 14px 16px;
+    background: #fff;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .arch-box.context-layer {
+    background: #eff6ff;
+    border-color: #93c5fd;
+  }
+  .arch-context-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d4ed8;
+    margin-bottom: 4px;
+  }
+  .arch-context-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .arch-pill {
+    font-size: 11px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .arch-context-section { margin-top: 10px; }
+  .arch-context-section:first-of-type { margin-top: 0; }
+  .arch-context-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #93c5fd;
+    margin-bottom: 5px;
+  }
+  .arch-pill-downstream {
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .arch-consumers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .arch-consumer {
+    border: 1.5px solid var(--rule);
+    padding: 9px 10px;
+    background: #fff;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+  }
+
+  /* ── tooltips ─────────────────────────────────────── */
+  .term { border-bottom: 1.5px dashed #bbb; cursor: help; }
   .term-tip {
     position: fixed;
     z-index: 1000;
@@ -116,6 +366,158 @@
   }
   .term-tip.tip-above::after { top: 100%; border-top-color: #1c1c1c; }
   .term-tip.tip-below::after { bottom: 100%; border-bottom-color: #1c1c1c; }
+
+  /* ── AC architecture diagram ─────────────────────── */
+  .ac-arch { margin: 32px 0; }
+  .ac-arch-sources {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .ac-arch-source {
+    border: 1.5px solid var(--rule);
+    background: #fff;
+    padding: 8px 6px;
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+  }
+  .ac-arch-vconn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 0;
+  }
+  .ac-arch-vconn-arrow { font-size: 13px; color: var(--faint); }
+  .ac-arch-conn-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .ac-arch-conn-tag.t-fivetran { background: #a7f3d0; color: #065f46; }
+  .ac-arch-conn-tag.t-dbt      { background: #fed7aa; color: #92400e; }
+  .ac-arch-conn-tag.t-mcp      { background: #dbeafe; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.07em; }
+  .ac-arch-quantum {
+    border: 1.5px solid #c4b5fd;
+    background: #f5f3ff;
+  }
+  .ac-arch-quantum-header {
+    padding: 6px 14px;
+    border-bottom: 1px solid #c4b5fd;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ac-arch-quantum-name {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7c3aed;
+  }
+  .ac-arch-quantum-note { font-size: 10px; color: #a78bfa; font-style: italic; }
+  .ac-arch-quantum-body {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+  }
+  .ac-arch-box {
+    border: 1.5px solid var(--rule);
+    background: #fff;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #555;
+    flex: 1;
+  }
+  .ac-arch-box.context { background: #eff6ff; border-color: #93c5fd; }
+  .ac-arch-context-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d4ed8;
+    margin-bottom: 6px;
+  }
+  .ac-arch-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ac-arch-pill {
+    font-size: 10px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .ac-arch-hconn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 10px;
+    flex-shrink: 0;
+  }
+  .ac-arch-hconn-arrow { font-size: 13px; color: var(--faint); }
+  .ac-arch-ac-box {
+    background: #fbcfe8;
+    border: 1.5px solid #f9a8d4;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #831843;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .ac-arch-ac-sub {
+    display: block;
+    font-size: 9px;
+    font-weight: 400;
+    color: #f472b6;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 5px;
+  }
+
+  /* ── concept callouts ─────────────────────────────── */
+  .concept-block {
+    border: 1.5px solid #93c5fd;
+    background: #eff6ff;
+    padding: 18px 22px;
+    margin: 28px 0;
+  }
+  .concept-block-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #1d4ed8;
+    margin-bottom: 10px;
+  }
+  .concept-block p {
+    font-size: 14px;
+    color: #1e3a5f;
+    margin: 0;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 580px) {
+    .constraint-cards { grid-template-columns: 1fr; }
+    .arch-sources, .arch-consumers { grid-template-columns: repeat(2, 1fr); }
+    .scattered-sources { grid-template-columns: 1fr; }
+    .ac-arch-sources { grid-template-columns: repeat(2, 1fr); }
+    .dbt-feature { grid-template-columns: 1fr; gap: 4px; }
+    .compute-visual { grid-template-columns: 1fr; }
+    .cv-col + .cv-col { border-left: none; border-top: 1.5px solid var(--rule); }
+  }
+
+  /* ── brand highlights ────────────────────────────── */
+  .hl-dbt, .hl-fivetran, .hl-ac {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .hl-dbt      { background: #fed7aa; }
+  .hl-fivetran { background: #a7f3d0; }
+  .hl-ac       { background: #fbcfe8; }
 </style>
 </head>
 <body>
@@ -124,20 +526,32 @@
   <nav><a href="/me/">← cedric turner ii</a></nav>
 
   <div class="hero">
-    <h1>insufficient data</h1>
-    <span class="tag">on intelligence, compute, and what we're actually building toward</span>
+    <h1>the data problem AI can't solve</h1>
+    <span class="tag">on what AI actually needs, and who's building it</span>
     <p class="lede">
-      There are exactly two things that determine how smart something is. What it knows. And how much it can think about at once. Everything else is a detail.
+      Intelligence has two constraints: what it knows and how much it can think about at once, and everything else is a detail. One of those constraints is being solved. The other one is on you.
     </p>
+    <div class="constraint-cards">
+      <div class="constraint-card">
+        <div class="constraint-num">01</div>
+        <div class="constraint-name">context</div>
+        <div class="constraint-desc">what it knows, and how complete and trustworthy that knowledge is</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-num">02</div>
+        <div class="constraint-name">compute</div>
+        <div class="constraint-desc">how much it can process at once, and how fast it can find the answer</div>
+      </div>
+    </div>
   </div>
 
 
   <div class="section">
-    <div class="section-label">01 / the frame</div>
-    <h2>an all-knowing machine that kept running into the same wall</h2>
+    <div class="section-label">01 / the hook</div>
+    <h2>an all-knowing machine, written before AI existed</h2>
 
     <p>
-      In 1956, Isaac Asimov wrote a short story about a supercomputer that grew smarter as humanity fed it more and more information. A machine that absorbed the knowledge of civilizations. Exactly the kind of all-knowing computer you'd expect to have every answer. But it kept hitting the same problem:
+      In 1956, long before anyone had named artificial intelligence, Isaac Asimov imagined a machine that would outlast civilizations. He called it <span class="hl-ac">AC</span>. Not a tool you queried and closed, but something that grew with the world, absorbed the memory of every generation that came before it, got smarter as humanity fed it more context, more history, more of everything the species had ever known. AC never refused a question. That was not in its nature. What <span class="hl-ac">AC</span> refused to do was guess. When it did not have enough to give a real answer, it said so, directly and without apology, every single time:
     </p>
 
     <div class="asimov-quote">
@@ -146,85 +560,280 @@
     </div>
 
     <p>
-      The machine was never throttled by compute. It was throttled by context. More information meant better answers. Less meant the same wall, over and over. That premise is still true. And dbt and Fivetran are the infrastructure that gets closest to removing it.
+      That honesty is what makes <span class="hl-ac">AC</span> worth paying attention to. It had access to more accumulated knowledge than any individual could build in a lifetime and still had the self-awareness to know when that was not enough. It was not broken, it was not failing, it was being precise about what it actually knew versus what it would have had to make up. Asimov wrote this before machine learning existed, before anyone had named the problem he was describing, before computers could do much of anything at all. He just saw the logic: AC is only as smart as what it knows, and the smarter you want it to be, the more complete and trustworthy that knowledge has to be. That logic has not changed. We are just now living inside it.
     </p>
   </div>
 
 
   <div class="section">
     <div class="section-label">02 / the two constraints</div>
-    <h2>what intelligence actually needs</h2>
+    <h2>what intelligence actually runs on</h2>
 
     <p>
-      Think about what makes a person give a good answer. They need to know enough to have relevant information, and they need enough time and mental space to think it through. Open book tests produce better results than closed book, not because they're easier, but because removing the memory constraint lets you focus on the thinking. The smartest person in the room with no information and no time is useless. An average person with the right context and space to think often surprises you.
+      Think about the last time you were asked a question you only half-knew the answer to. You gave the best answer you could with what you had, filling in the gaps with your best guess, and if you were wrong nobody could blame you because you were working with what you had. That is exactly what AI does too, and it is exactly why AC kept getting the same answer: not enough to go on.
     </p>
     <p>
-      AI is no different. The leap from early language models to the <span class="term" data-tip="AI models trained on massive amounts of text with billions to trillions of parameters. GPT-4, Claude, Gemini are all LLMs. The 'large' refers to model size, but what drove the practical leap in usefulness is how much relevant context the model can hold in view when answering.">large language models</span> we use today is mostly a story about adding context: bigger training sets, longer windows, real-time retrieval via tools like <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener"><span class="term" data-tip="Model Context Protocol. An open standard released by Anthropic in 2024 that lets AI models pull from live data sources, files, and tools in real time. Like handing the model a search bar instead of asking it to work from memory.">MCP</span></a>. More context, fewer hallucinations, better answers. The constraint has always been one of these two things: what the model knows, or what it can process at once.
+      How smart something is comes down to two things, what it knows and what it can process at once, and the entire history of making AI better is a story about pushing on both of those levers. Open book tests produce better results than closed book, not because they are easier, but because removing the memory constraint lets you focus on the reasoning itself. Tools like <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener"><span class="term" data-tip="Model Context Protocol. An open standard released by Anthropic in 2024 that lets AI models pull from live data sources, files, and tools in real time, like handing the model a search bar instead of asking it to work from memory.">MCP</span></a> exist for exactly this reason, giving the model access to live information at the moment it needs to answer, more context, fewer hallucinations, better answers. The <span class="term" data-tip="AI models trained on massive amounts of text with billions to trillions of parameters. GPT-4, Claude, Gemini are all LLMs. The 'large' refers to model size, but what drove the practical leap in usefulness is how much relevant context the model can access when answering.">large language models</span> we use today are not smarter than earlier ones because of magic, they are smarter because they have access to more.
     </p>
     <p>
-      We have been making progress on both. But we are still very far from either being solved. And the progress on one is about to accelerate in a way that changes what the other one means.
+      AC had both of these constraints too, and it kept pushing on both of them. So are we.
     </p>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">03 / the compute side</div>
+    <h2>one constraint is being solved, and it is not yours to solve</h2>
+
+    <p>
+      For decades, making computers faster meant making their parts smaller, packing more of them onto a chip so more could run at the same time. It worked remarkably well, until the parts got so small they were approaching the size of individual atoms, and there is simply nowhere smaller to go. The speed of traditional computers was beginning to plateau.
+    </p>
+    <p>
+      <span class="term" data-tip="A normal computer stores everything as bits: a 0 or a 1, off or on, yes or no. A qubit (quantum bit) can be 0, 1, or both at the same time until you measure it. That's called superposition. Think of Schrödinger's box: the cat inside is either alive or dead, but until you open it, both are true. Quantum computers use this to run every possible answer simultaneously instead of one at a time.">Quantum computing</span> takes a completely different approach. The best way to understand it is through a decision. Imagine you are playing a game where every choice you make changes the outcome, and you need to find the winning path. A traditional computer tries one choice, sees what happens, backtracks if it was wrong, tries the next one, and so on until it finds the answer, one path at a time. A quantum computer can take every path simultaneously, run every possible outcome at once, and find the right answer without the trial and error.
+    </p>
+
+    <div class="compute-visual">
+      <div class="cv-col">
+        <div class="cv-label">traditional compute</div>
+        <div class="cv-analogy">one path at a time</div>
+        <div class="cv-steps">
+          <div class="cv-step">try path A</div>
+          <div class="cv-arrow">↓ wrong, go back</div>
+          <div class="cv-step">try path B</div>
+          <div class="cv-arrow">↓ wrong, go back</div>
+          <div class="cv-step">try path C</div>
+          <div class="cv-arrow">↓ right</div>
+          <div class="cv-result">found it (eventually)</div>
+        </div>
+      </div>
+      <div class="cv-col">
+        <div class="cv-label">quantum compute</div>
+        <div class="cv-analogy">every path at once</div>
+        <div class="cv-steps">
+          <div class="cv-simultaneous">
+            <div class="cv-step">try path A</div>
+            <div class="cv-step">try path B</div>
+            <div class="cv-step">try path C</div>
+          </div>
+          <div class="cv-arrow">↓ all at once</div>
+          <div class="cv-result">found it (instantly)</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a>, <a href="https://azure.microsoft.com/en-us/solutions/quantum-computing" target="_blank" rel="noopener">Microsoft</a>, and a growing wave of startups are all racing toward commercial quantum systems, mostly out of the public eye because there is no commercial use case to ship yet. The breakthroughs are happening in labs, not product launches. But that is exactly how transformative technology tends to move, quietly, until it does not. When it arrives, the ripple effects will not be limited to AI: drug discovery and clinical trials will run at a scale that compresses decades into months, encryption standards that currently take millions of years to crack become solvable in minutes, and entire financial systems built on cryptographic assumptions will need to be rethought overnight. The field of <span class="term" data-tip="Quantum Machine Learning applies quantum computing to AI and machine learning tasks. The idea is that quantum speedup could dramatically accelerate how models train and reason, getting us much closer to AC. Still early, but growing fast.">quantum machine learning</span> sits at the center of all of it, because the intersection of unlimited compute and AI is where the next real leap in reasoning lives. When compute approaches unlimited, AC's first constraint starts to disappear. What remains is the harder one, and it is the one nobody is going to solve for you.
+    </p>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">04 / the agent era</div>
+    <h2>the stakes just got higher</h2>
+
+    <p>
+      Most people think of AI as something that answers questions. Ask it something, it responds, you decide what to do with the answer. That version of AI is already being replaced.
+    </p>
+    <p>
+      AI agents do not just answer, they act. An agent does not tell you what your pipeline looks like, it goes and checks it, finds the anomaly, cross-references it against three other data sources, and either flags it or fixes it depending on what it was told to do. The difference between a wrong answer and a wrong action is the difference between something you can correct and something you have to clean up. When an agent is working from bad data, it does not just produce a wrong answer with confidence, it takes a wrong action with confidence, and that is a much harder thing to recover from.
+    </p>
+    <p>
+      This is where most companies are unprepared. They have invested in AI, they have the models, they are deploying agents, and the agents are working from the same scattered, inconsistent, undefined data that the dashboards were always working from. The tolerance for that kind of data was low before. For agents, it is near zero.
+    </p>
+    <p>
+      <span class="hl-ac">AC</span> was not a question-answering system. It was an agent at cosmic scale, one that could act on everything it knew. The thing that kept it from its answer was never a lack of willingness to act. It was insufficient data. That is still the problem. It is just more urgent now.
+    </p>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">05 / the context side</div>
+    <h2>and most companies have not solved it</h2>
+
+    <p>
+      Imagine asking a doctor for a diagnosis but handing them three different sets of test results from three different labs, each measuring the same things slightly differently, with no explanation of which one to trust. A good doctor is not going to give you a confident answer, and if they do you should be worried, because confidence without reliable information is just a guess with good posture.
+    </p>
+    <p>
+      Most companies are asking their AI to do exactly that. The data is scattered across dozens of systems, "revenue" means something different in sales than it does in finance, business logic lives in spreadsheets and inside BI tools and in the memory of the analyst who built the original dashboard three years ago. The AI reads whatever it can find and gives you its best answer, not because it is broken, but because it is working with what it has. This is what AC kept running into too, not a compute problem but a context problem, not enough trustworthy information to give a meaningful answer. The difference is <span class="hl-ac">AC</span> was fictional. Your business is not.
+    </p>
+
+    <div class="scattered-data">
+      <div class="scattered-sources">
+        <div class="scattered-source">
+          <div class="ss-label">Sales CRM</div>
+          <div class="ss-value">revenue = $4.2M</div>
+        </div>
+        <div class="scattered-source">
+          <div class="ss-label">Finance</div>
+          <div class="ss-value">revenue = $3.8M</div>
+        </div>
+        <div class="scattered-source">
+          <div class="ss-label">BI Tool</div>
+          <div class="ss-value">revenue = $4.0M</div>
+        </div>
+      </div>
+      <div class="scatter-arrow">↓ &nbsp; AI tries to reconcile all three</div>
+      <div class="scatter-result">"THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER."</div>
+    </div>
 
     <div class="callout">
-      <p>When one constraint lifts, the other becomes the entire problem. If compute becomes abundant, context is everything. If context becomes rich, compute is what determines how fast you can reason across it.</p>
+      <p>No matter how much compute you have, if the data underneath is inconsistent and undefined, the answer will be wrong faster. Compute without context is just confident noise.</p>
     </div>
   </div>
 
 
   <div class="section">
-    <div class="section-label">03 / the compute wall</div>
-    <h2>we were running out of room, and then quantum happened</h2>
+    <div class="section-label">06 / what dbt and fivetran build</div>
+    <h2>the infrastructure <span class="hl-ac">AC</span> would have needed from the start</h2>
 
     <p>
-      For decades, computers got faster because transistors got smaller. More of them fit on a chip, so more could run at once. But transistors were approaching the size of individual atoms. You cannot make them smaller than that. We were reaching the physical limit of what silicon could do, and the speed of computers was beginning to plateau.
+      <span class="hl-fivetran">Fivetran</span> solves the ingestion side: it pulls data in from every source your company touches, your CRM, your warehouse, your third-party tools, all of it, and keeps it moving and current. Think of it as the part that makes sure AC has access to everything, not just whatever happened to be easy to reach.
     </p>
     <p>
-      Quantum computing approaches this differently. A normal bit is either 0 or 1. A <span class="term" data-tip="A regular bit is either 0 or 1. A qubit can be both at the same time, until you measure it. That's superposition. Schrödinger's box: before you open it, the cat is either alive or dead. Both are true until you look. This lets quantum computers process exponentially more possibilities simultaneously rather than one at a time.">qubit</span> can be both at the same time, until you measure it. This is not just a faster version of the same thing. It is a fundamentally different kind of computation, one that can hold and process exponentially more states simultaneously. <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, and <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a> are all racing toward commercial quantum systems. IBM already lets you write and run quantum programs from your own machine via <a href="https://www.ibm.com/quantum/qiskit" target="_blank" rel="noopener">Qiskit</a>. The field of <span class="term" data-tip="Quantum Machine Learning applies quantum computing to AI and machine learning tasks. The theory is that quantum speedup could dramatically accelerate model training and inference. Still early and mostly research-stage, but IBM, Google, IonQ, and a wave of startups are actively working on it.">quantum machine learning</span> is growing behind the scenes precisely because the intersection of quantum compute and AI training is where the next significant leap lives.
-    </p>
-    <p>
-      We have also seen a preview of what happens when compute moves closer to the data rather than the other way around. <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> runs analytical queries directly on your machine, no warehouse needed. It is a small signal of a larger shift: compute moving to wherever the data already lives. Quantum is the endpoint of that arc. When it reaches commercial scale, the question of "can we afford to compute this" largely disappears. What remains is: do we have the context to make the answer meaningful?
-    </p>
-  </div>
-
-
-  <div class="section">
-    <div class="section-label">04 / the context problem</div>
-    <h2>most company data is still answering from memory</h2>
-
-    <p>
-      Most companies have deployed AI. Most are not getting answers they trust. The instinct is to blame the model, to switch providers, to tune prompts. Almost always, the problem is one layer below: the data the model is reading is scattered, inconsistent, and undefined.
-    </p>
-    <p>
-      "Revenue" means something different in sales than it does in finance. Business logic lives in spreadsheets, inside BI tools, in the memory of the analyst who built the original dashboard and has since left. The AI is working closed-book, filling gaps with its best guess. It is not hallucinating because it is broken. It is hallucinating because it has insufficient data.
-    </p>
-    <p>
-      The fix is not a better model. It is a context layer: a place where your data is cleaned, your definitions are centralized, and your business logic is written down once and made available to everything that needs to read it. Fivetran gets data in from every source. dbt defines what it means. Together they solve the same problem the Asimov machine was working: not the compute, but the context. Making sure that when the question is asked, the answer exists somewhere trustworthy to read from.
+      <span class="hl-dbt">dbt</span> solves the definition side, and this is where it gets interesting. Having the data is not the same as having trustworthy data. dbt is where you write down, in code, what your data actually means, and then enforce it automatically every time anything changes. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what AC can know is dbt's structured layer plus everything that layers on downstream.
     </p>
 
-    <div class="callout">
-      <p>No matter how much compute you have, if the data underneath is undefined and inconsistent, the answer will be wrong faster. Compute without context is just confident noise.</p>
+    <div class="arch-flow">
+      <div class="arch-sources">
+        <div class="arch-source">CRM</div>
+        <div class="arch-source">warehouse</div>
+        <div class="arch-source">APIs</div>
+        <div class="arch-source">spreadsheets</div>
+      </div>
+      <div class="arch-arrow">↓ &nbsp; <span class="arch-tool arch-tool-fivetran">Fivetran</span> &nbsp; ingests everything, keeps it current</div>
+      <div class="arch-box">raw data, flowing in from every source</div>
+      <div class="arch-arrow">↓ &nbsp; <span class="arch-tool arch-tool-dbt">dbt</span> &nbsp; defines what it means, tests it automatically</div>
+      <div class="arch-box context-layer">
+        <div class="arch-context-title">context layer</div>
+        <div class="arch-context-section">
+          <div class="arch-context-section-label">dbt</div>
+          <div class="arch-context-pills">
+            <span class="arch-pill">semantic layer</span>
+            <span class="arch-pill">full lineage</span>
+            <span class="arch-pill">versioned logic</span>
+            <span class="arch-pill">automated tests</span>
+          </div>
+        </div>
+        <div class="arch-context-section">
+          <div class="arch-context-section-label">downstream</div>
+          <div class="arch-context-pills">
+            <span class="arch-pill-downstream">skills</span>
+            <span class="arch-pill-downstream">.md context</span>
+            <span class="arch-pill-downstream">tool definitions</span>
+          </div>
+        </div>
+      </div>
+      <div class="arch-arrow">↓ &nbsp; <span class="arch-tool arch-tool-mcp">MCP + API</span> &nbsp; everything reads from here</div>
+      <div class="arch-consumers">
+        <div class="arch-consumer">AI agents</div>
+        <div class="arch-consumer">dashboards</div>
+        <div class="arch-consumer">data apps</div>
+        <div class="arch-consumer">analysts</div>
+      </div>
     </div>
+
+    <div class="dbt-features">
+      <div class="dbt-feature">
+        <div class="dbt-feature-name">semantic layer</div>
+        <div class="dbt-feature-desc">Define "revenue" once. Every tool that asks, whether it is a dashboard, an AI agent, or an analyst, gets the exact same answer. No more version of the truth that depends on who you ask.</div>
+      </div>
+      <div class="dbt-feature">
+        <div class="dbt-feature-name">automated testing</div>
+        <div class="dbt-feature-desc">dbt tests your data automatically, like a spell checker for your business logic. If "revenue" ever stops following the rules you set, dbt catches it before the AI reads it and gives a wrong answer with confidence.</div>
+      </div>
+      <div class="dbt-feature">
+        <div class="dbt-feature-name">full lineage</div>
+        <div class="dbt-feature-desc">Every number can be traced all the way back to where it came from, like showing your work on a math test. If the AI gives an answer, you can follow the chain back to the source. No black boxes.</div>
+      </div>
+      <div class="dbt-feature">
+        <div class="dbt-feature-name">version control</div>
+        <div class="dbt-feature-desc">Your definitions live in code, not in someone's head. Every change is tracked, every decision is auditable, and if something breaks you can roll back, the same way software engineers manage code.</div>
+      </div>
+    </div>
+
+    <div class="concept-block">
+      <div class="concept-block-label">how dbt enables AC</div>
+      <p>Think of every dbt project as a library with no card catalog. The books are there, the data is organized, but when an agent needs to understand what your project contains it has to read everything from scratch, slow and prone to misreading. What changes this is turning all of that project metadata, every model, test, metric, and lineage connection, into a structured layer the agent can query directly. The data stack gets a search bar. <span class="hl-ac">AC</span> stops guessing about your project and starts reasoning against real context.</p>
+    </div>
+
+    <p>
+      Together, <span class="hl-fivetran">Fivetran</span> and <span class="hl-dbt">dbt</span> build the context layer: the foundation between raw data and every tool that reads from it, clean, defined, trustworthy. What AC would have needed from the very beginning, and what your AI needs right now.
+    </p>
+
+    <p class="go-deeper">On why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
 
 
   <div class="section">
-    <div class="section-label">05 / the prediction</div>
-    <h2>what this is actually building toward</h2>
+    <div class="section-label">07 / the prediction</div>
+    <h2>when both constraints lift</h2>
 
     <p>
-      As compute approaches unlimited through quantum, the only remaining constraint is context. Not which model you chose, not which warehouse you pay for, not which AI product you licensed last quarter. Whether your data is defined well enough to give a meaningful answer.
+      As quantum compute gets closer to commercial scale, AC's first constraint starts to disappear, and the only thing left standing between your AI and a meaningful answer is whether your data was ready. The companies building a real context layer now are the ones who will be able to ask harder questions when that moment arrives, not just "what happened?" but "why?" not just "why?" but "what should we do next?"
     </p>
-    <p>
-      The companies that figure this out first will be able to ask harder questions. Not just "what happened?" but "why?" Not just "why?" but "what should we do?" Reasoning across multiple sources, at speed, with no artificial limit on what can be held in view at once. That is where this is heading. It is not a near-term product roadmap. It is where the arc of intelligence, human and artificial, has always been pointing.
-    </p>
-    <p>
-      Fivetran pulls data in from every source. dbt defines what it means. Together they are building what the Asimov machine needed most: a reliable, centralized, well-defined picture of what is known. The infrastructure question of our era is not which compute platform to pick. It is whether your data will be ready when compute is no longer the reason you cannot answer.
-    </p>
-    <p>
-      The machine in the story eventually got there. The question is whether yours will.
-    </p>
+    <div class="concept-block">
+      <div class="concept-block-label">how dbt enables AC</div>
+      <p>The hardest question, what should we do next, requires something most AI tools cannot do today: reason across your warehouse, your documents, and your lineage graph simultaneously, cross-validate the answer against real data paths, and show you exactly how it got there. No black box. No guess. A full chain of reasoning you can follow all the way back to the source. That is what <span class="hl-ac">AC</span> needs to be trustworthy, not just smart, and it is the direction this infrastructure is actively heading.</p>
+    </div>
+    <div class="ac-arch">
 
-    <p class="go-deeper">The longer argument on what AI agents specifically need from your data infrastructure: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
+      <div class="ac-arch-sources">
+        <div class="ac-arch-source">CRM</div>
+        <div class="ac-arch-source">warehouse</div>
+        <div class="ac-arch-source">APIs</div>
+        <div class="ac-arch-source">spreadsheets</div>
+      </div>
+
+      <div class="ac-arch-vconn">
+        <div class="ac-arch-conn-tag t-fivetran">Fivetran</div>
+        <div class="ac-arch-vconn-arrow">↓</div>
+      </div>
+
+      <div class="ac-arch-quantum">
+        <div class="ac-arch-quantum-header">
+          <span class="ac-arch-quantum-name">quantum compute</span>
+          <span class="ac-arch-quantum-note">the solve in progress</span>
+        </div>
+        <div class="ac-arch-quantum-body">
+          <div class="ac-arch-box">raw data</div>
+          <div class="ac-arch-hconn">
+            <div class="ac-arch-conn-tag t-dbt">dbt</div>
+            <div class="ac-arch-hconn-arrow">→</div>
+          </div>
+          <div class="ac-arch-box context">
+            <div class="ac-arch-context-title">context layer</div>
+            <div class="ac-arch-pills" style="margin-bottom: 6px;">
+              <span class="ac-arch-pill">semantic layer</span>
+              <span class="ac-arch-pill">lineage</span>
+              <span class="ac-arch-pill">tests</span>
+            </div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:4px;">+ downstream</div>
+            <div class="ac-arch-pills">
+              <span class="ac-arch-pill" style="background:#e0e7ff;color:#3730a3;">skills</span>
+              <span class="ac-arch-pill" style="background:#e0e7ff;color:#3730a3;">.md</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ac-arch-vconn">
+        <div class="ac-arch-conn-tag t-mcp">MCP + API</div>
+        <div class="ac-arch-vconn-arrow">↓</div>
+      </div>
+
+      <div class="ac-arch-ac-box">
+        AC
+        <span class="ac-arch-ac-sub">the goal</span>
+      </div>
+
+    </div>
+
+    <p>
+      <span class="hl-ac">AC</span> is not a fantasy. It is a direction, and every piece of infrastructure built toward clean, centralized, trustworthy data is a step toward it. <span class="hl-fivetran">Fivetran</span> makes sure AC has access to everything. <span class="hl-dbt">dbt</span> makes sure AC can trust what it reads, reason against what it knows, and answer with receipts. That is the entire problem Asimov spent the story trying to solve, and it is solvable, with the right foundation underneath it.
+    </p>
+    <p>
+      Asimov imagined <span class="hl-ac">AC</span> in 1956. The infrastructure to build it exists now. The question is whether you are building on it.
+    </p>
   </div>
 
 
