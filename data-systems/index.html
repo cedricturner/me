@@ -273,6 +273,8 @@
   }
   .sm-sub { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.4; max-width: 100px; }
   .sm-arr { font-size: 15px; color: var(--flow-arrow); padding: 0 10px; flex-shrink: 0; margin-top: 14px; }
+  .sm-box--stage { background: #fdf6ee; border-color: #c4b8ae; }
+  .sm-box--goal { border-style: dashed; color: var(--muted); }
 
   /* inline flow */
   .flow-wrap {
@@ -411,28 +413,28 @@
     <div class="sysmap-wrap">
       <div class="sysmap">
         <div class="sm-node">
-          <div class="sm-box">sources</div>
+          <div class="sm-box sm-box--stage">sources</div>
           <div class="sm-sub">where data originates</div>
         </div>
         <div class="sm-arr">→</div>
         <div class="sm-node">
-          <div class="sm-box">storage</div>
+          <div class="sm-box sm-box--stage">storage</div>
           <div class="sm-sub">where it lives and how it gets processed</div>
         </div>
         <div class="sm-arr">→</div>
         <div class="sm-node">
-          <div class="sm-box">transformation</div>
+          <div class="sm-box sm-box--stage">transformation</div>
           <div class="sm-sub">how raw becomes trustworthy and defined</div>
         </div>
         <div class="sm-arr">→</div>
         <div class="sm-node">
-          <div class="sm-box">consumption</div>
+          <div class="sm-box sm-box--stage">consumption</div>
           <div class="sm-sub">how data reaches people and systems</div>
         </div>
         <div class="sm-arr">→</div>
         <div class="sm-node">
-          <div class="sm-box">decision</div>
-          <div class="sm-sub">the goal</div>
+          <div class="sm-box sm-box--goal">decision</div>
+          <div class="sm-sub">the goal, not a stage</div>
         </div>
       </div>
     </div>
