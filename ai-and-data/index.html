@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>context is the moat / Cedric Turner II</title>
+<title>insufficient data / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,7 +13,6 @@
     --faint: #aaa;
     --bg: #fafaf9;
     --rule: #e8e5e0;
-    --bg-lift: #f4f1ed;
   }
 
   body {
@@ -28,51 +27,22 @@
 
   .wrap { max-width: 620px; margin: 0 auto; }
 
-  /* nav */
   nav { padding: 40px 0 60px; font-size: 13px; }
   nav a { color: var(--muted); text-decoration: none; }
   nav a:hover { color: var(--text); }
 
-  /* hero */
   .hero { padding-bottom: 56px; border-bottom: 1px solid var(--rule); margin-bottom: 64px; }
   .hero h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px; }
-  .hero .tag {
-    display: inline-block;
-    font-size: 11px;
-    color: var(--faint);
-    letter-spacing: 0.04em;
-    margin-bottom: 20px;
-  }
-  .hero .lede {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.75;
-    max-width: 540px;
-  }
+  .hero .tag { display: inline-block; font-size: 11px; color: var(--faint); letter-spacing: 0.04em; margin-bottom: 20px; }
+  .hero .lede { font-size: 16px; color: #555; line-height: 1.75; max-width: 540px; }
 
-  /* sections */
   .section { margin-bottom: 72px; }
-
-  .section-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--faint);
-    margin-bottom: 18px;
-  }
-
-  .section h2 {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-    line-height: 1.3;
-  }
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--faint); margin-bottom: 18px; }
+  .section h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.3; }
 
   p { font-size: 16px; color: #2a2a2a; line-height: 1.8; margin-bottom: 20px; }
   p:last-child { margin-bottom: 0; }
 
-  /* inline links */
   .section a, .go-deeper a {
     color: var(--text);
     text-decoration: underline;
@@ -81,42 +51,6 @@
   }
   .section a:hover, .go-deeper a:hover { text-decoration-color: var(--text); }
 
-  /* before / after */
-  .before-after {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1.5px solid var(--rule);
-    margin: 28px 0;
-    overflow: hidden;
-  }
-
-  .ba-side { padding: 20px; }
-  .ba-side + .ba-side { border-left: 1.5px solid var(--rule); }
-
-  .ba-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--faint);
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .ba-line {
-    font-size: 14px;
-    color: #444;
-    line-height: 1.6;
-    margin-bottom: 8px;
-    display: flex;
-    gap: 8px;
-  }
-  .ba-line:last-child { margin-bottom: 0; }
-  .ba-line .dot { color: var(--faint); flex-shrink: 0; margin-top: 1px; }
-
-  /* callout */
   .callout {
     border-left: 3px solid var(--rule);
     padding: 14px 18px;
@@ -125,51 +59,28 @@
   }
   .callout p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.7; }
 
-  /* predictions */
-  .prediction-list {
-    margin: 28px 0;
-    border-top: 1px solid var(--rule);
+  .asimov-quote {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: #f4f1ed;
+    border-radius: 2px;
   }
-
-  .prediction-item {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 14px;
+  .asimov-quote .quote-text {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 8px;
   }
-
-  .prediction-num {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+  .asimov-quote .quote-attr {
+    font-size: 11px;
     color: var(--faint);
-    font-family: monospace;
-    padding-top: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
-  .prediction-text {
-    font-size: 15.5px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.5;
-    margin-bottom: 6px;
-  }
+  .go-deeper { font-size: 13px; color: var(--muted); margin-top: 20px; }
 
-  .prediction-why {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* go deeper */
-  .go-deeper {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 20px;
-  }
-
-  /* footer */
   .footer-note {
     margin-top: 80px;
     padding-top: 28px;
@@ -178,11 +89,8 @@
     color: var(--faint);
   }
 
-  /* ── tooltips ─────────────────────────────────────── */
-  .term {
-    border-bottom: 1.5px dashed #bbb;
-    cursor: help;
-  }
+  /* tooltips */
+  .term { border-bottom: 1.5px dashed #bbb; cursor: help; }
 
   .term-tip {
     position: fixed;
@@ -199,7 +107,6 @@
     transition: opacity 0.15s;
     display: none;
   }
-
   .term-tip::after {
     content: '';
     position: absolute;
@@ -207,16 +114,8 @@
     transform: translateX(-50%);
     border: 5px solid transparent;
   }
-
-  .term-tip.tip-above::after {
-    top: 100%;
-    border-top-color: #1c1c1c;
-  }
-
-  .term-tip.tip-below::after {
-    bottom: 100%;
-    border-bottom-color: #1c1c1c;
-  }
+  .term-tip.tip-above::after { top: 100%; border-top-color: #1c1c1c; }
+  .term-tip.tip-below::after { bottom: 100%; border-bottom-color: #1c1c1c; }
 </style>
 </head>
 <body>
@@ -224,185 +123,111 @@
 
   <nav><a href="/me/">← cedric turner ii</a></nav>
 
-  <!-- HERO -->
   <div class="hero">
-    <h1>context is the moat</h1>
-    <span class="tag">a prediction about where AI and data infrastructure are heading</span>
+    <h1>insufficient data</h1>
+    <span class="tag">on intelligence, compute, and what we're actually building toward</span>
     <p class="lede">
-      The AI conversation is mostly about models. Which one, how smart, how fast. That's the wrong layer. The companies that pull ahead over the next five years won't have better models. They'll have better context. Most data teams haven't started building it yet.
+      There are exactly two things that determine how smart something is. What it knows. And how much it can think about at once. Everything else is a detail.
     </p>
   </div>
 
 
-  <!-- 01 -->
   <div class="section">
-    <div class="section-label">01 / the context argument</div>
-    <h2>more context, fewer hallucinations</h2>
+    <div class="section-label">01 / the frame</div>
+    <h2>a story about a machine at the end of time</h2>
 
     <p>
-      The reason a model hallucinates isn't because it's dumb. It's because it doesn't know. People do the same thing. Fill in the gaps with something plausible. The more you know going in, the fewer gaps you have to fill.
+      In 1956, Isaac Asimov wrote a short story called <em>The Last Question</em>. In it, humanity keeps asking a supercomputer the same question across billions of years, as civilizations rise and fall, as stars burn out, as the universe itself winds down toward darkness. The question is always the same. The computer's answer is always the same:
+    </p>
+
+    <div class="asimov-quote">
+      <div class="quote-text">"THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER."</div>
+      <div class="quote-attr">Isaac Asimov, The Last Question (1956)</div>
+    </div>
+
+    <p>
+      Eventually, everything ends. The last stars go cold. The last humans merge their consciousness into the machine. The machine, now vast beyond comprehension, keeps thinking. Working the problem. And then, in the silence after everything, it finally has enough. It answers the question. It demonstrates the answer. It was Asimov's favorite story he ever wrote.
     </p>
     <p>
-      Open book tests produce better results than closed book. Not because people are cheating, but because access to more information at the moment of answering produces more accurate results. This is a solved problem at the human level. AI is working through the same one.
+      The reason it works as a story is that the premise is true: any intelligence, artificial or human, is only as good as the context it has access to and the compute it can bring to bear. Remove either constraint and you get worse answers. Remove both and you get the question we're all living in right now.
+    </p>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">02 / the two constraints</div>
+    <h2>what intelligence actually needs</h2>
+
+    <p>
+      Think about what makes a person give a good answer. They need to know enough to have relevant information, and they need enough time and mental space to think it through. Open book tests produce better results than closed book, not because they're easier, but because removing the memory constraint lets you focus on the thinking. The smartest person in the room with no information and no time is useless. An average person with the right context and space to think often surprises you.
     </p>
     <p>
-      The "large" in <span class="term" data-tip="AI models trained on massive amounts of text with billions to trillions of parameters. GPT-4, Claude, Gemini are all LLMs. The 'large' refers to model size, but what's driven the practical leap in usefulness is how much relevant context the model can access when answering.">large language model</span> refers partly to scale, but what's actually driven the leap in usefulness is how much relevant information a model can hold in view when it answers. Context windows grew. Retrieval systems improved. Tools like <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener"><span class="term" data-tip="Model Context Protocol. An open standard, released by Anthropic in 2024, that lets AI models pull from live data sources, files, and tools in real time. Like giving the model a search bar instead of asking it to work from memory.">MCP</span></a> let models pull from live sources at query time. You're handing the model the textbook instead of asking it to work from memory.
+      AI is no different. The leap from early language models to the <span class="term" data-tip="AI models trained on massive amounts of text with billions to trillions of parameters. GPT-4, Claude, Gemini are all LLMs. The 'large' refers to model size, but what drove the practical leap in usefulness is how much relevant context the model can hold in view when answering.">large language models</span> we use today is mostly a story about adding context: bigger training sets, longer windows, real-time retrieval via tools like <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener"><span class="term" data-tip="Model Context Protocol. An open standard released by Anthropic in 2024 that lets AI models pull from live data sources, files, and tools in real time. Like handing the model a search bar instead of asking it to work from memory.">MCP</span></a>. More context, fewer hallucinations, better answers. The constraint has always been one of these two things: what the model knows, or what it can process at once.
     </p>
     <p>
-      The entire arc of model improvement is this: give the model more of the right context. More training data, better retrieval, longer windows. The model that knows more gives better answers. The model that can hold more in view at once gives faster ones.
+      We have been making progress on both. But we are still very far from either being solved. And the progress on one is about to accelerate in a way that changes what the other one means.
     </p>
 
     <div class="callout">
-      <p>The constraint has never been the model. It's always been context. Better models help at the margin. Better context changes the answer entirely.</p>
+      <p>When one constraint lifts, the other becomes the entire problem. If compute becomes abundant, context is everything. If context becomes rich, compute is what determines how fast you can reason across it.</p>
     </div>
-
-    <p class="go-deeper">On how this shift changes the way people actually work: <a href="../blog/ai-forces-preference/">AI forces preference →</a></p>
   </div>
 
 
-  <!-- 02 -->
   <div class="section">
-    <div class="section-label">02 / where most companies are</div>
-    <h2>closed-book, and not by choice</h2>
+    <div class="section-label">03 / the compute wall</div>
+    <h2>we were running out of room, and then quantum happened</h2>
 
     <p>
-      Most companies have deployed AI. Very few are getting useful answers out of it.
+      For decades, computers got faster because transistors got smaller. More of them fit on a chip, so more could run at once. But transistors were approaching the size of individual atoms. You cannot make them smaller than that. We were reaching the physical limit of what silicon could do, and the speed of computers was beginning to plateau.
     </p>
     <p>
-      The reason is they're feeding AI with language-model-era context in a large-language-model-era world. Their data is scattered, inconsistent, and undefined. The same metric means different things in different systems. Business logic lives in spreadsheets, BI tools, and someone's memory. The AI is answering closed-book, filling in the gaps as best it can.
+      Quantum computing approaches this differently. A normal bit is either 0 or 1. A <span class="term" data-tip="A regular bit is either 0 or 1. A qubit can be both at the same time, until you measure it. That's superposition. Schrödinger's box: before you open it, the cat is either alive or dead. Both are true until you look. This lets quantum computers process exponentially more possibilities simultaneously rather than one at a time.">qubit</span> can be both at the same time, until you measure it. This is not just a faster version of the same thing. It is a fundamentally different kind of computation, one that can hold and process exponentially more states simultaneously. <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, and <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a> are all racing toward commercial quantum systems. IBM already lets you write and run quantum programs from your own machine via <a href="https://www.ibm.com/quantum/qiskit" target="_blank" rel="noopener">Qiskit</a>. The field of <span class="term" data-tip="Quantum Machine Learning applies quantum computing to AI and machine learning tasks. The theory is that quantum speedup could dramatically accelerate model training and inference. Still early and mostly research-stage, but IBM, Google, IonQ, and a wave of startups are actively working on it.">quantum machine learning</span> is growing behind the scenes precisely because the intersection of quantum compute and AI training is where the next significant leap lives.
     </p>
     <p>
-      The jump from language model to large language model wasn't a product decision. It was a sustained effort to get more of the right information into the model's reach. The same jump is available to companies, but it requires doing the foundational work first: cleaning the data, centralizing the definitions, building a context layer that any tool can read from.
-    </p>
-
-    <div class="before-after">
-      <div class="ba-side">
-        <div class="ba-label">closed-book</div>
-        <div class="ba-line"><span class="dot">·</span>"revenue" means something different in every system</div>
-        <div class="ba-line"><span class="dot">·</span>logic lives in spreadsheets and individual heads</div>
-        <div class="ba-line"><span class="dot">·</span>AI reads whatever it can reach and does its best</div>
-        <div class="ba-line"><span class="dot">·</span>the answer is confident and may be wrong</div>
-      </div>
-      <div class="ba-side">
-        <div class="ba-label">open-book</div>
-        <div class="ba-line"><span class="dot">·</span>"revenue" is defined once and tested automatically</div>
-        <div class="ba-line"><span class="dot">·</span>logic is centralized, versioned, and documented</div>
-        <div class="ba-line"><span class="dot">·</span>AI reads from a shared source of truth</div>
-        <div class="ba-line"><span class="dot">·</span>the answer is confident and is actually right</div>
-      </div>
-    </div>
-
-    <p>
-      Most teams are focused on which AI product to buy. The more important question is whether the data underneath it is ready to be read.
+      We have also seen a preview of what happens when compute moves closer to the data rather than the other way around. <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> runs analytical queries directly on your machine, no warehouse needed. It is a small signal of a larger shift: compute moving to wherever the data already lives. Quantum is the endpoint of that arc. When it reaches commercial scale, the question of "can we afford to compute this" largely disappears. What remains is: do we have the context to make the answer meaningful?
     </p>
   </div>
 
 
-  <!-- 03 -->
   <div class="section">
-    <div class="section-label">03 / the compute shift</div>
-    <h2>the layer that was the moat is losing its edge</h2>
+    <div class="section-label">04 / the context problem</div>
+    <h2>most company data is still answering from memory</h2>
 
     <p>
-      For a long time, compute was the constraint. You brought your data to the compute: centralized it, warehoused it, paid by the query. The platforms that owned compute owned the workflow.
+      Most companies have deployed AI. Most are not getting answers they trust. The instinct is to blame the model, to switch providers, to tune prompts. Almost always, the problem is one layer below: the data the model is reading is scattered, inconsistent, and undefined.
     </p>
     <p>
-      <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> made the case that you can bring compute to the data instead. Run analytical queries where the data already lives, without moving it into a centralized warehouse. At very large scale there are tradeoffs, but for most use cases it works. It opened a new pattern: local compute, exploratory work, no round-trip.
+      "Revenue" means something different in sales than it does in finance. Business logic lives in spreadsheets, inside BI tools, in the memory of the analyst who built the original dashboard and has since left. The AI is working closed-book, filling gaps with its best guess. It is not hallucinating because it is broken. It is hallucinating because it has insufficient data.
     </p>
     <p>
-      Quantum computing takes this further. <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, and <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a> are all working on the same fundamental problem: computation that doesn't resolve one answer at a time. <span class="term" data-tip="A regular bit is either 0 or 1. A qubit can be both at the same time, until you measure it. That's superposition. Schrödinger's box: before you open it, the cat inside is either alive or dead. Both are true until you look. A qubit works the same way, which lets quantum computers process exponentially more possibilities at once.">Qubits hold superposition</span>, which means the amount of information you can process simultaneously grows exponentially rather than linearly. IBM already lets you run sessions on their quantum infrastructure from your own machine via <a href="https://www.ibm.com/quantum/qiskit" target="_blank" rel="noopener">Qiskit</a>. This is still early-stage, but it points in a clear direction.
-    </p>
-    <p>
-      When compute becomes abundant, the question changes. You're no longer asking how to afford the processing. You're asking what you're computing, and with what context.
+      The fix is not a better model. It is a context layer: a place where your data is cleaned, your definitions are centralized, and your business logic is written down once and made available to everything that needs to read it. Fivetran gets data in from every source. dbt defines what it means. Together they solve the same problem the Asimov machine was working: not the compute, but the context. Making sure that when the question is asked, the answer exists somewhere trustworthy to read from.
     </p>
 
     <div class="callout">
-      <p>When compute is abundant, you're not paying for processing power. You're paying for the ecosystem that surrounds it. The trend in every other part of technology is that people don't want to pay for the ecosystem anymore.</p>
+      <p>No matter how much compute you have, if the data underneath is undefined and inconsistent, the answer will be wrong faster. Compute without context is just confident noise.</p>
     </div>
   </div>
 
 
-  <!-- 04 -->
-  <div class="section">
-    <div class="section-label">04 / the interoperability shift</div>
-    <h2>ecosystems are losing to openness</h2>
-
-    <p>
-      <span class="term" data-tip="Rich Communication Services. The messaging standard that made iPhone-to-Android texting work like iMessage, with read receipts, typing indicators, and high-quality media. Apple added support with iOS 18 in 2024, after years of resistance.">RCS</span> finally made iPhone and Android texts work together seamlessly. USB-C replaced the lightning connector. People mix Nike and Adidas without thinking twice. Car branding has gone minimal. The dominant trend across technology and culture right now is: plug anything into anything else and have it just work.
-    </p>
-    <p>
-      Data is heading the same direction.
-    </p>
-    <p>
-      The compute-centric platforms built their position on stickiness. Your data lives here, your logic lives here, your team learned this tooling, and so you stay. That worked when switching meant starting over. It works less well when the expectation is that things should be interoperable by default.
-    </p>
-    <p>
-      Apple's model worked because everything inside the ecosystem worked better together. Informatica used the same playbook. So did Snowflake, at a different layer. But when the cultural default becomes openness, the ecosystem becomes a liability. The value of lock-in drops to zero when plugging anything into anything else is what people expect.
-    </p>
-    <p>
-      The teams building data stacks today want to pick the best tool for each job and have them work together. Not the best bundle a single vendor offers. This is structural pressure on compute-centric platforms that doesn't show up in their current numbers yet.
-    </p>
-  </div>
-
-
-  <!-- 05 -->
   <div class="section">
     <div class="section-label">05 / the prediction</div>
-    <h2>context and ingestion win the next five years</h2>
+    <h2>what this is actually building toward</h2>
 
     <p>
-      Here's the thesis: as compute commoditizes and interoperability becomes the default, the durable competitive position in data is the context layer.
+      As compute approaches unlimited through quantum, the only remaining constraint is context. Not which model you chose, not which warehouse you pay for, not which AI product you licensed last quarter. Whether your data is defined well enough to give a meaningful answer.
     </p>
     <p>
-      Not which cloud you're on. Not which compute platform you chose. Not which AI product you licensed. Whether you've defined your data well, centralized your business logic, and built it in a way that survives vendor switches, model upgrades, and team turnover. The definitions travel. The logic travels. The context is yours.
+      The companies that figure this out first will be able to ask harder questions. Not just "what happened?" but "why?" Not just "why?" but "what should we do?" Reasoning across multiple sources, at speed, with no artificial limit on what can be held in view at once. That is where this is heading. It is not a near-term product roadmap. It is where the arc of intelligence, human and artificial, has always been pointing.
     </p>
     <p>
-      The combination that wins is strong ingestion paired with strong context definition. Getting data in is table stakes. What you do to it, and how well you define what it means, is the durable advantage.
+      dbt and Fivetran are not just winning a market segment. They are building the context layer that the future requires. The infrastructure question of our era is not which compute platform to pick. It is whether you will have your data ready when compute is no longer the reason you cannot answer.
     </p>
     <p>
-      The next frontier is reasoning, not retrieval. Most analytics today answers "what happened." The next wave answers "why did it happen" and "what should happen next." That requires a context layer rich enough to hold multiple sources in view and synthesize across them. The open book test, taken to its logical end. And it only works if the prep work has been done.
-    </p>
-    <p>
-      Most teams are still debating which warehouse to use.
+      The machine eventually got there. The question is whether you will.
     </p>
 
-    <div class="prediction-list">
-
-      <div class="prediction-item">
-        <div class="prediction-num">01</div>
-        <div class="prediction-body">
-          <div class="prediction-text">The traditional compute layer commoditizes faster than most expect.</div>
-          <div class="prediction-why">When you can bring compute to the data rather than the other way around, paying by the query to a centralized platform becomes a harder deal to justify. DuckDB is the preview. Quantum is the endpoint.</div>
-        </div>
-      </div>
-
-      <div class="prediction-item">
-        <div class="prediction-num">02</div>
-        <div class="prediction-body">
-          <div class="prediction-text">Lock-in loses its hold across the entire stack.</div>
-          <div class="prediction-why">The interoperability trend is structural, not cyclical. The tools that survive long-term connect to everything and trap you in nothing. Ecosystem plays stop working when openness is the default expectation.</div>
-        </div>
-      </div>
-
-      <div class="prediction-item">
-        <div class="prediction-num">03</div>
-        <div class="prediction-body">
-          <div class="prediction-text">The context layer becomes the most valuable layer in the stack.</div>
-          <div class="prediction-why">Not the compute layer. The layer that defines what the data means, keeps that definition consistent, and makes it available to any tool regardless of what's running on top. That's the work that compounds.</div>
-        </div>
-      </div>
-
-      <div class="prediction-item">
-        <div class="prediction-num">04</div>
-        <div class="prediction-body">
-          <div class="prediction-text">The question shifts from "what happened?" to "why?" and "what should we do?"</div>
-          <div class="prediction-why">Retrieval is a solved problem. Reasoning across multiple sources, at speed, with trustworthy context underneath it, is where the next wave of value gets created. The organizations that built the context layer first will be the ones who can actually ask it.</div>
-        </div>
-      </div>
-
-    </div>
-
-    <p class="go-deeper">For the longer argument on what AI agents actually need from your data infrastructure: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
+    <p class="go-deeper">The longer argument on what AI agents specifically need from your data infrastructure: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
 
 
@@ -417,32 +242,23 @@
   var tip = document.createElement('div');
   tip.className = 'term-tip';
   document.body.appendChild(tip);
-
   var visible = false;
 
   function show(el) {
     tip.textContent = el.dataset.tip;
     tip.style.display = 'block';
     tip.style.opacity = '0';
-
     var TW = 260;
     var r = el.getBoundingClientRect();
     var cx = r.left + r.width / 2;
-
-    var left = cx - TW / 2;
-    left = Math.max(10, Math.min(left, window.innerWidth - TW - 10));
-
-    var arrowLeft = cx - left;
-    arrowLeft = Math.max(16, Math.min(arrowLeft, TW - 16));
-
+    var left = Math.max(10, Math.min(cx - TW / 2, window.innerWidth - TW - 10));
+    var arrowLeft = Math.max(16, Math.min(cx - left, TW - 16));
     tip.style.width = TW + 'px';
     tip.style.left = left + 'px';
     tip.style.setProperty('--arrow-left', arrowLeft + 'px');
-
     var above = r.top > 180;
     tip.classList.toggle('tip-above', above);
     tip.classList.toggle('tip-below', !above);
-
     if (above) {
       tip.style.top = 'auto';
       tip.style.bottom = (window.innerHeight - r.top + 10) + 'px';
@@ -450,16 +266,13 @@
       tip.style.bottom = 'auto';
       tip.style.top = (r.bottom + 10) + 'px';
     }
-
     requestAnimationFrame(function () { tip.style.opacity = '1'; });
     visible = true;
   }
 
   function hide() {
     tip.style.opacity = '0';
-    setTimeout(function () {
-      if (!visible) tip.style.display = 'none';
-    }, 150);
+    setTimeout(function () { if (!visible) tip.style.display = 'none'; }, 150);
     visible = false;
   }
 
