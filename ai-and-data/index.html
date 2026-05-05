@@ -14,9 +14,6 @@
     --bg: #fafaf9;
     --rule: #e8e5e0;
     --bg-lift: #f4f1ed;
-    --dbt-bg: #eff6ff;
-    --dbt-border: #93c5fd;
-    --dbt-text: #1d4ed8;
   }
 
   body {
@@ -74,6 +71,15 @@
 
   p { font-size: 16px; color: #2a2a2a; line-height: 1.8; margin-bottom: 20px; }
   p:last-child { margin-bottom: 0; }
+
+  /* inline links */
+  .section a, .go-deeper a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #ccc;
+  }
+  .section a:hover, .go-deeper a:hover { text-decoration-color: var(--text); }
 
   /* before / after */
   .before-after {
@@ -142,8 +148,6 @@
     padding-top: 3px;
   }
 
-  .prediction-body {}
-
   .prediction-text {
     font-size: 15.5px;
     font-weight: 500;
@@ -164,12 +168,6 @@
     color: var(--muted);
     margin-top: 20px;
   }
-  .go-deeper a {
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .go-deeper a:hover { color: var(--muted); }
 
   /* footer */
   .footer-note {
@@ -178,6 +176,46 @@
     border-top: 1px solid var(--rule);
     font-size: 12px;
     color: var(--faint);
+  }
+
+  /* ── tooltips ─────────────────────────────────────── */
+  .term {
+    border-bottom: 1.5px dashed #bbb;
+    cursor: help;
+  }
+
+  .term-tip {
+    position: fixed;
+    z-index: 1000;
+    background: #1c1c1c;
+    color: #f0ede9;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 11px 14px;
+    border-radius: 3px;
+    width: 260px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    display: none;
+  }
+
+  .term-tip::after {
+    content: '';
+    position: absolute;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+  }
+
+  .term-tip.tip-above::after {
+    top: 100%;
+    border-top-color: #1c1c1c;
+  }
+
+  .term-tip.tip-below::after {
+    bottom: 100%;
+    border-bottom-color: #1c1c1c;
   }
 </style>
 </head>
@@ -208,7 +246,7 @@
       Open book tests produce better results than closed book. Not because people are cheating, but because access to more information at the moment of answering produces more accurate results. This is a solved problem at the human level. AI is working through the same one.
     </p>
     <p>
-      The "large" in large language model refers partly to scale, but what's actually driven the leap in usefulness is how much relevant information a model can hold in view when it answers. Context windows grew. Retrieval systems improved. Tools like MCP let models pull from live sources at query time. You're handing the model the textbook instead of asking it to work from memory.
+      The "large" in <span class="term" data-tip="AI models trained on massive amounts of text with billions to trillions of parameters. GPT-4, Claude, Gemini are all LLMs. The 'large' refers to model size, but what's driven the practical leap in usefulness is how much relevant context the model can access when answering.">large language model</span> refers partly to scale, but what's actually driven the leap in usefulness is how much relevant information a model can hold in view when it answers. Context windows grew. Retrieval systems improved. Tools like <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener"><span class="term" data-tip="Model Context Protocol. An open standard, released by Anthropic in 2024, that lets AI models pull from live data sources, files, and tools in real time. Like giving the model a search bar instead of asking it to work from memory.">MCP</span></a> let models pull from live sources at query time. You're handing the model the textbook instead of asking it to work from memory.
     </p>
     <p>
       The entire arc of model improvement is this: give the model more of the right context. More training data, better retrieval, longer windows. The model that knows more gives better answers. The model that can hold more in view at once gives faster ones.
@@ -269,10 +307,10 @@
       For a long time, compute was the constraint. You brought your data to the compute: centralized it, warehoused it, paid by the query. The platforms that owned compute owned the workflow.
     </p>
     <p>
-      DuckDB made the case that you can bring compute to the data instead. Run analytical queries where the data already lives, without moving it into a centralized warehouse. At very large scale there are tradeoffs, but for most use cases it works. It opened a new pattern: local compute, exploratory work, no round-trip.
+      <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> made the case that you can bring compute to the data instead. Run analytical queries where the data already lives, without moving it into a centralized warehouse. At very large scale there are tradeoffs, but for most use cases it works. It opened a new pattern: local compute, exploratory work, no round-trip.
     </p>
     <p>
-      Quantum computing takes this further. IBM, IonQ, and Google are all working on the same fundamental problem: computation that doesn't resolve one answer at a time. Qubits hold superposition, both states simultaneously, which means the amount of information you can process at once grows exponentially rather than linearly. IBM already lets you run sessions on their quantum infrastructure from your own machine via Qiskit. This is still early-stage, but it points in a clear direction.
+      Quantum computing takes this further. <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, and <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a> are all working on the same fundamental problem: computation that doesn't resolve one answer at a time. <span class="term" data-tip="A regular bit is either 0 or 1. A qubit can be both at the same time, until you measure it. That's superposition. Schrödinger's box: before you open it, the cat inside is either alive or dead. Both are true until you look. A qubit works the same way, which lets quantum computers process exponentially more possibilities at once.">Qubits hold superposition</span>, which means the amount of information you can process simultaneously grows exponentially rather than linearly. IBM already lets you run sessions on their quantum infrastructure from your own machine via <a href="https://www.ibm.com/quantum/qiskit" target="_blank" rel="noopener">Qiskit</a>. This is still early-stage, but it points in a clear direction.
     </p>
     <p>
       When compute becomes abundant, the question changes. You're no longer asking how to afford the processing. You're asking what you're computing, and with what context.
@@ -290,7 +328,7 @@
     <h2>ecosystems are losing to openness</h2>
 
     <p>
-      iPhone and Android phones now share text threads seamlessly. USB-C replaced the lightning connector. People mix Nike and Adidas without thinking twice. Car branding has gone minimal. The dominant trend across technology and culture right now is: plug anything into anything else and have it just work.
+      <span class="term" data-tip="Rich Communication Services. The messaging standard that made iPhone-to-Android texting work like iMessage, with read receipts, typing indicators, and high-quality media. Apple added support with iOS 18 in 2024, after years of resistance.">RCS</span> finally made iPhone and Android texts work together seamlessly. USB-C replaced the lightning connector. People mix Nike and Adidas without thinking twice. Car branding has gone minimal. The dominant trend across technology and culture right now is: plug anything into anything else and have it just work.
     </p>
     <p>
       Data is heading the same direction.
@@ -373,5 +411,69 @@
   </div>
 
 </div>
+
+<script>
+(function () {
+  var tip = document.createElement('div');
+  tip.className = 'term-tip';
+  document.body.appendChild(tip);
+
+  var visible = false;
+
+  function show(el) {
+    tip.textContent = el.dataset.tip;
+    tip.style.display = 'block';
+    tip.style.opacity = '0';
+
+    var TW = 260;
+    var r = el.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+
+    var left = cx - TW / 2;
+    left = Math.max(10, Math.min(left, window.innerWidth - TW - 10));
+
+    var arrowLeft = cx - left;
+    arrowLeft = Math.max(16, Math.min(arrowLeft, TW - 16));
+
+    tip.style.width = TW + 'px';
+    tip.style.left = left + 'px';
+    tip.style.setProperty('--arrow-left', arrowLeft + 'px');
+
+    var above = r.top > 180;
+    tip.classList.toggle('tip-above', above);
+    tip.classList.toggle('tip-below', !above);
+
+    if (above) {
+      tip.style.top = 'auto';
+      tip.style.bottom = (window.innerHeight - r.top + 10) + 'px';
+    } else {
+      tip.style.bottom = 'auto';
+      tip.style.top = (r.bottom + 10) + 'px';
+    }
+
+    requestAnimationFrame(function () { tip.style.opacity = '1'; });
+    visible = true;
+  }
+
+  function hide() {
+    tip.style.opacity = '0';
+    setTimeout(function () {
+      if (!visible) tip.style.display = 'none';
+    }, 150);
+    visible = false;
+  }
+
+  document.querySelectorAll('.term').forEach(function (el) {
+    el.addEventListener('mouseenter', function () { show(el); });
+    el.addEventListener('mouseleave', hide);
+    el.addEventListener('click', function (e) {
+      e.stopPropagation();
+      visible ? hide() : show(el);
+    });
+  });
+
+  document.addEventListener('click', hide);
+})();
+</script>
 </body>
 </html>
