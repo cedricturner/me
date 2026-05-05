@@ -155,31 +155,24 @@
   }
   .callout p { font-size: 14px; color: #505050; margin: 0; line-height: 1.75; }
 
-  /* prediction block */
-  .prediction {
-    border: 1.5px solid #f9a8d4;
-    background: #fdf2f8;
-    padding: 20px 24px;
-    margin-top: 40px;
+  /* before-AC comparison box */
+  .before-box {
+    background: var(--flow-bg);
+    border: 1px solid var(--rule);
     border-radius: 4px;
+    padding: 16px 20px;
+    margin-top: 36px;
     max-width: 660px;
   }
-  .prediction-label {
-    font-size: 10px;
+  .before-label {
+    font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #9d174d;
-    margin-bottom: 12px;
+    color: var(--faint);
+    margin-bottom: 8px;
   }
-  .prediction p {
-    font-size: 14.5px;
-    color: #1a1a1a;
-    margin-bottom: 14px;
-    line-height: 1.8;
-    max-width: none;
-  }
-  .prediction p:last-child { margin-bottom: 0; }
+  .before-box p { font-size: 14px; color: #505050; margin: 0; line-height: 1.75; }
 
   /* quantum block */
   .quantum-block {
@@ -338,6 +331,42 @@
   .card-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
   .card p { font-size: 13.5px; color: #555; line-height: 1.65; margin: 0; max-width: none; }
 
+  /* AC architecture stack diagram */
+  .ac-stack { margin: 28px 0; max-width: 520px; }
+  .ac-stack-layer {
+    border-radius: 5px;
+    border: 1px solid var(--flow-box-border);
+    padding: 14px 18px;
+  }
+  .ac-stack-layer--source { background: #fdf6ee; border-color: #c4b8ae; }
+  .ac-stack-layer--compute { background: #f5f3ff; border-color: #c4b5fd; }
+  .ac-stack-layer--context { background: #fef9f2; border-color: #fed7aa; }
+  .ac-stack-layer--ac { background: #fdf2f8; border-color: #f9a8d4; }
+  .ac-stack-layer--human { background: var(--callout-bg); border-color: var(--callout-border); }
+  .ac-stack-tier {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 3px;
+  }
+  .ac-stack-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .ac-stack-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .ac-stack-conn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 0;
+  }
+  .ac-stack-conn-arr { font-size: 14px; color: var(--flow-arrow); }
+  .ac-stack-conn-lbl {
+    font-size: 10px;
+    color: var(--faint);
+    font-family: 'Courier New', Courier, monospace;
+  }
+
   .footer-note { margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--faint); }
 
   @media (max-width: 560px) {
@@ -398,7 +427,7 @@
       </div>
     </div>
 
-    <p class="intro">The chain is the same. What sits at the end of it has changed. Each section below shows what the stage does today and what it has to become.</p>
+    <p class="intro">The chain is the same. What sits at the end of it has changed. Each section below describes what the layer looks like in the AC era, with a note on what it replaced and why.</p>
   </div>
 
 
@@ -407,7 +436,7 @@
     <div class="section-meta"><span class="section-num">01</span></div>
     <h2>the full system</h2>
     <p>
-      Every data system, no matter how many tools it involves, maps onto four stages. Data originates somewhere, lands somewhere, gets shaped into something trustworthy, and then gets used.
+      Every data system maps onto four stages. Data originates somewhere, lands somewhere, gets shaped into something trustworthy, and then gets used. The four stages below are what those layers become when <span class="hl-ac">AC</span> is the consumer at the end of the chain.
     </p>
 
     <div class="sysmap-wrap">
@@ -440,10 +469,7 @@
     </div>
 
     <p>
-      The sections below walk through each stage. Within each: what it does today and what it has to become when <span class="hl-ac">AC</span> is the consumer at the end of the chain.
-    </p>
-    <p>
-      The tools change constantly. The four stages do not. But what they need to produce is starting to.
+      The tools change constantly. The four stages do not. What they need to produce is starting to.
     </p>
   </div>
 
@@ -466,7 +492,10 @@
     </div>
     <h2>sources</h2>
     <p>
-      Before any analysis, any dashboard, any AI answer, something has to happen in the real world and get recorded somewhere. Sources are the origin point. They are the systems where data first exists.
+      In the AC era, every source is a live signal. Not a file to import on a schedule — a feed <span class="hl-ac">AC</span> reasons over continuously. Every piece of data gets a timestamp at the moment it enters the system. AC weights recency. It won't operate on context past its freshness threshold because stale context produces wrong answers, and wrong answers erode trust faster than no answer at all.
+    </p>
+    <p>
+      Coverage gaps are reasoning gaps. If a critical signal isn't connected, AC doesn't know what it doesn't have. It answers without flagging the absence. The competitive advantage shifts from having more data to having fewer holes in what you're giving the system.
     </p>
 
     <div class="table-wrap">
@@ -499,29 +528,22 @@
       </table>
     </div>
 
-    <p>
-      This is where most of the messiness starts. Each source produces data in its own shape, at its own speed, with its own guarantees about reliability. A lot of data engineering is just dealing with that inconsistency before anything useful can happen downstream.
-    </p>
-
     <div class="sub">
-      <div class="sub-label">within sources</div>
+      <div class="sub-label">mechanics</div>
       <h3>operational systems (OLTP)</h3>
       <p>
-        The most common source is an operational database: the live system running a business or product. These are often called OLTP systems, short for online transaction processing.
+        The most common source is an operational database: the live system running a business or product. These are called OLTP systems, short for online transaction processing. They are optimized for one thing: handling many small operations very fast, without making mistakes. When a customer places an order, a payment clears, or a record gets updated, that goes through an OLTP system.
       </p>
       <p>
-        OLTP systems are built for one thing: handling many small operations very fast, without making mistakes. When a customer places an order, a payment clears, or a record gets updated, that goes through an OLTP system. Latency matters here in a way it does not anywhere else in the stack. A slow checkout is a broken experience.
-      </p>
-      <p>
-        OLTP databases are optimized for writing and looking up individual records quickly, not for running large analytical queries across millions of rows. That is why data almost always has to move out of the operational system before any serious analysis can happen.
+        OLTP databases are not designed for analytical queries. Running heavy compute against them directly would degrade the product. In the AC architecture, the solution is CDC — change data capture — a stream of changes that leaves the source system mostly untouched while feeding a compute node that sits next to it.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within sources</div>
+      <div class="sub-label">mechanics</div>
       <h3>batch vs streaming</h3>
       <p>
-        Data leaves its source in two fundamentally different modes, and the rest of the system has to be designed around whichever one you are working with.
+        Data leaves its source in two fundamentally different modes.
       </p>
       <div class="two-col">
         <div class="card">
@@ -534,18 +556,13 @@
         </div>
       </div>
       <p>
-        Most organizations run both. Streaming for the things that need to be current. Batch for everything where a few hours of lag is fine.
+        In the AC era, streaming is the default. Batch still exists for cases where latency is genuinely acceptable, but those cases have to earn their place. The question is no longer "why would we stream?" but "what justifies the lag?"
       </p>
     </div>
 
-    <div class="callout">
-      <p>The quality of everything downstream depends on what comes in here. A well-understood, clean source makes every stage after it easier. A messy or undocumented source creates problems that compound at every step.</p>
-    </div>
-
-    <div class="prediction">
-      <div class="prediction-label">in the AC era</div>
-      <p>Every source becomes a live signal. Not a file to import on a schedule, but a feed that <span class="hl-ac">AC</span> reasons over continuously. The gap between when something happens in the world and when AC knows about it approaches zero.</p>
-      <p>Coverage gaps become reasoning gaps. If a critical signal isn't connected, AC doesn't know what it doesn't have. It can't flag the absence. It works with less and doesn't say so. The next competitive advantage isn't having more data. It's having fewer holes in what you're giving the system. Every source that isn't wired in is context AC is missing every time it answers a question.</p>
+    <div class="before-box">
+      <div class="before-label">before AC</div>
+      <p>Batch was the default. Nightly exports, hourly syncs, file drops — data moved on schedules because streaming required more engineering work and cost more to operate. The tradeoff made sense when the consumer was a dashboard that refreshed once a day. When the consumer is something reasoning in real time over current context, that tradeoff inverts. Streaming stops being an advanced pattern and becomes the baseline.</p>
     </div>
   </div>
 
@@ -568,31 +585,27 @@
     </div>
     <h2>storage</h2>
     <p>
-      Once data leaves a source, it has to live somewhere. Storage is where data is held at rest. It does not do anything by itself. It just holds data until something needs it.
+      In the AC era, storage is <span class="hl-ac">AC</span>'s working memory. Not a place where analysts run queries — a layer AC navigates directly: structured tables to scan, vectors to search semantically, metadata to read like a map. Vector stores stop being a niche AI pattern and become core infrastructure.
     </p>
     <p>
-      The analogy that makes sense to me: storage is the boxes in a warehouse. The boxes hold the contents. They do not sort themselves, answer questions, or do any work. That is what compute is for.
+      The architecture is shifting from a central warehouse to a federation of domain-local compute nodes. Instead of moving data to a warehouse where compute runs against it, compute moves to where data already lives. Each source domain gets its own node that handles ingestion, transformation, and storage together, co-located with the source. The warehouse becomes the federation of those nodes.
     </p>
 
     <div class="two-col">
       <div class="card">
         <div class="card-title">storage</div>
-        <p>where data lives. boxes in a warehouse. holds records at rest. cheap to keep, designed to persist.</p>
+        <p>where data lives. holds records at rest. in the AC era, structured for machine navigation, not just human queries.</p>
       </div>
       <div class="card">
         <div class="card-title">compute</div>
-        <p>what does the work. workers reading the boxes. reads data, runs queries, aggregates results. active while running, costs money while it runs.</p>
+        <p>what does the work. in the AC era, moving closer to the source — embedded in domain nodes rather than running in a central warehouse.</p>
       </div>
     </div>
 
-    <p>
-      Separating storage from compute is one of the ideas that makes modern cloud data architecture work. When they are decoupled, you can scale compute up when you need fast answers and scale it back down when you do not, without touching the stored data. Multiple teams can also run different compute engines against the same storage.
-    </p>
-
     <div class="sub">
-      <div class="sub-label">within storage</div>
-      <h3>storage formats and where data lands</h3>
-      <p>Not all storage is the same. The format data is stored in determines what kinds of queries are fast and what kinds are slow.</p>
+      <div class="sub-label">mechanics</div>
+      <h3>storage formats</h3>
+      <p>The format data is stored in determines what kinds of queries are fast and what kinds are slow.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -622,15 +635,11 @@
           </tbody>
         </table>
       </div>
-      <p>
-        Columnar storage is significantly faster for analytical queries because you only read the columns a query touches. Row storage is faster for transactional work because you usually need a complete record all at once.
-      </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within storage</div>
+      <div class="sub-label">mechanics</div>
       <h3>data warehouse, data lake, and lakehouse</h3>
-      <p>Three terms that come up constantly, each representing a different answer to the question of where analytical data should live.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -658,23 +667,8 @@
     </div>
 
     <div class="sub">
-      <div class="sub-label">within storage</div>
-      <h3>analytical systems (OLAP)</h3>
-      <p>
-        OLAP stands for online analytical processing. Where OLTP (in sources) is optimized for writing many small records quickly, OLAP is optimized for reading large amounts of data to answer analytical questions.
-      </p>
-      <p>
-        This is where data warehouses live. When an analyst runs a query to calculate revenue by region for the last quarter, that is OLAP work. Large scans, aggregations across millions of rows, slower but deeper.
-      </p>
-      <p>
-        Most analytical data flows from OLTP to OLAP before it can be used. The OLTP system runs the business. The OLAP system helps understand it. They need very different things from the infrastructure underneath them.
-      </p>
-    </div>
-
-    <div class="sub">
-      <div class="sub-label">within storage</div>
+      <div class="sub-label">mechanics</div>
       <h3>types of databases</h3>
-      <p>Not all databases are trying to do the same thing. The category a database sits in determines what it is fast at, what it is bad at, and where it belongs in the system.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -714,53 +708,11 @@
           </tbody>
         </table>
       </div>
-      <p>
-        The reason this landscape is fragmented is that each category makes a different tradeoff. A transactional database that is also fast at analytical queries would require compromises that make both worse. Most organizations end up using more than one type, moving data between them depending on what they need to do with it.
-      </p>
     </div>
 
-    <div class="sub">
-      <div class="sub-label">within storage</div>
-      <h3>cloud offerings on top</h3>
-      <p>Many of these database categories have a managed cloud version that sits on top of the core engine. The pattern is consistent: take something that is powerful but requires infrastructure to run, and wrap it in a service that handles the operational work for you.</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>base engine</th><th>cloud offering</th><th>what the cloud layer adds</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>DuckDB</td>
-              <td>MotherDuck</td>
-              <td>shared access, persistence, collaboration, and cloud storage without giving up local speed</td>
-            </tr>
-            <tr>
-              <td>ClickHouse</td>
-              <td>ClickHouse Cloud</td>
-              <td>managed infrastructure, autoscaling, backups, and a web UI on top of the same fast engine</td>
-            </tr>
-            <tr>
-              <td>Postgres</td>
-              <td>Neon, Supabase, AlloyDB</td>
-              <td>serverless scaling, branching, built-in auth and APIs, removing the need to manage a database server</td>
-            </tr>
-            <tr>
-              <td>open table formats (Iceberg, Delta)</td>
-              <td>Databricks, Snowflake, AWS Glue</td>
-              <td>query engines and governance layers on top of files that live in your own object storage</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout">
-        <p>The tradeoff with managed cloud offerings is usually cost and control. You give up some flexibility and pay a premium over running it yourself, in exchange for not having to think about infrastructure. For most teams, that trade is worth it until the scale or specific requirements make self-hosting the better answer.</p>
-      </div>
-    </div>
-
-    <div class="prediction">
-      <div class="prediction-label">in the AC era</div>
-      <p>Storage becomes <span class="hl-ac">AC</span>'s working memory. Not just a place to hold data until someone queries it, but a layer AC reads continuously: structured tables to scan, vectors to search semantically, metadata to navigate like a map. Vector stores stop being a niche AI pattern and become core infrastructure.</p>
-      <p>This is where the quantum computing forcing function hits hardest. When compute capacity takes a step-change, retrieval speed and storage structure become the bottleneck. An agent that can reason over a million data points simultaneously is only as useful as how quickly it can pull the right context from storage. The teams that have already structured their storage for machine access, not just human queries, will be ready. The ones that haven't will spend years catching up at the exact moment when speed matters most.</p>
+    <div class="before-box">
+      <div class="before-label">before AC</div>
+      <p>The warehouse model — pull everything into Snowflake or BigQuery, run queries against it — made sense when the bottleneck was compute and you needed a central place to aggregate across domains. Separating storage from compute was the right call: scale compute when you need it, down when you don't. The next move reverses the direction. Instead of data flowing to compute, compute moves to data. Domain-local nodes sit close to source systems, receive a continuous stream, and handle transform and storage in place. The central warehouse becomes a federation. Storage cost was never the problem — it's been cheap for years. The problem was always structure: how do you organize what you have so an agent can navigate it fast?</p>
     </div>
   </div>
 
@@ -783,28 +735,28 @@
     </div>
     <h2>transformation</h2>
     <p>
-      Raw data from sources is almost never ready to answer a question directly. It is inconsistent across systems, missing context, and carries no shared definitions. Transformation is the stage where raw data gets shaped into something a person or system can actually trust.
+      In the AC era, transformation is where the company's understanding of itself gets written down. The semantic layer is the contract <span class="hl-ac">AC</span> reads: what revenue means, what churn counts, what an active user is. When AC reasons across your data, it uses your definitions, not guesses. <span class="hl-dbt">dbt</span> is where that contract lives.
     </p>
     <p>
-      This is also the stage with the most moving parts. It involves moving data between systems, modeling it, scheduling the pipelines that keep everything current, and building in the quality checks that make downstream consumers confident in what they are seeing.
+      Transformation is also continuous now, not scheduled. Definitions are enforced at write time, inline, as data enters the compute node. The pipeline and the query are the same operation. When quantum computing takes compute from a constraint to a commodity, context becomes the only real differentiator — and context lives here.
     </p>
 
     <div class="sub">
-      <div class="sub-label">within transformation</div>
+      <div class="sub-label">mechanics</div>
       <h3>ingestion</h3>
       <p>
-        Before any transformation can happen, data has to move from its source into the storage layer. That movement is called ingestion. It sounds simple but is where a lot of operational complexity lives: handling API rate limits, schema changes, deduplication, and keeping data fresh.
+        Before transformation can happen, data has to move from its source into the storage layer. That movement is ingestion — where a lot of operational complexity lives: API rate limits, schema changes, deduplication, freshness.
       </p>
       <p>
-        Tools like <span class="hl-fivetran">Fivetran</span>, Airbyte, and Stitch are built to manage this. They connect to hundreds of source systems and land data into a warehouse or lake on a schedule, without requiring custom engineering for every connector.
+        Tools like <span class="hl-fivetran">Fivetran</span>, Airbyte, and Stitch are built to manage this. They connect to hundreds of source systems and land data into a warehouse or lake on a schedule, without requiring custom engineering for every connector. In the AC architecture, the ingestion layer gets absorbed into the domain compute node — but the problem it solves, reliably connecting to every source system, does not go away.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within transformation</div>
+      <div class="sub-label">mechanics</div>
       <h3>modeling</h3>
       <p>
-        Once raw data is in storage, it needs to be structured into something reliable. Modeling is the process of building layered SQL transformations that take messy source tables and produce clean, documented, tested outputs.
+        Modeling is the process of building layered SQL transformations that take messy source tables and produce clean, documented, tested outputs.
       </p>
 
       <div class="flow-wrap">
@@ -832,72 +784,46 @@
       </div>
 
       <p>
-        The output of modeling is not just data. It is data with definitions attached: a revenue metric that says exactly what it counts, how it is calculated, and which tests confirm it is correct. <span class="hl-dbt">dbt</span> is the tool most commonly used for this work today.
+        The output of modeling is data with definitions attached: a revenue metric that says exactly what it counts, how it is calculated, and which tests confirm it is correct. <span class="hl-dbt">dbt</span> is the tool most commonly used for this work today.
       </p>
-
-      <div class="callout">
-        <p>Without modeling, every downstream consumer makes their own assumptions about what the numbers mean. Different dashboards produce different answers to the same question. Modeling is where those assumptions get written down and enforced in one place.</p>
-      </div>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within transformation</div>
+      <div class="sub-label">mechanics</div>
       <h3>orchestration</h3>
       <p>
-        Transformation pipelines do not run once. They run on a schedule: nightly, hourly, or triggered by upstream events. Orchestration is the layer that manages the timing and order of all these jobs, handles failures, and makes sure dependencies run in the right sequence.
+        Transformation pipelines run on a schedule: nightly, hourly, or triggered by upstream events. Orchestration manages the timing and order of all these jobs, handles failures, and makes sure dependencies run in the right sequence. Tools like Apache Airflow, Dagster, and Prefect sit in this layer.
       </p>
       <p>
-        If ingestion has to complete before modeling can start, and modeling has to complete before a dashboard can refresh, something has to coordinate that chain. Tools like Apache Airflow, Dagster, and Prefect sit in this layer.
-      </p>
-      <p>
-        Bad orchestration shows up as stale dashboards, silent failures, and pipelines that succeed individually but produce wrong answers when combined.
+        In the AC architecture, orchestration shifts from schedule-based to event-based: compute triggers on a new stream event rather than a clock. The coordination problem doesn't go away; the cadence changes.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within transformation</div>
+      <div class="sub-label">mechanics</div>
       <h3>data quality and observability</h3>
       <p>
-        Pipelines break. Schemas change upstream without warning. A column that was always populated suddenly has nulls. Data quality is about detecting these problems before they reach the people relying on the data.
+        Pipelines break. Schemas change upstream without warning. A column that was always populated suddenly has nulls. Data quality is about detecting these problems before they reach the consumers relying on the data — whether that consumer is an analyst or AC.
       </p>
       <p>
-        This happens at two levels. Tests that run as part of the pipeline (checking expected row counts, uniqueness, referential integrity) and observability tools that monitor data health in production (Monte Carlo, Soda, Elementary). Together they answer: did this pipeline run correctly, and does the output look right?
+        Tests that run as part of the pipeline (checking row counts, uniqueness, referential integrity) and observability tools that monitor data health in production (Monte Carlo, Soda, Elementary). In the AC era, a data quality failure isn't just a broken dashboard — it's AC reasoning over wrong information and not knowing it.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within transformation</div>
+      <div class="sub-label">mechanics</div>
       <h3>the semantic layer</h3>
       <p>
-        Even after data is modeled and tested, there is one more problem: different teams define the same metric differently. Finance calculates revenue one way, sales calculates it another. When the numbers do not match, people stop trusting any of them.
+        The semantic layer is where metric definitions get locked in: what revenue means, what churn counts, how active users are calculated. Once defined there, any downstream consumer, whether a dashboard, an analyst running a query, or an AI agent, gets the same answer.
       </p>
       <p>
-        The semantic layer is where metric definitions get locked in: what revenue means, what churn counts, how active users are calculated. Once defined there, any downstream tool, whether a dashboard, an analyst running a query, or an AI agent, gets the same answer.
-      </p>
-      <p>
-        <span class="hl-dbt">dbt</span>'s Semantic Layer and MetricFlow sit in this space. They let you define a metric once and expose it consistently across every consumer.
+        <span class="hl-dbt">dbt</span>'s Semantic Layer and MetricFlow sit in this space. In the AC era, the semantic layer isn't a query-time convenience — it's a write-time requirement. Definitions are enforced at ingestion, before anything gets stored, so that everything AC reads is already structured against the same contract.
       </p>
     </div>
 
-    <div class="sub">
-      <div class="sub-label">within transformation</div>
-      <h3>machine learning</h3>
-      <p>
-        Machine learning is mostly a transformation-stage concern on the input side. Before a model can be trained, data has to be cleaned, features have to be engineered, and training datasets have to be assembled from the same trusted models that power dashboards.
-      </p>
-      <p>
-        Feature engineering is where domain knowledge gets encoded into the inputs a model will learn from. Which signals matter, how they are normalized, what time windows to use: these decisions live here, and they are often the biggest driver of model quality.
-      </p>
-      <p>
-        Once a model is trained, it shifts stages. The trained model becomes a consumer and a producer: it takes data in, produces predictions, and those predictions often flow back into storage to be used downstream.
-      </p>
-    </div>
-
-    <div class="prediction">
-      <div class="prediction-label">in the AC era</div>
-      <p>This is the highest-stakes layer. Transformation was always where data became trustworthy. In the AC era, it becomes where the company's understanding of itself gets written down.</p>
-      <p>The semantic layer is no longer just a way to sync metric definitions across dashboards. It is the contract that tells <span class="hl-ac">AC</span> what revenue means, what churn counts, what an active user is, so that when AC reasons across your data, it uses your definitions and not guesses. <span class="hl-dbt">dbt</span> is where that contract gets written. Every model, every test, every documented metric is a line of context that AC either has or doesn't.</p>
-      <p>This is where the compute/context cycle matters most. When quantum computing takes compute from a constraint to a commodity, context becomes the only real differentiator. Two companies with the same compute can get completely different answers from AC because one spent years making their transformation layer precise and the other didn't. You can't fix a missing or wrong definition after the fact. The transformation layer is where it has to be right.</p>
+    <div class="before-box">
+      <div class="before-label">before AC</div>
+      <p>Transformation ran on schedules: nightly dbt runs, hourly pipeline refreshes. The output was tables for analysts to query and dashboards to display. The semantic layer was a convenience — a way to keep metrics consistent across teams. In the AC era, the output is structured context for an agent to reason over, and the semantic layer is a hard requirement. Without it, AC guesses. Two companies with the same compute can get completely different answers from AC because one spent years making their transformation layer precise and the other didn't. You can't fix a missing or wrong definition after the fact.</p>
     </div>
   </div>
 
@@ -920,28 +846,28 @@
     </div>
     <h2>consumption</h2>
     <p>
-      Consumption is how data reaches a person or a downstream system. The transformation stage produces trusted, defined data. Consumption is everything that sits on top of it: the interfaces, the tools, and the systems that turn that data into answers.
+      In the AC era, the primary consumer at the end of the chain is an agent. <span class="hl-ac">AC</span> doesn't browse a dashboard. It queries structured data, reads lineage, calls tools, and returns an answer. Consumption patterns built for human eyes have to be rebuilt for machine eyes.
     </p>
     <p>
-      There are a few different access patterns here, each suited to a different kind of question.
+      The question shifts from "how do we display this data?" to "how do we make this data queryable by something that never sleeps and never guesses?" Dashboards don't disappear. They become one surface among many, and not the primary one anymore.
     </p>
 
     <div class="sub">
-      <div class="sub-label">within consumption</div>
+      <div class="sub-label">mechanics</div>
       <h3>BI and dashboards</h3>
       <p>
-        The most familiar form of consumption. A BI tool (Tableau, Looker, Sigma, Metabase) connects to the storage and transformation layer, runs queries, and displays the results visually. An analyst or business user navigates to a dashboard, finds the number they need, and interprets it.
+        A BI tool (Tableau, Looker, Sigma, Metabase) connects to the storage and transformation layer, runs queries, and displays the results visually. An analyst navigates to a dashboard, finds the number they need, and interprets it.
       </p>
       <p>
-        Dashboards are good at answering questions that were anticipated. Someone built the chart because they knew people would need that view. The limitation is that the data can only answer the questions someone thought to ask in advance.
+        Dashboards answer questions that were anticipated. The limitation is that the data can only answer what someone thought to ask in advance. In the AC era, that limitation is exactly what AC resolves — but dashboards remain useful for human-facing reporting and executive visibility.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within consumption</div>
+      <div class="sub-label">mechanics</div>
       <h3>AI as the interface layer</h3>
       <p>
-        AI sits between the transformation output and the person asking the question. Instead of a fixed dashboard, a person describes what they want in plain language and the model figures out which data to retrieve, how to interpret it, and what to say back.
+        AI sits between the transformation output and the person or system asking the question. Instead of a fixed dashboard, a query in plain language returns an answer shaped from the structured context below.
       </p>
 
       <div class="flow-wrap">
@@ -973,8 +899,6 @@
         </div>
       </div>
 
-      <p>Three patterns show up in how AI systems interact with data:</p>
-
       <div class="table-wrap">
         <table>
           <thead>
@@ -1000,44 +924,33 @@
         </table>
       </div>
 
-      <p>
-        RAG is worth understanding on its own. An LLM has a knowledge cutoff and no access to your private data. RAG solves this by retrieving relevant records before the model generates its answer. Think of it as letting the model open the textbook before answering the question, rather than answering from memory.
-      </p>
-
       <div class="callout">
-        <p>AI does not change the underlying data problems. It changes the interface to the data. For an AI to answer well, the data still has to be clean, defined, and trustworthy. A confident wrong answer is worse than no answer, and that is exactly what happens when an AI agent hits undocumented or inconsistent data.</p>
+        <p>AI does not change the underlying data problems. It changes the interface to the data. For AC to answer well, the data still has to be clean, defined, and trustworthy. A confident wrong answer is worse than no answer — that is exactly what happens when an agent hits undocumented or inconsistent data.</p>
       </div>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within consumption</div>
+      <div class="sub-label">mechanics</div>
       <h3>ML models in production</h3>
       <p>
-        Trained machine learning models are also a form of consumption. They take data from the storage and transformation layer, run inference, and produce predictions that flow somewhere else: a recommendation in a product, a churn score in a CRM, a fraud flag on a transaction.
+        Trained machine learning models take data from the storage and transformation layer, run inference, and produce predictions: a recommendation in a product, a churn score in a CRM, a fraud flag on a transaction. The model was trained offline. In production, it consumes data continuously and produces outputs that other systems act on.
       </p>
       <p>
-        This is often called model serving or inference. The model was trained offline in the transformation stage. In production, it consumes data continuously and produces outputs that other systems act on.
-      </p>
-      <p>
-        A key challenge here is model drift: the world changes, but the model does not update automatically. Monitoring model performance in production, retraining on fresh data, and managing versions of deployed models is its own discipline, sometimes called MLOps.
+        A key challenge here is model drift: the world changes, but the model does not update automatically. In the AC era, this is magnified — a drifted model feeding wrong predictions into AC's context is harder to catch than a wrong number on a dashboard.
       </p>
     </div>
 
     <div class="sub">
-      <div class="sub-label">within consumption</div>
+      <div class="sub-label">mechanics</div>
       <h3>data products and APIs</h3>
       <p>
-        Not all data consumption is human-facing. Some of the most important consumers of a data platform are other systems: a recommendation engine reading a feature table, an application enriching user records with model outputs, a partner system receiving a data feed.
-      </p>
-      <p>
-        Data products treat trusted datasets as first-class outputs, with defined schemas, ownership, and SLAs. Data APIs expose that data programmatically, letting other systems query or subscribe to it without needing direct warehouse access.
+        Not all data consumption is human-facing. Data products treat trusted datasets as first-class outputs with defined schemas, ownership, and SLAs. Data APIs expose that data programmatically, letting other systems query or subscribe to it without needing direct warehouse access. In the AC architecture, these become the primary way domains expose their structured output to the rest of the federation.
       </p>
     </div>
 
-    <div class="prediction">
-      <div class="prediction-label">in the AC era</div>
-      <p>The dashboard era doesn't end. It gets reframed. The primary consumer at the end of the chain shifts from a person navigating a screen to an agent reasoning in real time. <span class="hl-ac">AC</span> doesn't browse a dashboard. It queries structured data, reads lineage, calls tools, and returns an answer.</p>
-      <p>Consumption patterns built for human eyes have to be rebuilt for machine eyes. The question shifts from "how do we make this data visible?" to "how do we make this data queryable by something that never sleeps and never guesses?" Dashboards don't disappear. They become one surface among many, and not the primary one anymore.</p>
+    <div class="before-box">
+      <div class="before-label">before AC</div>
+      <p>The BI dashboard era was built for human consumption: navigate to a chart, find a number, interpret it, decide. That interface assumed the consumer had time to look, context to apply, and could handle some ambiguity in the data. The primary way information moved from the data stack to a decision was a visual display. In the AC era, the primary interface is a query. AC reaches directly into structured context without a human navigating a screen to translate what the data says.</p>
     </div>
   </div>
 
@@ -1060,10 +973,10 @@
     </div>
     <h2>the decision</h2>
     <p>
-      The whole system exists to produce a better decision than someone could make without it. That is the same goal from the beginning, and it is worth coming back to at the end.
+      The decision layer splits. <span class="hl-ac">AC</span> computes: it reasons from the structured context below it, surfaces a recommendation, and can explain its reasoning. The human judges: whether to trust the recommendation, whether to act, what happens next.
     </p>
     <p>
-      For a decision to be trustworthy, the data behind it has to earn that trust at every stage.
+      The analyst who spent a career building dashboards becomes the strategist who interprets what AC surfaces and decides what to do about it. The role doesn't go away. It goes up.
     </p>
 
     <div class="table-wrap">
@@ -1101,15 +1014,114 @@
       </table>
     </div>
 
-    <div class="prediction">
-      <div class="prediction-label">in the AC era</div>
-      <p>The role of the human doesn't go away. It goes up. <span class="hl-ac">AC</span> recommends. The human approves, redirects, or escalates. The analyst who spent a career building dashboards becomes the strategist who interprets what AC surfaces and decides what to do about it.</p>
-      <p>The decision layer splits: there is the computation (what AC concludes from the data) and the judgment: whether to trust it, whether to act, and what happens next. That second half belongs to people. It always will.</p>
-      <p>And how good that computation is depends entirely on whether compute and context stayed in step as each improved. Quantum computing will push compute forward in ways that feel sudden. Every layer in this stack, sources, storage, transformation, consumption, has to be ready to match it with better context. That is the cycle. That is how you get to AC.</p>
+    <div class="before-box">
+      <div class="before-label">before AC</div>
+      <p>Before AC, the decision layer was human all the way through. Data informed a person who made a judgment call. The quality of that judgment depended on how good the data was, how much context the person held in their head, and how well they could synthesize it under time pressure. AC doesn't replace that judgment. It improves the information going into it — and it never forgets context between questions. The human's job shifts from "find the insight" to "decide what to do with the insight AC already found."</p>
     </div>
 
     <div class="callout">
-      <p>Tools change faster than the underlying questions do. Where does the data live? Where does compute happen? Who can trust the result? How does a human make a better decision because of it? Those questions were true before AI. They are still true now. The systems that answer them well are the ones worth building.</p>
+      <p>Tools change faster than the underlying questions do. Where does the data live? Where does compute happen? Who can trust the result? How does a human make a better decision because of it? Those questions were true before AC. They are still true now. The stack described here is what it looks like when you take them seriously all the way through.</p>
+    </div>
+  </div>
+
+
+  <!-- 07: THE AC ARCHITECTURE -->
+  <div class="section">
+    <div class="section-meta"><span class="section-num">07</span></div>
+    <h2>the AC architecture</h2>
+    <p>
+      The sections above map each layer. This is what the full stack looks like when they've all changed together — the shape of the system when <span class="hl-ac">AC</span> is real. Not a product roadmap. The architecture.
+    </p>
+
+    <div class="ac-stack">
+      <div class="ac-stack-layer ac-stack-layer--source">
+        <div class="ac-stack-tier">layer 1</div>
+        <div class="ac-stack-name">source systems</div>
+        <div class="ac-stack-note">streaming, timestamped, freshness-enforced — every signal wired in</div>
+      </div>
+      <div class="ac-stack-conn">
+        <div class="ac-stack-conn-arr">↓</div>
+        <div class="ac-stack-conn-lbl">continuous CDC stream</div>
+      </div>
+      <div class="ac-stack-layer ac-stack-layer--compute">
+        <div class="ac-stack-tier">layer 2</div>
+        <div class="ac-stack-name">domain compute nodes</div>
+        <div class="ac-stack-note">co-located with each source domain — embedded transform, storage, and quantum-enabled compute in one place</div>
+      </div>
+      <div class="ac-stack-conn">
+        <div class="ac-stack-conn-arr">↓</div>
+        <div class="ac-stack-conn-lbl">structured, semantically-defined output</div>
+      </div>
+      <div class="ac-stack-layer ac-stack-layer--context">
+        <div class="ac-stack-tier">layer 3</div>
+        <div class="ac-stack-name">context layer</div>
+        <div class="ac-stack-note">semantic definitions, lineage, metadata — what <span class="hl-dbt">dbt</span> becomes: the governance contract every node's output is held to</div>
+      </div>
+      <div class="ac-stack-conn">
+        <div class="ac-stack-conn-arr">↓</div>
+        <div class="ac-stack-conn-lbl">queryable, structured context</div>
+      </div>
+      <div class="ac-stack-layer ac-stack-layer--ac">
+        <div class="ac-stack-tier">layer 4</div>
+        <div class="ac-stack-name"><span class="hl-ac">AC</span></div>
+        <div class="ac-stack-note">reasons over the full context, never guesses, surfaces recommendations with traceable reasoning</div>
+      </div>
+      <div class="ac-stack-conn">
+        <div class="ac-stack-conn-arr">↓</div>
+        <div class="ac-stack-conn-lbl">recommendation</div>
+      </div>
+      <div class="ac-stack-layer ac-stack-layer--human">
+        <div class="ac-stack-tier">layer 5</div>
+        <div class="ac-stack-name">human</div>
+        <div class="ac-stack-note">approve, redirect, or escalate — the judgment layer, elevated not replaced</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-label">the shift</div>
+      <h3>streaming and compute collapse at the source</h3>
+      <p>
+        In the AC architecture, there is no separate ingestion step. CDC streams from source systems directly into domain compute nodes that sit close to the source — one node per domain. The node receives the stream, runs transformations inline, enforces metric definitions at write time, and stores structured output in place. The distinction between moving data and computing on it dissolves.
+      </p>
+      <p>
+        The OLTP problem still exists: live databases running your product cannot have heavy analytical compute running against them directly. The solution is CDC — a stream of changes that leaves the source system mostly untouched. The compute node sits next to the source, not inside it. Source freshness is enforced by the architecture, not by tests that run afterward.
+      </p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-label">the shift</div>
+      <h3>the warehouse becomes a federation</h3>
+      <p>
+        A central warehouse made sense when data had to travel to compute. In the AC architecture, compute is distributed: each source domain has a node, nodes produce structured output, and <span class="hl-ac">AC</span> queries the federation. There is no single repository — there is a set of semantically consistent, well-defined outputs that AC can reason across together.
+      </p>
+      <p>
+        The "one massive cheap database that holds everything" path has surface appeal but the wrong bottleneck assumption: storage has been cheap for years. The constraint has always been structure. A federation of well-structured domain nodes, each governed by the same semantic contract, gives AC what it actually needs — not more storage, but better-organized context that it can navigate fast.
+      </p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-label">the shift</div>
+      <h3>the context layer is the moat</h3>
+      <p>
+        Any organization can add compute nodes. Not every organization has spent years encoding what their data actually means. The semantic layer — documented metric definitions, tested models, traceable lineage — is what <span class="hl-dbt">dbt</span> becomes in this architecture: the governance contract that tells every node what its output is allowed to mean.
+      </p>
+      <p>
+        When quantum computing takes compute from a constraint to a commodity, this layer is the only real differentiator. Better compute is available to everyone. Better context belongs to whoever built it.
+      </p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-label">an open question</div>
+      <h3>on quantum and local vs cloud compute</h3>
+      <p>
+        The "local quantum nodes that eventually become cheap enough for truly distributed compute" vision has real appeal. The more likely path is quantum following the GPU arc: powerful, then expensive, then democratized through cloud providers (AWS Braket, Azure Quantum, Google Quantum AI) rather than moving into local hardware. Local quantum nodes are probably 20 years further out.
+      </p>
+      <p>
+        The model is more likely "quantum as a service your federation calls out to when it hits a problem that needs it" than "quantum chips embedded in every compute node." What quantum changes is the ceiling — workloads that are currently impractical, like reasoning over an entire company's knowledge graph in real time or running thousands of hypothetical scenarios simultaneously, become practical. That is what unlocks the full version of AC.
+      </p>
+      <p>
+        The governance question quantum raises might be the bigger disruption: if quantum makes current encryption trivially breakable, the security and access control models the whole stack depends on have to be rebuilt from scratch. That is a larger change than the compute story.
+      </p>
     </div>
   </div>
 
