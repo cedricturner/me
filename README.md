@@ -10,14 +10,14 @@ Hosted on GitHub Pages.
 
 | Page | URL | Description |
 |------|-----|-------------|
-| data systems | [/me/data-systems/](https://cedricturner.github.io/me/data-systems/) | A map of how modern data systems fit together, from sources to decisions |
+| what the data stack becomes | [/me/data-systems/](https://cedricturner.github.io/me/data-systems/) | The four stages of the data stack redrawn for the AC era — forward-looking, with "before AC" comparisons and a full AC architecture diagram in section 07 |
 | AI forces preference | [/me/blog/ai-forces-preference/](https://cedricturner.github.io/me/blog/ai-forces-preference/) | AI doesn't give you answers. It forces you to know what you want. |
 
 ## The Vision
 
 | Page | URL | Description |
 |------|-----|-------------|
-| what AI actually runs on | [/me/ai-and-data/](https://cedricturner.github.io/me/ai-and-data/) | How AI uses data, where things break, and where dbt fits. For anyone who needs to talk about it. |
+| the data problem AI can't solve | [/me/ai-and-data/](https://cedricturner.github.io/me/ai-and-data/) | Intelligence has two constraints: compute and context. Compute is being solved. Context is on you. Introduces AC, the compute/context cycle, and where dbt and Fivetran fit. |
 
 ## Tools
 
