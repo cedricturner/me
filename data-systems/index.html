@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>data systems / Cedric Turner II</title>
+<title>what the data stack becomes / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -34,20 +34,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap {
-    max-width: 780px;
-    margin: 0 auto;
-  }
+  .wrap { max-width: 780px; margin: 0 auto; }
 
-  /* nav */
-  .back-nav {
-    padding: 40px 0 52px;
-    font-size: 13px;
-  }
+  .back-nav { padding: 40px 0 52px; font-size: 13px; }
   .back-nav a { color: var(--muted); text-decoration: none; }
   .back-nav a:hover { color: var(--text); }
 
-  /* hero */
   .hero {
     padding-bottom: 60px;
     border-bottom: 1px solid var(--rule);
@@ -60,21 +52,29 @@
     line-height: 1.2;
     margin-bottom: 8px;
   }
-  .hero .subtitle {
-    color: var(--muted);
-    font-size: 15px;
-    margin-bottom: 28px;
-  }
+  .hero .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
   .hero .intro {
     color: #505050;
     font-size: 15px;
     line-height: 1.8;
     max-width: 660px;
+    margin-bottom: 16px;
   }
+  .hero .intro a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  .hero .intro a:hover { color: var(--muted); }
 
-  /* section */
+  /* brand highlights */
+  .hl-dbt, .hl-fivetran, .hl-ac {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .hl-dbt      { background: #fed7aa; }
+  .hl-fivetran { background: #a7f3d0; }
+  .hl-ac       { background: #fbcfe8; }
+
   .section { margin-bottom: 84px; }
-
   .section-meta {
     display: flex;
     align-items: center;
@@ -83,7 +83,6 @@
     flex-wrap: nowrap;
     overflow: hidden;
   }
-
   .section-num {
     font-size: 10px;
     color: var(--faint);
@@ -92,7 +91,6 @@
     flex-shrink: 0;
   }
 
-  /* mini breadcrumb */
   .crumb {
     display: flex;
     align-items: center;
@@ -102,7 +100,6 @@
     scrollbar-width: none;
   }
   .crumb::-webkit-scrollbar { display: none; }
-
   .crumb-node {
     font-size: 11px;
     color: var(--faint);
@@ -118,12 +115,7 @@
     padding: 2px 7px;
     border-radius: 3px;
   }
-  .crumb-arr {
-    font-size: 11px;
-    color: var(--faint);
-    padding: 0 5px;
-    flex-shrink: 0;
-  }
+  .crumb-arr { font-size: 11px; color: var(--faint); padding: 0 5px; flex-shrink: 0; }
 
   .section h2 {
     font-size: 19px;
@@ -132,7 +124,6 @@
     margin-bottom: 18px;
     line-height: 1.3;
   }
-
   .section p {
     color: #454545;
     font-size: 15px;
@@ -142,25 +133,9 @@
   }
   .section p:last-child { margin-bottom: 0; }
 
-  /* sub-section (nested concept inside a stage) */
-  .sub {
-    margin-top: 44px;
-    padding-top: 28px;
-    border-top: 1px solid var(--rule);
-  }
-  .sub-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--faint);
-    margin-bottom: 8px;
-  }
-  .sub h3 {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: var(--text);
-  }
+  .sub { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .sub-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--faint); margin-bottom: 8px; }
+  .sub h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
   .sub p {
     color: #454545;
     font-size: 14.5px;
@@ -170,7 +145,6 @@
   }
   .sub p:last-child { margin-bottom: 0; }
 
-  /* callout */
   .callout {
     background: var(--callout-bg);
     border-left: 3px solid var(--callout-border);
@@ -179,14 +153,61 @@
     border-radius: 0 4px 4px 0;
     max-width: 660px;
   }
-  .callout p {
-    font-size: 14px;
-    color: #505050;
-    margin: 0;
-    line-height: 1.75;
-  }
+  .callout p { font-size: 14px; color: #505050; margin: 0; line-height: 1.75; }
 
-  /* ── HERO FLOW ─────────────────────────────── */
+  /* prediction block */
+  .prediction {
+    border: 1.5px solid #f9a8d4;
+    background: #fdf2f8;
+    padding: 20px 24px;
+    margin-top: 40px;
+    border-radius: 4px;
+    max-width: 660px;
+  }
+  .prediction-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9d174d;
+    margin-bottom: 12px;
+  }
+  .prediction p {
+    font-size: 14.5px;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+    line-height: 1.8;
+    max-width: none;
+  }
+  .prediction p:last-child { margin-bottom: 0; }
+
+  /* quantum block */
+  .quantum-block {
+    border: 1.5px solid #c4b5fd;
+    background: #f5f3ff;
+    padding: 20px 24px;
+    margin: 28px 0;
+    border-radius: 4px;
+    max-width: 660px;
+  }
+  .quantum-block-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7c3aed;
+    margin-bottom: 12px;
+  }
+  .quantum-block p {
+    font-size: 14.5px;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+    line-height: 1.8;
+    max-width: none;
+  }
+  .quantum-block p:last-child { margin-bottom: 0; }
+
+  /* hero flow */
   .hero-flow-wrap {
     overflow-x: auto;
     -ms-overflow-style: none;
@@ -194,26 +215,18 @@
     margin: 32px 0;
   }
   .hero-flow-wrap::-webkit-scrollbar { display: none; }
-
   .hero-flow {
     display: flex;
     align-items: flex-start;
     flex-wrap: nowrap;
     gap: 0;
     min-width: min-content;
-    padding: 20px 20px;
+    padding: 20px;
     background: var(--flow-bg);
     border: 1px solid var(--rule);
     border-radius: 8px;
   }
-
-  .hf-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-  }
+  .hf-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
   .hf-box {
     background: var(--flow-box-bg);
     border: 1px solid var(--flow-box-border);
@@ -224,22 +237,10 @@
     color: var(--text);
     white-space: nowrap;
   }
-  .hf-sub {
-    font-size: 10px;
-    color: var(--faint);
-    text-align: center;
-    line-height: 1.4;
-    max-width: 80px;
-  }
-  .hf-arr {
-    font-size: 15px;
-    color: var(--flow-arrow);
-    padding: 0 8px;
-    flex-shrink: 0;
-    margin-top: 12px;
-  }
+  .hf-sub { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.4; max-width: 80px; }
+  .hf-arr { font-size: 15px; color: var(--flow-arrow); padding: 0 8px; flex-shrink: 0; margin-top: 12px; }
 
-  /* ── SYSTEM MAP ─────────────────────────────── */
+  /* sysmap */
   .sysmap-wrap {
     overflow-x: auto;
     -ms-overflow-style: none;
@@ -247,7 +248,6 @@
     margin: 28px 0;
   }
   .sysmap-wrap::-webkit-scrollbar { display: none; }
-
   .sysmap {
     display: flex;
     align-items: flex-start;
@@ -259,14 +259,7 @@
     border: 1px solid var(--rule);
     border-radius: 8px;
   }
-
-  .sm-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
+  .sm-node { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
   .sm-box {
     background: var(--flow-box-bg);
     border: 1px solid var(--flow-box-border);
@@ -278,22 +271,10 @@
     white-space: nowrap;
     text-align: center;
   }
-  .sm-sub {
-    font-size: 10px;
-    color: var(--faint);
-    text-align: center;
-    line-height: 1.4;
-    max-width: 100px;
-  }
-  .sm-arr {
-    font-size: 15px;
-    color: var(--flow-arrow);
-    padding: 0 10px;
-    flex-shrink: 0;
-    margin-top: 14px;
-  }
+  .sm-sub { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.4; max-width: 100px; }
+  .sm-arr { font-size: 15px; color: var(--flow-arrow); padding: 0 10px; flex-shrink: 0; margin-top: 14px; }
 
-  /* ── INLINE FLOW (smaller, used in sub-sections) */
+  /* inline flow */
   .flow-wrap {
     overflow-x: auto;
     -ms-overflow-style: none;
@@ -301,7 +282,6 @@
     margin: 18px 0;
   }
   .flow-wrap::-webkit-scrollbar { display: none; }
-
   .flow {
     display: flex;
     align-items: flex-start;
@@ -313,13 +293,7 @@
     border: 1px solid var(--rule);
     border-radius: 6px;
   }
-  .f-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    flex-shrink: 0;
-  }
+  .f-node { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
   .f-box {
     background: var(--flow-box-bg);
     border: 1px solid var(--flow-box-border);
@@ -330,32 +304,12 @@
     color: var(--text);
     white-space: nowrap;
   }
-  .f-sub {
-    font-size: 10px;
-    color: var(--faint);
-    text-align: center;
-    line-height: 1.35;
-    max-width: 80px;
-  }
-  .f-arr {
-    font-size: 14px;
-    color: var(--flow-arrow);
-    padding: 0 7px;
-    flex-shrink: 0;
-    margin-top: 10px;
-  }
+  .f-sub { font-size: 10px; color: var(--faint); text-align: center; line-height: 1.35; max-width: 80px; }
+  .f-arr { font-size: 14px; color: var(--flow-arrow); padding: 0 7px; flex-shrink: 0; margin-top: 10px; }
 
   /* tables */
-  .table-wrap {
-    overflow-x: auto;
-    margin: 18px 0;
-    max-width: 660px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-  }
+  .table-wrap { overflow-x: auto; margin: 18px 0; max-width: 660px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   th {
     background: var(--table-head-bg);
     text-align: left;
@@ -374,48 +328,15 @@
     line-height: 1.6;
     vertical-align: top;
   }
-  td:first-child {
-    font-weight: 500;
-    color: var(--text);
-    white-space: nowrap;
-  }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
 
   /* two-col cards */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 18px 0;
-    max-width: 660px;
-  }
-  .card {
-    background: var(--callout-bg);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    padding: 16px 18px;
-  }
-  .card-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 7px;
-  }
-  .card p {
-    font-size: 13.5px;
-    color: #555;
-    line-height: 1.65;
-    margin: 0;
-    max-width: none;
-  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; max-width: 660px; }
+  .card { background: var(--callout-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 18px; }
+  .card-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+  .card p { font-size: 13.5px; color: #555; line-height: 1.65; margin: 0; max-width: none; }
 
-  /* footer */
-  .footer-note {
-    margin-top: 80px;
-    padding-top: 28px;
-    border-top: 1px solid var(--rule);
-    font-size: 12px;
-    color: var(--faint);
-  }
+  .footer-note { margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--faint); }
 
   @media (max-width: 560px) {
     .two-col { grid-template-columns: 1fr; }
@@ -425,15 +346,21 @@
 <body>
 <div class="wrap">
 
-  <div class="back-nav"><a href="./">← back</a></div>
+  <div class="back-nav"><a href="/me/">← cedric turner ii</a></div>
 
-  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <!-- HERO -->
   <div class="hero">
-    <h1>data systems</h1>
-    <div class="subtitle">notes on data, AI, and the shape of modern systems</div>
+    <h1>what the data stack becomes</h1>
+    <div class="subtitle">the infrastructure <span class="hl-ac">AC</span> runs on</div>
     <p class="intro">
-      I'm working through how modern data systems fit together. Not as a glossary of tools, not as a tutorial. More like a map. Every system in this space exists to solve a specific part of the same problem, and understanding the problem first makes every piece easier to place.
+      I wrote about two things that constrain intelligence: compute and context. <a href="/me/ai-and-data/">The data problem AI can't solve</a> makes the argument that compute is being worked on and context is the part nobody has figured out yet. This is the other side of that. The data stack has always existed to produce better decisions. When the thing making the decision is <span class="hl-ac">AC</span>, the four stages don't go away. They become the infrastructure AC runs on. What they need to produce changes completely.
     </p>
+
+    <div class="quantum-block">
+      <div class="quantum-block-label">compute + context</div>
+      <p>Quantum computing is not far off in the abstract. IBM, Google, Microsoft Azure Quantum, IonQ, and a growing wave of startups are in labs right now. It doesn't have a commercial use case yet, but when it does, the unlock will be sudden. Healthcare, encryption, cryptography, AI — all of it changes when compute stops being the constraint.</p>
+      <p>That creates a forcing function for every layer of this stack. Compute and context move together. When compute takes a step-change, context has to match it or the additional processing power goes to waste. <span class="hl-ac">AC</span> only gets smarter if both sides improve. The cycle — better compute demanding better context, better context enabling better compute to do more — is what drives toward AC. This page is about what each layer has to become for that cycle to keep moving.</p>
+    </div>
 
     <div class="hero-flow-wrap">
       <div class="hero-flow">
@@ -459,23 +386,21 @@
         <div class="hf-arr">→</div>
         <div class="hf-node">
           <div class="hf-box">reaches someone</div>
-          <div class="hf-sub">a person or system</div>
+          <div class="hf-sub">a person or agent</div>
         </div>
         <div class="hf-arr">→</div>
         <div class="hf-node">
           <div class="hf-box">a decision gets made</div>
-          <div class="hf-sub">the whole point</div>
+          <div class="hf-sub">the goal, same as before</div>
         </div>
       </div>
     </div>
 
-    <p class="intro">
-      Everything below is just a closer look at one part of that chain.
-    </p>
+    <p class="intro">The chain is the same. What sits at the end of it has changed. Each section below shows what the stage does today and what it has to become.</p>
   </div>
 
 
-  <!-- ── 01: THE FULL SYSTEM ──────────────────────────────── -->
+  <!-- 01: THE FULL SYSTEM -->
   <div class="section">
     <div class="section-meta"><span class="section-num">01</span></div>
     <h2>the full system</h2>
@@ -513,15 +438,15 @@
     </div>
 
     <p>
-      The sections below walk through each stage. Within each one, I try to explain what it is doing, why it exists, and where the interesting tradeoffs show up.
+      The sections below walk through each stage. Within each: what it does today and what it has to become when <span class="hl-ac">AC</span> is the consumer at the end of the chain.
     </p>
     <p>
-      The tools change constantly. The four stages do not.
+      The tools change constantly. The four stages do not. But what they need to produce is starting to.
     </p>
   </div>
 
 
-  <!-- ── 02: SOURCES ──────────────────────────────────────── -->
+  <!-- 02: SOURCES -->
   <div class="section">
     <div class="section-meta">
       <span class="section-num">02</span>
@@ -576,7 +501,6 @@
       This is where most of the messiness starts. Each source produces data in its own shape, at its own speed, with its own guarantees about reliability. A lot of data engineering is just dealing with that inconsistency before anything useful can happen downstream.
     </p>
 
-    <!-- SUB: operational systems (OLTP) -->
     <div class="sub">
       <div class="sub-label">within sources</div>
       <h3>operational systems (OLTP)</h3>
@@ -591,7 +515,6 @@
       </p>
     </div>
 
-    <!-- SUB: batch vs streaming -->
     <div class="sub">
       <div class="sub-label">within sources</div>
       <h3>batch vs streaming</h3>
@@ -616,10 +539,16 @@
     <div class="callout">
       <p>The quality of everything downstream depends on what comes in here. A well-understood, clean source makes every stage after it easier. A messy or undocumented source creates problems that compound at every step.</p>
     </div>
+
+    <div class="prediction">
+      <div class="prediction-label">in the AC era</div>
+      <p>Every source becomes a live signal. Not a file to import on a schedule, but a feed that <span class="hl-ac">AC</span> reasons over continuously. The gap between when something happens in the world and when AC knows about it approaches zero.</p>
+      <p>Coverage gaps become reasoning gaps. If a critical signal isn't connected, AC doesn't know what it doesn't have. It can't flag the absence. It works with less and doesn't say so. The next competitive advantage isn't having more data — it's having fewer holes in what you're giving the system. Every source that isn't wired in is context AC is missing every time it answers a question.</p>
+    </div>
   </div>
 
 
-  <!-- ── 03: STORAGE ──────────────────────────────────────── -->
+  <!-- 03: STORAGE -->
   <div class="section">
     <div class="section-meta">
       <span class="section-num">03</span>
@@ -658,13 +587,10 @@
       Separating storage from compute is one of the ideas that makes modern cloud data architecture work. When they are decoupled, you can scale compute up when you need fast answers and scale it back down when you do not, without touching the stored data. Multiple teams can also run different compute engines against the same storage.
     </p>
 
-    <!-- SUB: formats and storage types -->
     <div class="sub">
       <div class="sub-label">within storage</div>
       <h3>storage formats and where data lands</h3>
-      <p>
-        Not all storage is the same. The format data is stored in determines what kinds of queries are fast and what kinds are slow.
-      </p>
+      <p>Not all storage is the same. The format data is stored in determines what kinds of queries are fast and what kinds are slow.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -699,13 +625,10 @@
       </p>
     </div>
 
-    <!-- SUB: data warehouse / lake / lakehouse -->
     <div class="sub">
       <div class="sub-label">within storage</div>
       <h3>data warehouse, data lake, and lakehouse</h3>
-      <p>
-        Three terms that come up constantly, each representing a different answer to the question of where analytical data should live.
-      </p>
+      <p>Three terms that come up constantly, each representing a different answer to the question of where analytical data should live.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -732,7 +655,6 @@
       </div>
     </div>
 
-    <!-- SUB: OLAP -->
     <div class="sub">
       <div class="sub-label">within storage</div>
       <h3>analytical systems (OLAP)</h3>
@@ -747,13 +669,10 @@
       </p>
     </div>
 
-    <!-- SUB: types of databases -->
     <div class="sub">
       <div class="sub-label">within storage</div>
       <h3>types of databases</h3>
-      <p>
-        Not all databases are trying to do the same thing. The category a database sits in determines what it is fast at, what it is bad at, and where it belongs in the system.
-      </p>
+      <p>Not all databases are trying to do the same thing. The category a database sits in determines what it is fast at, what it is bad at, and where it belongs in the system.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -772,7 +691,7 @@
             </tr>
             <tr>
               <td>fast analytical (OLAP)</td>
-              <td>extremely fast columnar queries, often at real-time or near-real-time scale. self-hosted or cloud.</td>
+              <td>extremely fast columnar queries, often at real-time or near-real-time scale.</td>
               <td>ClickHouse, Apache Druid, StarRocks</td>
             </tr>
             <tr>
@@ -782,7 +701,7 @@
             </tr>
             <tr>
               <td>object storage</td>
-              <td>cheap, durable file storage. not a database itself, but where raw data often lives before it gets queried.</td>
+              <td>cheap, durable file storage. where raw data often lives before it gets queried.</td>
               <td>S3, GCS, Azure Blob (parquet, JSON, CSV files)</td>
             </tr>
             <tr>
@@ -798,13 +717,10 @@
       </p>
     </div>
 
-    <!-- SUB: cloud offerings -->
     <div class="sub">
       <div class="sub-label">within storage</div>
       <h3>cloud offerings on top</h3>
-      <p>
-        Many of these database categories have a managed cloud version that sits on top of the core engine. The pattern is consistent: take something that is powerful but requires infrastructure to run, and wrap it in a service that handles the operational work for you.
-      </p>
+      <p>Many of these database categories have a managed cloud version that sits on top of the core engine. The pattern is consistent: take something that is powerful but requires infrastructure to run, and wrap it in a service that handles the operational work for you.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -834,17 +750,20 @@
           </tbody>
         </table>
       </div>
-      <p>
-        What cloud offerings typically add across the board: managed infrastructure so you do not run servers, autoscaling so you are not paying for idle capacity, access controls and audit logging, web UIs for collaboration, and pay-as-you-go pricing. The core query engine stays the same. The operational burden disappears.
-      </p>
       <div class="callout">
         <p>The tradeoff with managed cloud offerings is usually cost and control. You give up some flexibility and pay a premium over running it yourself, in exchange for not having to think about infrastructure. For most teams, that trade is worth it until the scale or specific requirements make self-hosting the better answer.</p>
       </div>
     </div>
+
+    <div class="prediction">
+      <div class="prediction-label">in the AC era</div>
+      <p>Storage becomes <span class="hl-ac">AC</span>'s working memory. Not just a place to hold data until someone queries it, but a layer AC reads continuously: structured tables to scan, vectors to search semantically, metadata to navigate like a map. Vector stores stop being a niche AI pattern and become core infrastructure.</p>
+      <p>This is where the quantum computing forcing function hits hardest. When compute capacity takes a step-change, retrieval speed and storage structure become the bottleneck. An agent that can reason over a million data points simultaneously is only as useful as how quickly it can pull the right context from storage. The teams that have already structured their storage for machine access — not just human queries — will be ready. The ones that haven't will spend years catching up at the exact moment when speed matters most.</p>
+    </div>
   </div>
 
 
-  <!-- ── 04: TRANSFORMATION ───────────────────────────────── -->
+  <!-- 04: TRANSFORMATION -->
   <div class="section">
     <div class="section-meta">
       <span class="section-num">04</span>
@@ -868,7 +787,6 @@
       This is also the stage with the most moving parts. It involves moving data between systems, modeling it, scheduling the pipelines that keep everything current, and building in the quality checks that make downstream consumers confident in what they are seeing.
     </p>
 
-    <!-- SUB: ingestion -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>ingestion</h3>
@@ -876,11 +794,10 @@
         Before any transformation can happen, data has to move from its source into the storage layer. That movement is called ingestion. It sounds simple but is where a lot of operational complexity lives: handling API rate limits, schema changes, deduplication, and keeping data fresh.
       </p>
       <p>
-        Tools like Fivetran, Airbyte, and Stitch are built to manage this. They connect to hundreds of source systems and land data into a warehouse or lake on a schedule, without requiring custom engineering for every connector.
+        Tools like <span class="hl-fivetran">Fivetran</span>, Airbyte, and Stitch are built to manage this. They connect to hundreds of source systems and land data into a warehouse or lake on a schedule, without requiring custom engineering for every connector.
       </p>
     </div>
 
-    <!-- SUB: modeling -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>modeling</h3>
@@ -913,7 +830,7 @@
       </div>
 
       <p>
-        The output of modeling is not just data. It is data with definitions attached: a revenue metric that says exactly what it counts, how it is calculated, and which tests confirm it is correct. dbt is the tool most commonly used for this work today.
+        The output of modeling is not just data. It is data with definitions attached: a revenue metric that says exactly what it counts, how it is calculated, and which tests confirm it is correct. <span class="hl-dbt">dbt</span> is the tool most commonly used for this work today.
       </p>
 
       <div class="callout">
@@ -921,7 +838,6 @@
       </div>
     </div>
 
-    <!-- SUB: orchestration -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>orchestration</h3>
@@ -936,7 +852,6 @@
       </p>
     </div>
 
-    <!-- SUB: data quality -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>data quality and observability</h3>
@@ -948,7 +863,6 @@
       </p>
     </div>
 
-    <!-- SUB: semantic layer -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>the semantic layer</h3>
@@ -956,14 +870,13 @@
         Even after data is modeled and tested, there is one more problem: different teams define the same metric differently. Finance calculates revenue one way, sales calculates it another. When the numbers do not match, people stop trusting any of them.
       </p>
       <p>
-        The semantic layer is where metric definitions get locked in: what revenue means, what churn counts, how active users are calculated. Once defined there, any downstream tool, whether a dashboard, an analyst running a query, or an AI agent, gets the same answer.
+        The semantic layer is where metric definitions get locked in: what revenue means, what churn counts, how active users are calculated. Once defined there, any downstream tool — whether a dashboard, an analyst running a query, or an AI agent — gets the same answer.
       </p>
       <p>
-        dbt's Semantic Layer and MetricFlow sit in this space. They let you define a metric once and expose it consistently across every consumer.
+        <span class="hl-dbt">dbt</span>'s Semantic Layer and MetricFlow sit in this space. They let you define a metric once and expose it consistently across every consumer.
       </p>
     </div>
 
-    <!-- SUB: machine learning -->
     <div class="sub">
       <div class="sub-label">within transformation</div>
       <h3>machine learning</h3>
@@ -974,13 +887,20 @@
         Feature engineering is where domain knowledge gets encoded into the inputs a model will learn from. Which signals matter, how they are normalized, what time windows to use: these decisions live here, and they are often the biggest driver of model quality.
       </p>
       <p>
-        Once a model is trained, it shifts stages. The trained model becomes a consumer and a producer: it takes data in, produces predictions, and those predictions often flow back into storage to be used downstream. That part shows up in the consumption stage.
+        Once a model is trained, it shifts stages. The trained model becomes a consumer and a producer: it takes data in, produces predictions, and those predictions often flow back into storage to be used downstream.
       </p>
+    </div>
+
+    <div class="prediction">
+      <div class="prediction-label">in the AC era</div>
+      <p>This is the highest-stakes layer. Transformation was always where data became trustworthy. In the AC era, it becomes where the company's understanding of itself gets written down.</p>
+      <p>The semantic layer is no longer just a way to sync metric definitions across dashboards. It is the contract that tells <span class="hl-ac">AC</span> what revenue means, what churn counts, what an active user is — so that when AC reasons across your data, it uses your definitions and not guesses. <span class="hl-dbt">dbt</span> is where that contract gets written. Every model, every test, every documented metric is a line of context that AC either has or doesn't.</p>
+      <p>This is where the compute/context cycle matters most. When quantum computing takes compute from a constraint to a commodity, context becomes the only real differentiator. Two companies with the same compute can get completely different answers from AC because one spent years making their transformation layer precise and the other didn't. You can't fix a missing or wrong definition after the fact. The transformation layer is where it has to be right.</p>
     </div>
   </div>
 
 
-  <!-- ── 05: CONSUMPTION ──────────────────────────────────── -->
+  <!-- 05: CONSUMPTION -->
   <div class="section">
     <div class="section-meta">
       <span class="section-num">05</span>
@@ -1004,7 +924,6 @@
       There are a few different access patterns here, each suited to a different kind of question.
     </p>
 
-    <!-- SUB: BI and dashboards -->
     <div class="sub">
       <div class="sub-label">within consumption</div>
       <h3>BI and dashboards</h3>
@@ -1016,7 +935,6 @@
       </p>
     </div>
 
-    <!-- SUB: AI as interface layer -->
     <div class="sub">
       <div class="sub-label">within consumption</div>
       <h3>AI as the interface layer</h3>
@@ -1053,9 +971,7 @@
         </div>
       </div>
 
-      <p>
-        Three patterns show up in how AI systems interact with data:
-      </p>
+      <p>Three patterns show up in how AI systems interact with data:</p>
 
       <div class="table-wrap">
         <table>
@@ -1091,7 +1007,6 @@
       </div>
     </div>
 
-    <!-- SUB: ML inference -->
     <div class="sub">
       <div class="sub-label">within consumption</div>
       <h3>ML models in production</h3>
@@ -1106,7 +1021,6 @@
       </p>
     </div>
 
-    <!-- SUB: data products and APIs -->
     <div class="sub">
       <div class="sub-label">within consumption</div>
       <h3>data products and APIs</h3>
@@ -1117,10 +1031,16 @@
         Data products treat trusted datasets as first-class outputs, with defined schemas, ownership, and SLAs. Data APIs expose that data programmatically, letting other systems query or subscribe to it without needing direct warehouse access.
       </p>
     </div>
+
+    <div class="prediction">
+      <div class="prediction-label">in the AC era</div>
+      <p>The dashboard era doesn't end — it gets reframed. The primary consumer at the end of the chain shifts from a person navigating a screen to an agent reasoning in real time. <span class="hl-ac">AC</span> doesn't browse a dashboard. It queries structured data, reads lineage, calls tools, and returns an answer.</p>
+      <p>Consumption patterns built for human eyes have to be rebuilt for machine eyes. The question shifts from "how do we make this data visible?" to "how do we make this data queryable by something that never sleeps and never guesses?" Dashboards don't disappear. They become one surface among many — and not the primary one anymore.</p>
+    </div>
   </div>
 
 
-  <!-- ── 06: THE DECISION ─────────────────────────────────── -->
+  <!-- 06: THE DECISION -->
   <div class="section">
     <div class="section-meta">
       <span class="section-num">06</span>
@@ -1179,8 +1099,15 @@
       </table>
     </div>
 
+    <div class="prediction">
+      <div class="prediction-label">in the AC era</div>
+      <p>The role of the human doesn't go away. It goes up. <span class="hl-ac">AC</span> recommends. The human approves, redirects, or escalates. The analyst who spent a career building dashboards becomes the strategist who interprets what AC surfaces and decides what to do about it.</p>
+      <p>The decision layer splits: there is the computation — what AC concludes from the data — and the judgment — whether to trust it, whether to act, and what happens next. That second half belongs to people. It always will.</p>
+      <p>And how good that computation is depends entirely on whether compute and context stayed in step as each improved. Quantum computing will push compute forward in ways that feel sudden. Every layer in this stack — sources, storage, transformation, consumption — has to be ready to match it with better context. That is the cycle. That is how you get to AC.</p>
+    </div>
+
     <div class="callout">
-      <p>The pattern I keep coming back to: tools change faster than the underlying questions do. Where does the data live? Where does compute happen? Who can trust the result? How does a human make a better decision because of it? Those questions were true before AI and they are still true now. The systems that answer them well are the ones worth understanding.</p>
+      <p>Tools change faster than the underlying questions do. Where does the data live? Where does compute happen? Who can trust the result? How does a human make a better decision because of it? Those questions were true before AI. They are still true now. The systems that answer them well are the ones worth building.</p>
     </div>
   </div>
 
