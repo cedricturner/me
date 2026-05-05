@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>the prep kitchen problem / Cedric Turner II</title>
+<title>context is the moat / Cedric Turner II</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -75,93 +75,7 @@
   p { font-size: 16px; color: #2a2a2a; line-height: 1.8; margin-bottom: 20px; }
   p:last-child { margin-bottom: 0; }
 
-  /* ── THE SYSTEM DIAGRAM ─────────────────────────── */
-
-  .system-diagram {
-    margin: 36px 0;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .system-diagram::-webkit-scrollbar { display: none; }
-
-  .system-row {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    min-width: min-content;
-  }
-
-  .sys-node {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    width: 128px;
-  }
-
-  .sys-box {
-    border: 1.5px solid var(--rule);
-    background: #fff;
-    padding: 14px 12px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-  }
-
-  .sys-box.dbt {
-    background: var(--dbt-bg);
-    border-color: var(--dbt-border);
-  }
-
-  .sys-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.2;
-  }
-
-  .sys-box.dbt .sys-name { color: var(--dbt-text); }
-
-  .sys-analogy {
-    font-size: 11px;
-    color: var(--faint);
-    line-height: 1.4;
-  }
-
-  .sys-desc {
-    font-size: 11.5px;
-    color: #666;
-    line-height: 1.5;
-    margin-top: 4px;
-  }
-
-  .sys-dbt-tag {
-    display: inline-block;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--dbt-text);
-    background: #dbeafe;
-    padding: 2px 6px;
-    border-radius: 2px;
-    margin-top: 4px;
-    align-self: flex-start;
-  }
-
-  .sys-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 6px;
-    flex-shrink: 0;
-    color: var(--faint);
-    font-size: 16px;
-  }
-
-  /* ── BEFORE / AFTER ─────────────────────────────── */
-
+  /* before / after */
   .before-after {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -194,69 +108,7 @@
     gap: 8px;
   }
   .ba-line:last-child { margin-bottom: 0; }
-
-  .ba-line .dot {
-    color: var(--faint);
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  /* ── WHERE THINGS BREAK ─────────────────────────── */
-
-  .break-list {
-    margin: 24px 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .break-item {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .break-scenario {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--faint);
-    margin-bottom: 8px;
-  }
-
-  .break-item p {
-    font-size: 15px;
-    color: #444;
-    margin: 0;
-    line-height: 1.7;
-  }
-
-  .break-item .punchline {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 8px;
-    font-style: italic;
-  }
-
-  /* ── DIAGNOSTIC ─────────────────────────────────── */
-
-  .diagnostic-list {
-    margin: 28px 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .diagnostic-item {
-    padding: 18px 0;
-    border-bottom: 1px solid var(--rule);
-    display: flex;
-    gap: 14px;
-  }
-
-  .diagnostic-q {
-    font-size: 15.5px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.5;
-    flex: 1;
-  }
+  .ba-line .dot { color: var(--faint); flex-shrink: 0; margin-top: 1px; }
 
   /* callout */
   .callout {
@@ -267,7 +119,46 @@
   }
   .callout p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.7; }
 
-  /* go deeper links */
+  /* predictions */
+  .prediction-list {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .prediction-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+  }
+
+  .prediction-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    font-family: monospace;
+    padding-top: 3px;
+  }
+
+  .prediction-body {}
+
+  .prediction-text {
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .prediction-why {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* go deeper */
   .go-deeper {
     font-size: 13px;
     color: var(--muted);
@@ -297,254 +188,185 @@
 
   <!-- HERO -->
   <div class="hero">
-    <h1>the prep kitchen problem</h1>
-    <span class="tag">a point of view on AI and data infrastructure</span>
+    <h1>context is the moat</h1>
+    <span class="tag">a prediction about where AI and data infrastructure are heading</span>
     <p class="lede">
-      Everyone is talking about AI. Most of that conversation is about the model: which one, how fast, what it can do. The real leverage is one layer below the model, in how your data is shaped and defined before AI ever reads it. That's the part most teams are getting wrong.
+      The AI conversation is mostly about models. Which one, how smart, how fast. That's the wrong layer. The companies that pull ahead over the next five years won't have better models. They'll have better context. Most data teams haven't started building it yet.
     </p>
   </div>
 
 
-  <!-- 1. THE SHIFT -->
+  <!-- 01 -->
   <div class="section">
-    <div class="section-label">01 / the shift</div>
-    <h2>the interface changed, the problem didn't</h2>
+    <div class="section-label">01 / the context argument</div>
+    <h2>more context, fewer hallucinations</h2>
 
     <p>
-      A few years ago, when someone had a question about the business, they'd pull up a dashboard or ask an analyst to build one.
+      The reason a model hallucinates isn't because it's dumb. It's because it doesn't know. People do the same thing. Fill in the gaps with something plausible. The more you know going in, the fewer gaps you have to fill.
     </p>
     <p>
-      Now they're asking AI directly, in plain English, and they expect an answer in seconds.
+      Open book tests produce better results than closed book. Not because people are cheating, but because access to more information at the moment of answering produces more accurate results. This is a solved problem at the human level. AI is working through the same one.
     </p>
     <p>
-      The interface changed, but the data underneath still has to answer the question and still has to be right. That's the part most people skip over.
+      The "large" in large language model refers partly to scale, but what's actually driven the leap in usefulness is how much relevant information a model can hold in view when it answers. Context windows grew. Retrieval systems improved. Tools like MCP let models pull from live sources at query time. You're handing the model the textbook instead of asking it to work from memory.
+    </p>
+    <p>
+      The entire arc of model improvement is this: give the model more of the right context. More training data, better retrieval, longer windows. The model that knows more gives better answers. The model that can hold more in view at once gives faster ones.
+    </p>
+
+    <div class="callout">
+      <p>The constraint has never been the model. It's always been context. Better models help at the margin. Better context changes the answer entirely.</p>
+    </div>
+
+    <p class="go-deeper">On how this shift changes the way people actually work: <a href="../blog/ai-forces-preference/">AI forces preference →</a></p>
+  </div>
+
+
+  <!-- 02 -->
+  <div class="section">
+    <div class="section-label">02 / where most companies are</div>
+    <h2>closed-book, and not by choice</h2>
+
+    <p>
+      Most companies have deployed AI. Very few are getting useful answers out of it.
+    </p>
+    <p>
+      The reason is they're feeding AI with language-model-era context in a large-language-model-era world. Their data is scattered, inconsistent, and undefined. The same metric means different things in different systems. Business logic lives in spreadsheets, BI tools, and someone's memory. The AI is answering closed-book, filling in the gaps as best it can.
+    </p>
+    <p>
+      The jump from language model to large language model wasn't a product decision. It was a sustained effort to get more of the right information into the model's reach. The same jump is available to companies, but it requires doing the foundational work first: cleaning the data, centralizing the definitions, building a context layer that any tool can read from.
     </p>
 
     <div class="before-after">
       <div class="ba-side">
-        <div class="ba-label">then</div>
-        <div class="ba-line"><span class="dot">·</span>someone has a question</div>
-        <div class="ba-line"><span class="dot">·</span>analyst writes SQL</div>
-        <div class="ba-line"><span class="dot">·</span>dashboard shows the answer</div>
-        <div class="ba-line"><span class="dot">·</span>person decides</div>
+        <div class="ba-label">closed-book</div>
+        <div class="ba-line"><span class="dot">·</span>"revenue" means something different in every system</div>
+        <div class="ba-line"><span class="dot">·</span>logic lives in spreadsheets and individual heads</div>
+        <div class="ba-line"><span class="dot">·</span>AI reads whatever it can reach and does its best</div>
+        <div class="ba-line"><span class="dot">·</span>the answer is confident and may be wrong</div>
       </div>
       <div class="ba-side">
-        <div class="ba-label">now</div>
-        <div class="ba-line"><span class="dot">·</span>someone has a question</div>
-        <div class="ba-line"><span class="dot">·</span>asks AI in plain language</div>
-        <div class="ba-line"><span class="dot">·</span>AI reads data and responds</div>
-        <div class="ba-line"><span class="dot">·</span>person decides</div>
+        <div class="ba-label">open-book</div>
+        <div class="ba-line"><span class="dot">·</span>"revenue" is defined once and tested automatically</div>
+        <div class="ba-line"><span class="dot">·</span>logic is centralized, versioned, and documented</div>
+        <div class="ba-line"><span class="dot">·</span>AI reads from a shared source of truth</div>
+        <div class="ba-line"><span class="dot">·</span>the answer is confident and is actually right</div>
       </div>
     </div>
 
     <p>
-      The middle steps look different, but they still depend on the same thing: data that is clean, defined, and trustworthy.
+      Most teams are focused on which AI product to buy. The more important question is whether the data underneath it is ready to be read.
     </p>
-    <p class="go-deeper">If you want to think through what this shift actually means for how people work: <a href="../blog/ai-forces-preference/">AI forces preference →</a></p>
   </div>
 
 
-  <!-- 2. THE SYSTEM -->
+  <!-- 03 -->
   <div class="section">
-    <div class="section-label">02 / the system</div>
-    <h2>there is a system, most people only see the top of it</h2>
+    <div class="section-label">03 / the compute shift</div>
+    <h2>the layer that was the moat is losing its edge</h2>
 
     <p>
-      Think of it like a restaurant kitchen. Before a chef can cook, someone has to bring in the ingredients, do all the prep work, and write out the recipes. The chef, no matter how talented, can only work with what's in front of them.
+      For a long time, compute was the constraint. You brought your data to the compute: centralized it, warehoused it, paid by the query. The platforms that owned compute owned the workflow.
     </p>
     <p>
-      Data works the same way. There are four layers, and AI sits at the top of them.
+      DuckDB made the case that you can bring compute to the data instead. Run analytical queries where the data already lives, without moving it into a centralized warehouse. At very large scale there are tradeoffs, but for most use cases it works. It opened a new pattern: local compute, exploratory work, no round-trip.
     </p>
-
-    <div class="system-diagram">
-      <div class="system-row">
-
-        <div class="sys-node">
-          <div class="sys-box">
-            <div class="sys-name">raw data</div>
-            <div class="sys-analogy">the ingredients</div>
-            <div class="sys-desc">scattered across every system: CRM, databases, spreadsheets, third-party tools. Rarely consistent or labeled.</div>
-          </div>
-        </div>
-
-        <div class="sys-arrow">→</div>
-
-        <div class="sys-node">
-          <div class="sys-box dbt">
-            <div class="sys-name">transformation</div>
-            <div class="sys-analogy">the prep kitchen</div>
-            <div class="sys-desc">data gets cleaned, organized, and given definitions that mean the same thing everywhere.</div>
-            <div class="sys-dbt-tag">dbt lives here</div>
-          </div>
-        </div>
-
-        <div class="sys-arrow">→</div>
-
-        <div class="sys-node">
-          <div class="sys-box dbt">
-            <div class="sys-name">context layer</div>
-            <div class="sys-analogy">the recipe cards</div>
-            <div class="sys-desc">define "revenue" once. every tool that asks (dashboards, AI, apps) gets the exact same answer.</div>
-            <div class="sys-dbt-tag">also dbt</div>
-          </div>
-        </div>
-
-        <div class="sys-arrow">→</div>
-
-        <div class="sys-node">
-          <div class="sys-box">
-            <div class="sys-name">AI / apps</div>
-            <div class="sys-analogy">the chef</div>
-            <div class="sys-desc">reads everything below it and is only as smart as what it's reading.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     <p>
-      Most conversations about AI are about the chef. They're impressive. But a fast chef with bad ingredients still makes bad food.
+      Quantum computing takes this further. IBM, IonQ, and Google are all working on the same fundamental problem: computation that doesn't resolve one answer at a time. Qubits hold superposition, both states simultaneously, which means the amount of information you can process at once grows exponentially rather than linearly. IBM already lets you run sessions on their quantum infrastructure from your own machine via Qiskit. This is still early-stage, but it points in a clear direction.
+    </p>
+    <p>
+      When compute becomes abundant, the question changes. You're no longer asking how to afford the processing. You're asking what you're computing, and with what context.
     </p>
 
     <div class="callout">
-      <p>The companies getting real value from AI aren't necessarily using better models. They've done the prep work the others haven't.</p>
+      <p>When compute is abundant, you're not paying for processing power. You're paying for the ecosystem that surrounds it. The trend in every other part of technology is that people don't want to pay for the ecosystem anymore.</p>
     </div>
   </div>
 
 
-  <!-- 3. WHERE THINGS BREAK -->
+  <!-- 04 -->
   <div class="section">
-    <div class="section-label">03 / where things break</div>
-    <h2>most AI problems are actually data problems</h2>
+    <div class="section-label">04 / the interoperability shift</div>
+    <h2>ecosystems are losing to openness</h2>
 
     <p>
-      When AI gives a bad answer, the instinct is to blame the model, switch to a different one, tune the prompts, or try a different product. But usually that's not where the problem is.
+      iPhone and Android phones now share text threads seamlessly. USB-C replaced the lightning connector. People mix Nike and Adidas without thinking twice. Car branding has gone minimal. The dominant trend across technology and culture right now is: plug anything into anything else and have it just work.
     </p>
-
-    <div class="break-list">
-
-      <div class="break-item">
-        <div class="break-scenario">scenario 1 · conflicting definitions</div>
-        <p>Sales defines revenue as bookings. Finance defines it as recognized revenue. The AI gets asked for "revenue." It picks one definition, or worse, it tries to reconcile two inconsistent sources. Nobody agrees with the answer.</p>
-        <p class="punchline">The AI isn't wrong. The company never agreed on what "revenue" meant.</p>
-      </div>
-
-      <div class="break-item">
-        <div class="break-scenario">scenario 2 · logic scattered everywhere</div>
-        <p>Churn is calculated slightly differently in Salesforce, in the data warehouse, and in the BI tool. The AI pulls from whichever one is easiest to reach. The number it returns is technically from the data, but nobody can explain how it got there.</p>
-        <p class="punchline">The AI did exactly what it was supposed to. The system underneath it wasn't consistent.</p>
-      </div>
-
-      <div class="break-item">
-        <div class="break-scenario">scenario 3 · answers that don't match the dashboard</div>
-        <p>An exec asks AI to summarize performance. The numbers don't match the BI dashboard. Both are reading the same underlying data. Everyone loses confidence in both.</p>
-        <p class="punchline">Two systems reading the same raw data can produce different answers if neither of them agree on definitions.</p>
-      </div>
-
-    </div>
-
     <p>
-      These aren't AI problems, they're data shape problems. The AI just made them more visible.
+      Data is heading the same direction.
+    </p>
+    <p>
+      The compute-centric platforms built their position on stickiness. Your data lives here, your logic lives here, your team learned this tooling, and so you stay. That worked when switching meant starting over. It works less well when the expectation is that things should be interoperable by default.
+    </p>
+    <p>
+      Apple's model worked because everything inside the ecosystem worked better together. Informatica used the same playbook. So did Snowflake, at a different layer. But when the cultural default becomes openness, the ecosystem becomes a liability. The value of lock-in drops to zero when plugging anything into anything else is what people expect.
+    </p>
+    <p>
+      The teams building data stacks today want to pick the best tool for each job and have them work together. Not the best bundle a single vendor offers. This is structural pressure on compute-centric platforms that doesn't show up in their current numbers yet.
     </p>
   </div>
 
 
-  <!-- 4. WHERE dbt FITS -->
+  <!-- 05 -->
   <div class="section">
-    <div class="section-label">04 / where dbt fits</div>
-    <h2>dbt is the prep kitchen</h2>
+    <div class="section-label">05 / the prediction</div>
+    <h2>context and ingestion win the next five years</h2>
 
     <p>
-      dbt sits between raw data and everything that uses it. Its job is to take scattered, inconsistent source data and turn it into something reliable.
+      Here's the thesis: as compute commoditizes and interoperability becomes the default, the durable competitive position in data is the context layer.
     </p>
     <p>
-      It's not a BI tool or a database. It doesn't store your data or show you charts. It does one thing: makes raw data usable and trustworthy.
-    </p>
-
-    <div class="before-after">
-      <div class="ba-side">
-        <div class="ba-label">without dbt</div>
-        <div class="ba-line"><span class="dot">·</span>"revenue" means different things in different systems</div>
-        <div class="ba-line"><span class="dot">·</span>business logic lives in spreadsheets, BI tools, and someone's head</div>
-        <div class="ba-line"><span class="dot">·</span>AI reads whatever it can find and does its best</div>
-        <div class="ba-line"><span class="dot">·</span>the answer is fast and confident, and may be wrong</div>
-      </div>
-      <div class="ba-side">
-        <div class="ba-label">with dbt</div>
-        <div class="ba-line"><span class="dot">·</span>"revenue" has one definition, tested automatically</div>
-        <div class="ba-line"><span class="dot">·</span>business logic lives in one place, versioned and documented</div>
-        <div class="ba-line"><span class="dot">·</span>AI reads what dbt made trustworthy</div>
-        <div class="ba-line"><span class="dot">·</span>the answer is fast and confident, and is actually right</div>
-      </div>
-    </div>
-
-    <p>
-      AI doesn't write its own definitions, it reads the ones that already exist. dbt is where those definitions get written and enforced. That's why it matters.
-    </p>
-
-    <p>
-      There's a second layer worth understanding: the context layer, or semantic layer. If transformation is the prep kitchen, the context layer is where you write the recipe cards. Think about what happens when every chef uses their own recipe. The dish is called the same thing on the menu, but it tastes different every time depending on who's working that night. Now replace the chefs with your tools: a dashboard, an AI agent, a data product. If each one calculates a metric its own way, the answer depends on which tool you ask. Same question, different meal.
+      Not which cloud you're on. Not which compute platform you chose. Not which AI product you licensed. Whether you've defined your data well, centralized your business logic, and built it in a way that survives vendor switches, model upgrades, and team turnover. The definitions travel. The logic travels. The context is yours.
     </p>
     <p>
-      The context layer is how you give every tool the same recipe. dbt lets you define "revenue" or "churn" once, centrally, and serve that definition to everything that needs it. It doesn't matter which tool you ask. The answer is the same.
+      The combination that wins is strong ingestion paired with strong context definition. Getting data in is table stakes. What you do to it, and how well you define what it means, is the durable advantage.
     </p>
-
-    <div class="callout">
-      <p>When someone invests in an AI product, they're buying the chef. dbt is the prep kitchen and the recipe book. The recipe book is what stops two chefs from making the same dish two different ways.</p>
-    </div>
-    <p class="go-deeper">For the longer argument on why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
-  </div>
-
-
-  <!-- 5. HOW TO TELL -->
-  <div class="section">
-    <div class="section-label">05 / how to tell</div>
-    <h2>a few questions worth asking about your own stack</h2>
-
     <p>
-      Before evaluating AI products, it's worth checking the layer below. These aren't rhetorical. If any of them are hard to answer, the definitions don't live in the right place yet.
+      The next frontier is reasoning, not retrieval. Most analytics today answers "what happened." The next wave answers "why did it happen" and "what should happen next." That requires a context layer rich enough to hold multiple sources in view and synthesize across them. The open book test, taken to its logical end. And it only works if the prep work has been done.
+    </p>
+    <p>
+      Most teams are still debating which warehouse to use.
     </p>
 
-    <div class="diagnostic-list">
+    <div class="prediction-list">
 
-      <div class="diagnostic-item">
-        <div class="diagnostic-q">If your AI and your BI tool gave different answers to the same question, would you be able to explain why?</div>
+      <div class="prediction-item">
+        <div class="prediction-num">01</div>
+        <div class="prediction-body">
+          <div class="prediction-text">The traditional compute layer commoditizes faster than most expect.</div>
+          <div class="prediction-why">When you can bring compute to the data rather than the other way around, paying by the query to a centralized platform becomes a harder deal to justify. DuckDB is the preview. Quantum is the endpoint.</div>
+        </div>
       </div>
 
-      <div class="diagnostic-item">
-        <div class="diagnostic-q">Where is your most important metric actually defined? Is it one definition in one place, or a slightly different version in every tool that uses it?</div>
+      <div class="prediction-item">
+        <div class="prediction-num">02</div>
+        <div class="prediction-body">
+          <div class="prediction-text">Lock-in loses its hold across the entire stack.</div>
+          <div class="prediction-why">The interoperability trend is structural, not cyclical. The tools that survive long-term connect to everything and trap you in nothing. Ecosystem plays stop working when openness is the default expectation.</div>
+        </div>
       </div>
 
-      <div class="diagnostic-item">
-        <div class="diagnostic-q">If you switched AI providers tomorrow, would your business logic come with you? Or is it locked inside the current tool?</div>
+      <div class="prediction-item">
+        <div class="prediction-num">03</div>
+        <div class="prediction-body">
+          <div class="prediction-text">The context layer becomes the most valuable layer in the stack.</div>
+          <div class="prediction-why">Not the compute layer. The layer that defines what the data means, keeps that definition consistent, and makes it available to any tool regardless of what's running on top. That's the work that compounds.</div>
+        </div>
       </div>
 
-      <div class="diagnostic-item">
-        <div class="diagnostic-q">Can you trace an answer from what the AI returned all the way back to the source data it read?</div>
+      <div class="prediction-item">
+        <div class="prediction-num">04</div>
+        <div class="prediction-body">
+          <div class="prediction-text">The question shifts from "what happened?" to "why?" and "what should we do?"</div>
+          <div class="prediction-why">Retrieval is a solved problem. Reasoning across multiple sources, at speed, with trustworthy context underneath it, is where the next wave of value gets created. The organizations that built the context layer first will be the ones who can actually ask it.</div>
+        </div>
       </div>
 
     </div>
 
-    <p>
-      The teams that can answer these clearly have done the prep work. The ones that can't are usually one bad answer away from a trust problem.
-    </p>
+    <p class="go-deeper">For the longer argument on what AI agents actually need from your data infrastructure: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
 
-
-  <div class="section" style="margin-top: 80px;">
-    <p>
-      A great chef can cook from memory. The dish might even be excellent. But if every chef in the same restaurant uses their own version of the recipe, the customer experience depends on who's working that night. It's not a skill problem. It's a consistency problem. The recipes need to exist somewhere that everyone can read from.
-    </p>
-    <p>
-      The question is where. And this is where it matters.
-    </p>
-    <p>
-      The recipes shouldn't live at the farm or the butcher. That's where the raw ingredients come from, not where the cooking happens. If you switch suppliers, you lose everything tied to them. The recipes shouldn't live with the chef either. If the chef leaves or changes direction, those recipes walk out the door too. The right place for the recipes is the prep kitchen: the layer in between, where the ingredients get turned into something usable and where the logic of cooking actually lives.
-    </p>
-    <p>
-      That's the transformation layer. And dbt is one of the best ways to build it.
-    </p>
-  </div>
 
   <div class="footer-note">
     by <a href="/me/" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Cedric Turner II</a> · May 2026
