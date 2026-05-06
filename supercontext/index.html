@@ -172,6 +172,50 @@
     color: var(--faint);
   }
 
+  /* ── equation visual (sec 07) ───────────────────── */
+  .equation-visual {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 28px 0;
+  }
+  .eq-card {
+    flex: 1;
+    padding: 16px 18px;
+    border: 1.5px solid var(--rule);
+  }
+  .eq-card--supercontext { background: #fbcfe8; border-color: #f9a8d4; }
+  .eq-card--supercompute { background: #1a1a1a; border-color: #1a1a1a; }
+  .eq-card--ac            { background: #fff; border-color: #1a1a1a; }
+  .eq-card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    margin-bottom: 5px;
+  }
+  .eq-card--supercontext .eq-card-label { color: #1a1a1a; }
+  .eq-card--supercompute .eq-card-label { color: #fff; }
+  .eq-card--ac            .eq-card-label { color: #1a1a1a; }
+  .eq-card-desc { font-size: 12px; line-height: 1.5; }
+  .eq-card--supercontext .eq-card-desc { color: #555; }
+  .eq-card--supercompute .eq-card-desc { color: #999; }
+  .eq-card--ac            .eq-card-desc { color: #666; }
+  .eq-operator {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--faint);
+    font-weight: 300;
+    flex-shrink: 0;
+    padding: 0 2px;
+  }
+  @media (max-width: 520px) {
+    .equation-visual { flex-direction: column; }
+    .eq-operator { justify-content: center; }
+  }
+
   /* ── constraint cards (hero) ─────────────────────── */
   .constraint-cards {
     display: grid;
@@ -326,8 +370,8 @@
   }
   .arch-pill-downstream {
     font-size: 11px;
-    background: #ede9fe;
-    color: #7c3aed;
+    background: #f0f0f0;
+    color: #444;
     padding: 2px 8px;
     border-radius: 2px;
   }
@@ -463,12 +507,12 @@
   }
   .ac-arch-hconn-arrow { font-size: 13px; color: var(--faint); }
   .ac-arch-ac-box {
-    background: #7c3aed;
-    border: 1.5px solid #6d28d9;
+    background: #fff;
+    border: 1.5px solid #1a1a1a;
     padding: 18px;
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: #1a1a1a;
     text-align: center;
     letter-spacing: 0.05em;
   }
@@ -476,7 +520,7 @@
     display: block;
     font-size: 9px;
     font-weight: 400;
-    color: #c4b5fd;
+    color: #888;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 5px;
@@ -523,7 +567,7 @@
   }
   .hl-dbt          { background: #fed7aa; }
   .hl-fivetran     { background: #a7f3d0; }
-  .hl-ac           { background: #7c3aed; color: #fff; }
+  .hl-ac           { background: #fff; color: #1a1a1a; border: 1px solid #1a1a1a; }
   .hl-supercontext { background: #fbcfe8; color: #1a1a1a; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; font-size: 0.85em; }
   .hl-supercompute { background: #1a1a1a; color: #fff; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; font-size: 0.85em; }
 </style>
@@ -560,7 +604,7 @@
     <h2>what we're chasing</h2>
 
     <p>
-      In 1956, long before anyone had named artificial intelligence, Isaac Asimov imagined a machine that would outlast civilizations. He called it <span class="hl-ac">AC</span>. Not a tool you queried and closed, but something that grew with the world, absorbed the memory of every generation that came before it, got smarter as humanity fed it more context, more history, more of everything the species had ever known. AC never refused a question. That was not in its nature. What <span class="hl-ac">AC</span> refused to do was guess. When it did not have enough to give a real answer, it said so, directly and without apology, every single time:
+      In 1956, long before anyone had named artificial intelligence, Isaac Asimov imagined a machine that would outlast civilizations. He called it <span class="hl-ac">AC</span>. What Asimov described, we now call superintelligence. Not a tool you queried and closed, but something that grew with the world, absorbed the memory of every generation that came before it, got smarter as humanity fed it more context, more history, more of everything the species had ever known. AC never refused a question. That was not in its nature. What AC refused to do was guess. When it did not have enough to give a real answer, it said so, directly and without apology, every single time:
     </p>
 
     <div class="asimov-quote">
@@ -569,7 +613,7 @@
     </div>
 
     <p>
-      That honesty is what makes <span class="hl-ac">AC</span> worth paying attention to. It had access to more accumulated knowledge than any individual could build in a lifetime and still had the self-awareness to know when that was not enough. It was not broken, it was not failing, it was being precise about what it actually knew versus what it would have had to make up. Asimov wrote this before machine learning existed, before anyone had named the problem he was describing, before computers could do much of anything at all. He just saw the logic: AC is only as smart as what it knows, and the smarter you want it to be, the more complete and trustworthy that knowledge has to be. That logic has not changed. We are just now living inside it.
+      That honesty is what makes AC worth paying attention to. It had access to more accumulated knowledge than any individual could build in a lifetime and still had the self-awareness to know when that was not enough. It was not broken, it was not failing, it was being precise about what it actually knew versus what it would have had to make up. Asimov wrote this before machine learning existed, before anyone had named the problem he was describing, before computers could do much of anything at all. He just saw the logic: AC is only as smart as what it knows, and the smarter you want it to be, the more complete and trustworthy that knowledge has to be. That logic has not changed. We are just now living inside it.
     </p>
   </div>
 
@@ -730,7 +774,7 @@
       <span class="hl-fivetran">Fivetran</span> handles the coverage side of <span class="hl-supercontext">supercontext</span>. It connects your CRM, your warehouse, your third-party tools, all of it, and keeps everything moving and current. Think of it as bringing all the textbooks to the library: before dbt can make your data mean anything, Fivetran makes sure it is all there. <a href="https://www.fivetran.com/connectors" target="_blank" rel="noopener">See what Fivetran connects to →</a>
     </p>
     <p>
-      <span class="hl-dbt">dbt</span> handles the definition side: not just moving data, but making it mean something. Having data arrive is not the same as having trustworthy data. dbt is where you write, in code, what your data actually means, and then enforce it automatically every time anything changes. That is the meaning layer: what the librarian uses to know which books answer which questions. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what <span class="hl-ac">AC</span> can know is dbt's structured layer plus everything that layers on downstream.
+      <span class="hl-dbt">dbt</span> handles the definition side: not just moving data, but making it mean something. Having data arrive is not the same as having trustworthy data. dbt is where you write, in code, what your data actually means, and then enforce it automatically every time anything changes. That is the meaning layer: what the librarian uses to know which books answer which questions. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what AC can know is dbt's structured layer plus everything that layers on downstream.
     </p>
 
     <div class="arch-flow">
@@ -793,12 +837,29 @@
 
     <div class="concept-block">
       <div class="concept-block-label">how dbt and fivetran build supercontext</div>
-      <p>Fivetran establishes the address layer: every source connected, every pipeline running, no gaps in what <span class="hl-ac">AC</span> can reach. dbt builds the meaning layer on top: every metric defined, every number tested, every output traceable. Together, they produce <span class="hl-supercontext">supercontext</span>. Not a better search. The complete, trustworthy, navigable foundation that <span class="hl-ac">AC</span> needs to read from instead of guessing.</p>
+      <p>Fivetran establishes the address layer: every source connected, every pipeline running, no gaps in what AC can reach. dbt builds the meaning layer on top: every metric defined, every number tested, every output traceable. Together, they produce <span class="hl-supercontext">supercontext</span>. Not a better search. The complete, trustworthy, navigable foundation that <span class="hl-ac">AC</span> needs to read from instead of guessing.</p>
     </div>
 
     <p>
       Together, <span class="hl-fivetran">Fivetran</span> and <span class="hl-dbt">dbt</span> build <span class="hl-supercontext">supercontext</span>: Fivetran on the coverage side, ensuring <span class="hl-ac">AC</span> can reach everything, dbt on the definition side, ensuring what it reads means something. What AC would have needed from the very beginning, and what your AI needs right now.
     </p>
+
+    <div class="equation-visual">
+      <div class="eq-card eq-card--supercontext">
+        <div class="eq-card-label">supercontext</div>
+        <div class="eq-card-desc">everything worth processing</div>
+      </div>
+      <div class="eq-operator">+</div>
+      <div class="eq-card eq-card--supercompute">
+        <div class="eq-card-label">supercompute</div>
+        <div class="eq-card-desc">the capacity to process everything at once</div>
+      </div>
+      <div class="eq-operator">=</div>
+      <div class="eq-card eq-card--ac">
+        <div class="eq-card-label">AC</div>
+        <div class="eq-card-desc">answers without guessing</div>
+      </div>
+    </div>
 
     <p class="go-deeper">On why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
@@ -849,8 +910,8 @@
             </div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:4px;">+ downstream</div>
             <div class="ac-arch-pills">
-              <span class="ac-arch-pill" style="background:#ede9fe;color:#7c3aed;">skills</span>
-              <span class="ac-arch-pill" style="background:#ede9fe;color:#7c3aed;">.md</span>
+              <span class="ac-arch-pill" style="background:#f0f0f0;color:#444;">skills</span>
+              <span class="ac-arch-pill" style="background:#f0f0f0;color:#444;">.md</span>
             </div>
           </div>
         </div>
