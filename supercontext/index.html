@@ -172,6 +172,50 @@
     color: var(--faint);
   }
 
+  /* ── equation visual (sec 07) ───────────────────── */
+  .equation-visual {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 28px 0;
+  }
+  .eq-card {
+    flex: 1;
+    padding: 16px 18px;
+    border: 1.5px solid var(--rule);
+  }
+  .eq-card--supercontext { background: #fbcfe8; border-color: #f9a8d4; }
+  .eq-card--supercompute { background: #1a1a1a; border-color: #1a1a1a; }
+  .eq-card--ac            { background: #7c3aed; border-color: #6d28d9; }
+  .eq-card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    margin-bottom: 5px;
+  }
+  .eq-card--supercontext .eq-card-label { color: #1a1a1a; }
+  .eq-card--supercompute .eq-card-label { color: #fff; }
+  .eq-card--ac            .eq-card-label { color: #fff; }
+  .eq-card-desc { font-size: 12px; line-height: 1.5; }
+  .eq-card--supercontext .eq-card-desc { color: #555; }
+  .eq-card--supercompute .eq-card-desc { color: #999; }
+  .eq-card--ac            .eq-card-desc { color: #c4b5fd; }
+  .eq-operator {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--faint);
+    font-weight: 300;
+    flex-shrink: 0;
+    padding: 0 2px;
+  }
+  @media (max-width: 520px) {
+    .equation-visual { flex-direction: column; }
+    .eq-operator { justify-content: center; }
+  }
+
   /* ── constraint cards (hero) ─────────────────────── */
   .constraint-cards {
     display: grid;
@@ -799,6 +843,23 @@
     <p>
       Together, <span class="hl-fivetran">Fivetran</span> and <span class="hl-dbt">dbt</span> build <span class="hl-supercontext">supercontext</span>: Fivetran on the coverage side, ensuring <span class="hl-ac">AC</span> can reach everything, dbt on the definition side, ensuring what it reads means something. What AC would have needed from the very beginning, and what your AI needs right now.
     </p>
+
+    <div class="equation-visual">
+      <div class="eq-card eq-card--supercontext">
+        <div class="eq-card-label">supercontext</div>
+        <div class="eq-card-desc">everything worth processing</div>
+      </div>
+      <div class="eq-operator">+</div>
+      <div class="eq-card eq-card--supercompute">
+        <div class="eq-card-label">supercompute</div>
+        <div class="eq-card-desc">the capacity to process everything at once</div>
+      </div>
+      <div class="eq-operator">=</div>
+      <div class="eq-card eq-card--ac">
+        <div class="eq-card-label">AC</div>
+        <div class="eq-card-desc">answers without guessing</div>
+      </div>
+    </div>
 
     <p class="go-deeper">On why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
   </div>
