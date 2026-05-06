@@ -458,12 +458,12 @@
   }
   .ac-arch-hconn-arrow { font-size: 13px; color: var(--faint); }
   .ac-arch-ac-box {
-    background: #fbcfe8;
-    border: 1.5px solid #f9a8d4;
+    background: #3730a3;
+    border: 1.5px solid #312e81;
     padding: 18px;
     font-size: 16px;
     font-weight: 700;
-    color: #831843;
+    color: #fff;
     text-align: center;
     letter-spacing: 0.05em;
   }
@@ -471,7 +471,7 @@
     display: block;
     font-size: 9px;
     font-weight: 400;
-    color: #f472b6;
+    color: #a5b4fc;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 5px;
@@ -518,7 +518,7 @@
   }
   .hl-dbt          { background: #fed7aa; }
   .hl-fivetran     { background: #a7f3d0; }
-  .hl-ac           { background: #fbcfe8; }
+  .hl-ac           { background: #3730a3; color: #fff; }
   .hl-supercontext { background: #DCB8CB; color: #1a1a1a; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; }
   .hl-supercompute { background: #1a1a1a; color: #fff; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; }
 </style>
@@ -626,7 +626,7 @@
     </div>
 
     <p>
-      <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a>, <a href="https://azure.microsoft.com/en-us/solutions/quantum-computing" target="_blank" rel="noopener">Microsoft</a>, and a growing wave of startups are all racing toward commercial quantum systems, mostly out of the public eye because there is no commercial use case to ship yet. The breakthroughs are happening in labs, not product launches. But that is exactly how transformative technology tends to move, quietly, until it does not. Quantum is best understood as the next major acceleration layer: the way GPUs reshaped what AI could process, applied to a different class of problems. Anything that benefits from evaluating many possibilities at once gets dramatically faster. It will not instantly replace every piece of existing infrastructure, but when it reaches commercial scale it will raise the ceiling on how much a model can reason through at a time. Quantum is the path to <span class="hl-supercompute">supercompute</span>: the kind of compute that does not just move faster, but processes every possibility at once.
+      <a href="https://www.ibm.com/quantum" target="_blank" rel="noopener">IBM</a>, <a href="https://ionq.com" target="_blank" rel="noopener">IonQ</a>, <a href="https://quantumai.google" target="_blank" rel="noopener">Google</a>, <a href="https://azure.microsoft.com/en-us/solutions/quantum-computing" target="_blank" rel="noopener">Microsoft</a>, and a growing wave of startups are all racing toward commercial quantum systems, mostly out of the public eye because there is no commercial use case to ship yet. The breakthroughs are happening in labs, not product launches. But that is exactly how transformative technology tends to move, quietly, until it does not. Quantum is best understood as the next major acceleration layer: the way NVIDIA's GPUs and the data centers built around them reshaped what AI could process, applied to a different class of problems. Anything that benefits from evaluating many possibilities at once gets dramatically faster. It will not instantly replace every piece of existing infrastructure, but when it reaches commercial scale it will raise the ceiling on how much a model can reason through at a time. Quantum is the path to <span class="hl-supercompute">supercompute</span>: the kind of compute that does not just move faster, but processes every possibility at once.
     </p>
     <p>
       Quantum may raise the ceiling on what machines can reason through. But it does not fix whether the information they reason over is true, complete, governed, or meaningful. When compute gets faster, the context problem does not get easier. It gets more exposed.
@@ -722,10 +722,10 @@
     <h2>the infrastructure <span class="hl-ac">AC</span> would have needed from the start</h2>
 
     <p>
-      <span class="hl-fivetran">Fivetran</span> solves the ingestion side: it pulls data in from every source your company touches, your CRM, your warehouse, your third-party tools, all of it, and keeps it moving and current. Think of it as the part that makes sure AC has access to everything, not just whatever happened to be easy to reach.
+      <span class="hl-fivetran">Fivetran</span> handles the coverage side of <span class="hl-supercontext">supercontext</span>. It connects to over 700 data sources, your CRM, your warehouse, your third-party tools, all of it, and keeps everything moving and current. Every source reached, every pipeline maintained. Think of it as the part that closes the gaps in what <span class="hl-ac">AC</span> can see: not just the data that was easy to connect, but everything.
     </p>
     <p>
-      <span class="hl-dbt">dbt</span> solves the definition side, and this is where it gets interesting. Having the data is not the same as having trustworthy data. dbt is where you write down, in code, what your data actually means, and then enforce it automatically every time anything changes. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what AC can know is dbt's structured layer plus everything that layers on downstream.
+      <span class="hl-dbt">dbt</span> handles the definition side: not just moving data, but making it mean something. Having data arrive is not the same as having trustworthy data. dbt is where you write, in code, what your data actually means, and then enforce it automatically every time anything changes. Semantic layer, full lineage, automated tests, versioned logic. The addresses Fivetran establishes, dbt makes trustworthy. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what <span class="hl-ac">AC</span> can know is dbt's structured layer plus everything that layers on downstream.
     </p>
 
     <div class="arch-flow">
@@ -787,12 +787,12 @@
     </div>
 
     <div class="concept-block">
-      <div class="concept-block-label">how dbt enables AC</div>
-      <p>Think of every dbt project as a library with no card catalog. The books are there, the data is organized, but when an agent needs to understand what your project contains it has to read everything from scratch, slow and prone to misreading. What changes this is turning all of that project metadata, every model, test, metric, and lineage connection, into a structured layer the agent can query directly. The data stack gets a search bar. <span class="hl-ac">AC</span> stops guessing about your project and starts reasoning against real context.</p>
+      <div class="concept-block-label">how dbt and fivetran build supercontext</div>
+      <p>Fivetran establishes the address layer: every source connected, every pipeline running, no gaps in what <span class="hl-ac">AC</span> can reach. dbt builds the meaning layer on top: every metric defined, every number tested, every output traceable. Together, they produce <span class="hl-supercontext">supercontext</span>. Not a better search. The complete, trustworthy, navigable foundation that <span class="hl-ac">AC</span> needs to read from instead of guessing.</p>
     </div>
 
     <p>
-      Together, <span class="hl-fivetran">Fivetran</span> and <span class="hl-dbt">dbt</span> build the context layer: the foundation between raw data and every tool that reads from it, clean, defined, trustworthy. What AC would have needed from the very beginning, and what your AI needs right now.
+      Together, <span class="hl-fivetran">Fivetran</span> and <span class="hl-dbt">dbt</span> build <span class="hl-supercontext">supercontext</span>: Fivetran on the coverage side, ensuring <span class="hl-ac">AC</span> can reach everything, dbt on the definition side, ensuring what it reads means something. What AC would have needed from the very beginning, and what your AI needs right now.
     </p>
 
     <p class="go-deeper">On why the transformation layer matters more once AI agents are in the picture: <a href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener">is dbt core enough in the age of AI →</a></p>
@@ -804,11 +804,11 @@
     <h2>when both constraints lift</h2>
 
     <p>
-      As quantum compute gets closer to commercial scale, AC's first constraint starts to disappear, and the only thing left standing between your AI and a meaningful answer is whether your data was ready. The companies building a real context layer now are the ones who will be able to ask harder questions when that moment arrives, not just "what happened?" but "why?" not just "why?" but "what should we do next?"
+      <span class="hl-supercompute">Supercompute</span> is being built. The labs are ahead of schedule. When quantum computing reaches commercial scale, the first constraint on <span class="hl-ac">AC</span> lifts: processing is no longer the ceiling. What is left is <span class="hl-supercontext">supercontext</span>. The companies spending the next few years connecting every source, defining every metric, and governing every output are the ones who will be ready when compute catches up. Not just to ask harder questions. To actually get answers: not "what happened?" with caveats, but "what should we do next?" with a full chain of reasoning you can trace all the way back.
     </p>
     <div class="concept-block">
-      <div class="concept-block-label">how dbt enables AC</div>
-      <p>The hardest question, what should we do next, requires something most AI tools cannot do today: reason across your warehouse, your documents, and your lineage graph simultaneously, cross-validate the answer against real data paths, and show you exactly how it got there. No black box. No guess. A full chain of reasoning you can follow all the way back to the source. That is what <span class="hl-ac">AC</span> needs to be trustworthy, not just smart, and it is the direction this infrastructure is actively heading.</p>
+      <div class="concept-block-label">the convergence</div>
+      <p><span class="hl-supercompute">Supercompute</span> without <span class="hl-supercontext">supercontext</span> produces confident wrong answers, faster. <span class="hl-supercontext">Supercontext</span> without <span class="hl-supercompute">supercompute</span> produces right answers, slowly. When both constraints lift at once, you get something that has not existed before: a system that can reason over everything, trust what it is reading, and answer without guessing. That is <span class="hl-ac">AC</span>. Not a product. A direction. And the infrastructure to build it exists now.</p>
     </div>
     <div class="ac-arch">
 
