@@ -17,7 +17,7 @@ Hosted on GitHub Pages.
 
 | Page | URL | Description |
 |------|-----|-------------|
-| building supercontext | [/me/ai-and-data/](https://cedricturner.github.io/me/ai-and-data/) | Intelligence has two constraints: compute and context. Compute is being solved. Context is on you. Introduces AC, the compute/context cycle, and where dbt and Fivetran fit. |
+| building supercontext | [/me/supercontext/](https://cedricturner.github.io/me/supercontext/) | Intelligence has two constraints: compute and context. Compute is being solved. Context is on you. Introduces AC, the compute/context cycle, and where dbt and Fivetran fit. |
 
 ## Tools
 
