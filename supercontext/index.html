@@ -186,7 +186,7 @@
   }
   .eq-card--supercontext { background: #fbcfe8; border-color: #f9a8d4; }
   .eq-card--supercompute { background: #1a1a1a; border-color: #1a1a1a; }
-  .eq-card--ac            { background: #7c3aed; border-color: #6d28d9; }
+  .eq-card--ac            { background: #fff; border-color: #1a1a1a; }
   .eq-card-label {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
@@ -197,11 +197,11 @@
   }
   .eq-card--supercontext .eq-card-label { color: #1a1a1a; }
   .eq-card--supercompute .eq-card-label { color: #fff; }
-  .eq-card--ac            .eq-card-label { color: #fff; }
+  .eq-card--ac            .eq-card-label { color: #1a1a1a; }
   .eq-card-desc { font-size: 12px; line-height: 1.5; }
   .eq-card--supercontext .eq-card-desc { color: #555; }
   .eq-card--supercompute .eq-card-desc { color: #999; }
-  .eq-card--ac            .eq-card-desc { color: #c4b5fd; }
+  .eq-card--ac            .eq-card-desc { color: #666; }
   .eq-operator {
     display: flex;
     align-items: center;
@@ -370,8 +370,8 @@
   }
   .arch-pill-downstream {
     font-size: 11px;
-    background: #ede9fe;
-    color: #7c3aed;
+    background: #f0f0f0;
+    color: #444;
     padding: 2px 8px;
     border-radius: 2px;
   }
@@ -507,12 +507,12 @@
   }
   .ac-arch-hconn-arrow { font-size: 13px; color: var(--faint); }
   .ac-arch-ac-box {
-    background: #7c3aed;
-    border: 1.5px solid #6d28d9;
+    background: #fff;
+    border: 1.5px solid #1a1a1a;
     padding: 18px;
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: #1a1a1a;
     text-align: center;
     letter-spacing: 0.05em;
   }
@@ -520,7 +520,7 @@
     display: block;
     font-size: 9px;
     font-weight: 400;
-    color: #c4b5fd;
+    color: #888;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 5px;
@@ -567,7 +567,7 @@
   }
   .hl-dbt          { background: #fed7aa; }
   .hl-fivetran     { background: #a7f3d0; }
-  .hl-ac           { background: #7c3aed; color: #fff; }
+  .hl-ac           { background: #fff; color: #1a1a1a; border: 1px solid #1a1a1a; }
   .hl-supercontext { background: #fbcfe8; color: #1a1a1a; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; font-size: 0.85em; }
   .hl-supercompute { background: #1a1a1a; color: #fff; font-weight: 700; letter-spacing: 0.05em; text-transform: lowercase; font-size: 0.85em; }
 </style>
@@ -604,7 +604,7 @@
     <h2>what we're chasing</h2>
 
     <p>
-      In 1956, long before anyone had named artificial intelligence, Isaac Asimov imagined a machine that would outlast civilizations. He called it <span class="hl-ac">AC</span>. Not a tool you queried and closed, but something that grew with the world, absorbed the memory of every generation that came before it, got smarter as humanity fed it more context, more history, more of everything the species had ever known. AC never refused a question. That was not in its nature. What AC refused to do was guess. When it did not have enough to give a real answer, it said so, directly and without apology, every single time:
+      In 1956, long before anyone had named artificial intelligence, Isaac Asimov imagined a machine that would outlast civilizations. He called it <span class="hl-ac">AC</span>. What Asimov described, we now call superintelligence. Not a tool you queried and closed, but something that grew with the world, absorbed the memory of every generation that came before it, got smarter as humanity fed it more context, more history, more of everything the species had ever known. AC never refused a question. That was not in its nature. What AC refused to do was guess. When it did not have enough to give a real answer, it said so, directly and without apology, every single time:
     </p>
 
     <div class="asimov-quote">
@@ -910,8 +910,8 @@
             </div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:4px;">+ downstream</div>
             <div class="ac-arch-pills">
-              <span class="ac-arch-pill" style="background:#ede9fe;color:#7c3aed;">skills</span>
-              <span class="ac-arch-pill" style="background:#ede9fe;color:#7c3aed;">.md</span>
+              <span class="ac-arch-pill" style="background:#f0f0f0;color:#444;">skills</span>
+              <span class="ac-arch-pill" style="background:#f0f0f0;color:#444;">.md</span>
             </div>
           </div>
         </div>
