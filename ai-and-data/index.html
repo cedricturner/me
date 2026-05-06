@@ -150,6 +150,11 @@
     color: #1d4ed8;
     padding-top: 2px;
   }
+  .dbt-feature-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .dbt-feature-name a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
   .dbt-feature-desc {
     font-size: 14px;
@@ -722,10 +727,10 @@
     <h2>the infrastructure <span class="hl-ac">AC</span> would have needed from the start</h2>
 
     <p>
-      <span class="hl-fivetran">Fivetran</span> handles the coverage side of <span class="hl-supercontext">supercontext</span>. It connects to over 700 data sources, your CRM, your warehouse, your third-party tools, all of it, and keeps everything moving and current. Every source reached, every pipeline maintained. Think of it as the part that closes the gaps in what <span class="hl-ac">AC</span> can see: not just the data that was easy to connect, but everything.
+      <span class="hl-fivetran">Fivetran</span> handles the coverage side of <span class="hl-supercontext">supercontext</span>. It connects your CRM, your warehouse, your third-party tools, all of it, and keeps everything moving and current. Think of it as bringing all the textbooks to the library: before dbt can make your data mean anything, <span class="hl-fivetran">Fivetran</span> makes sure it is all there. <a href="https://www.fivetran.com/connectors" target="_blank" rel="noopener">See what Fivetran connects to →</a>
     </p>
     <p>
-      <span class="hl-dbt">dbt</span> handles the definition side: not just moving data, but making it mean something. Having data arrive is not the same as having trustworthy data. dbt is where you write, in code, what your data actually means, and then enforce it automatically every time anything changes. Semantic layer, full lineage, automated tests, versioned logic. The addresses Fivetran establishes, dbt makes trustworthy. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what <span class="hl-ac">AC</span> can know is dbt's structured layer plus everything that layers on downstream.
+      <span class="hl-dbt">dbt</span> handles the definition side: not just moving data, but making it mean something. Having data arrive is not the same as having trustworthy data. dbt is where you write, in code, what your data actually means, and then enforce it automatically every time anything changes. That is the meaning layer: what the librarian uses to know which books answer which questions. On top of that, downstream tools add their own layer: skill files, markdown documentation, tool-level context that agents carry with them. The full picture of what <span class="hl-ac">AC</span> can know is dbt's structured layer plus everything that layers on downstream.
     </p>
 
     <div class="arch-flow">
@@ -769,19 +774,19 @@
 
     <div class="dbt-features">
       <div class="dbt-feature">
-        <div class="dbt-feature-name">semantic layer</div>
+        <div class="dbt-feature-name"><a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl" target="_blank" rel="noopener">semantic layer ↗</a></div>
         <div class="dbt-feature-desc">Define "revenue" once. Every tool that asks, whether it is a dashboard, an AI agent, or an analyst, gets the exact same answer. No more version of the truth that depends on who you ask.</div>
       </div>
       <div class="dbt-feature">
-        <div class="dbt-feature-name">automated testing</div>
+        <div class="dbt-feature-name"><a href="https://docs.getdbt.com/docs/build/data-tests" target="_blank" rel="noopener">automated testing ↗</a></div>
         <div class="dbt-feature-desc">dbt tests your data automatically, like a spell checker for your business logic. If "revenue" ever stops following the rules you set, dbt catches it before the AI reads it and gives a wrong answer with confidence.</div>
       </div>
       <div class="dbt-feature">
-        <div class="dbt-feature-name">full lineage</div>
+        <div class="dbt-feature-name"><a href="https://docs.getdbt.com/docs/collaborate/explore-projects" target="_blank" rel="noopener">full lineage ↗</a></div>
         <div class="dbt-feature-desc">Every number can be traced all the way back to where it came from, like showing your work on a math test. If the AI gives an answer, you can follow the chain back to the source. No black boxes.</div>
       </div>
       <div class="dbt-feature">
-        <div class="dbt-feature-name">version control</div>
+        <div class="dbt-feature-name"><a href="https://docs.getdbt.com/docs/cloud/git/git-configuration-in-dbt-cloud" target="_blank" rel="noopener">version control ↗</a></div>
         <div class="dbt-feature-desc">Your definitions live in code, not in someone's head. Every change is tracked, every decision is auditable, and if something breaks you can roll back, the same way software engineers manage code.</div>
       </div>
     </div>
