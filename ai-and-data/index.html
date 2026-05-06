@@ -535,12 +535,12 @@
       <div class="constraint-card">
         <div class="constraint-num">01</div>
         <div class="constraint-name">context</div>
-        <div class="constraint-desc">what it knows, and how complete and trustworthy that knowledge is</div>
+        <div class="constraint-desc">what you know, and how complete and trustworthy that knowledge is</div>
       </div>
       <div class="constraint-card">
         <div class="constraint-num">02</div>
         <div class="constraint-name">compute</div>
-        <div class="constraint-desc">how much it can process at once, and how fast it can find the answer</div>
+        <div class="constraint-desc">how much you can process at once, and how fast you can find the answer</div>
       </div>
     </div>
     <p style="margin-top: 28px; font-size: 15px; color: #444; max-width: 540px; line-height: 1.75;">Artificial intelligence is still intelligence. The same two constraints apply. The race toward something like <span class="hl-ac">AC</span> is not just a race for better models. It is a race to build the memory layer: the combination of context and compute that makes real intelligence possible. Better compute is coming. The context side is on you.</p>
@@ -654,33 +654,20 @@
 
 
   <div class="section">
-    <div class="section-label">05 / the agent era</div>
-    <h2>the stakes just got higher</h2>
-
-    <p>
-      Most people think of AI as something that answers questions. Ask it something, it responds, you decide what to do with the answer. That version of AI is already being replaced.
-    </p>
-    <p>
-      AI agents do not just answer, they act. An agent does not tell you what your pipeline looks like, it goes and checks it, finds the anomaly, cross-references it against three other data sources, and either flags it or fixes it depending on what it was told to do. The difference between a wrong answer and a wrong action is the difference between something you can correct and something you have to clean up. When an agent is working from bad data, it does not just produce a wrong answer with confidence, it takes a wrong action with confidence, and that is a much harder thing to recover from.
-    </p>
-    <p>
-      This is where most companies are unprepared. They have invested in AI, they have the models, they are deploying agents, and the agents are working from the same scattered, inconsistent, undefined data that the dashboards were always working from. The tolerance for that kind of data was low before. For agents, it is near zero.
-    </p>
-    <p>
-      <span class="hl-ac">AC</span> was not a question-answering system. It was an agent at cosmic scale, one that could act on everything it knew. The thing that kept it from its answer was never a lack of willingness to act. It was insufficient data. That is still the problem. It is just more urgent now.
-    </p>
-  </div>
-
-
-  <div class="section">
-    <div class="section-label">06 / the context side</div>
+    <div class="section-label">05 / the context side</div>
     <h2>supercontext</h2>
 
     <p>
-      Imagine asking a doctor for a diagnosis but handing them three different sets of test results from three different labs, each measuring the same things slightly differently, with no explanation of which one to trust. A good doctor is not going to give you a confident answer, and if they do you should be worried, because confidence without reliable information is just a guess with good posture.
+      Supercontext is not just good data. It is information organized to a standard that a reasoning system can navigate without introducing contradictions. The bar is higher than it sounds. When supercompute evaluates thousands of scenarios at once, inconsistencies in the underlying context do not cancel each other out. They multiply. A wrong definition does not produce one wrong answer. It produces thousands of them, all confident, all at once.
     </p>
     <p>
-      Most companies are asking their AI to do exactly that. The data is scattered across dozens of systems, "revenue" means something different in sales than it does in finance, business logic lives in spreadsheets and inside BI tools and in the memory of the analyst who built the original dashboard three years ago. The AI reads whatever it can find and gives you its best answer, not because it is broken, but because it is working with what it has. This is what AC kept running into too, not a compute problem but a context problem, not enough trustworthy information to give a meaningful answer. The difference is <span class="hl-ac">AC</span> was fictional. Your business is not.
+      Think of it in two layers. The first is the index: every piece of information has an address. Not just stored somewhere, but registered: a known location, a defined meaning, a traceable origin. You can find it, you know exactly what it counts, and you can follow it back to where it came from. Without an index, information exists but nothing is findable. With one, any question has a path to an answer.
+    </p>
+    <p>
+      The second layer is the prism. If the index gives information an address, the prism gives it meaning in context. Think of the ultimate librarian: not just knowing where every book is, but understanding which books answer which questions, how the ideas inside them connect, and what answer emerges when you pull them together. That is what <span class="hl-ac">AC</span> reads from: not raw data that lives somewhere, but structured, navigable knowledge that a reasoning system can move through without losing the thread. The semantic layer is the vocabulary. The lineage graph is the map. The index makes it findable. The prism makes it thinkable.
+    </p>
+    <p>
+      Without both, <span class="hl-ac">AC</span> has no address for truth. It reads whatever it can find and resolves conflicts with its best guess.
     </p>
 
     <div class="scattered-data">
@@ -698,13 +685,32 @@
           <div class="ss-value">revenue = $4.0M</div>
         </div>
       </div>
-      <div class="scatter-arrow">↓ &nbsp; AI tries to reconcile all three</div>
+      <div class="scatter-arrow">↓ &nbsp; AC tries to reconcile all three</div>
       <div class="scatter-result">"THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER."</div>
     </div>
 
     <div class="callout">
       <p>No matter how much compute you have, if the data underneath is inconsistent and undefined, the answer will be wrong faster. Compute without context is just confident noise.</p>
     </div>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">06 / the agent era</div>
+    <h2>the stakes just got higher</h2>
+
+    <p>
+      Most people think of AI as something that answers questions. Ask it something, it responds, you decide what to do with the answer. That version of AI is already being replaced.
+    </p>
+    <p>
+      AI agents do not just answer, they act. An agent does not tell you what your pipeline looks like, it goes and checks it, finds the anomaly, cross-references it against three other data sources, and either flags it or fixes it depending on what it was told to do. The difference between a wrong answer and a wrong action is the difference between something you can correct and something you have to clean up. When an agent is working from bad data, it does not just produce a wrong answer with confidence, it takes a wrong action with confidence, and that is a much harder thing to recover from.
+    </p>
+    <p>
+      This is where most companies are unprepared. They have invested in AI, they have the models, they are deploying agents, and the agents are working from the same scattered, inconsistent, undefined data that the dashboards were always working from. The tolerance for that kind of data was low before. For agents, it is near zero.
+    </p>
+    <p>
+      <span class="hl-ac">AC</span> was not a question-answering system. It was an agent at cosmic scale, one that could act on everything it knew. The thing that kept it from its answer was never a lack of willingness to act. It was insufficient data. That is still the problem. It is just more urgent now.
+    </p>
   </div>
 
 
