@@ -40,11 +40,9 @@
     position: relative;
   }
   .hero h1 {
-    font-family: 'Space Mono', monospace;
-    text-transform: uppercase;
-    font-size: clamp(26px, 5vw, 34px);
-    font-weight: 700;
-    letter-spacing: -0.025em;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     line-height: 1.2;
     margin-bottom: 16px;
   }
@@ -63,6 +61,8 @@
 
   p { margin-bottom: 22px; font-size: 16px; line-height: 1.8; color: #2a2a2a; }
   p:last-child { margin-bottom: 0; }
+  p a { color: inherit; text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 2px; }
+  p a:hover { text-decoration-color: var(--text); }
 
   ul { list-style: none; padding: 0; }
   ul li {
@@ -309,8 +309,8 @@
   <nav><a href="/me/">← cedric turner ii</a></nav>
 
   <div class="hero">
-    <h1><span class="hl">what i've done</span></h1>
-    <p>What I've built, who I've helped, and what the numbers look like.</p>
+    <h1>what i've done</h1>
+    <p>what i've built, who i've helped, and what the numbers look like</p>
     <a class="btn" href="resume.pdf" download="Cedric_Turner_Resume.pdf" style="position:absolute;bottom:20px;left:0;text-decoration:none;font-size:11px;padding:4px 10px;">↓ download resume</a>
   </div>
 
@@ -330,78 +330,15 @@
       <button class="btn" onclick="openModal('diag-modal')">▶ Preview</button>
     </div>
 
-    <p id="item-prompt-md" style="margin-top:28px;"><strong>PROMPT.md Artifact Replication System.</strong> Skill document so any SA can generate customer-facing HTML explainers without building from scratch. Became a shared team pattern.</p>
+    <p id="item-prompt-md" style="margin-top:28px;"><strong>PROMPT.md Artifact Replication System.</strong> Other SAs saw what I was building with Claude and wanted the same output without spending the time I'd already spent learning how to prompt for it. So I wrote down how I prompt. PROMPT.md is a markdown file you upload at the start of a session, and it gives Claude a working understanding of how I scaffold an artifact, what shape I aim for, and where I usually cut. Drop it in, describe what you want, get a rough draft worth iterating on instead of burning through prompts to find the path. Most of the SA work <a href="#what-i-enabled">credited below</a> was built using it.</p>
     <div class="btn-row">
       <button class="btn" onclick="dlPromptMD()">💾 Download .md</button>
     </div>
 
-    <p id="item-workshop" style="margin-top:28px;"><strong>Workshop-Driven Soft POC Motion.</strong> Workshop format replacing formal POC overhead. Used across multiple customer engagements. Eliminated formal POC in several deals. Now part of how I ramp AEs.</p>
+    <p id="item-workshop" style="margin-top:28px;"><strong>Workshop-Driven Soft POC Motion.</strong> Formal POCs were rigid and slow. Customers had to set up an environment, our team had to support them through it, and the two-week window often ran out before they'd seen half of what they actually needed. Deals dragged. The replacement: multiple short demo sessions in our environment, each one showing a specific feature against a use case the customer cares about. Same outcome, without making them build a validation environment from scratch to find out whether dbt fits. Used across multiple engagements. In commercial, the target is now 80% workshops, 20% hands-on POCs.</p>
 
-    <p id="item-discovery" style="margin-top:28px;"><strong>Discovery Process Redesign.</strong> Reshaped the discovery motion across the org. Built a structured framework around current state, future state, the gap between them, and what closing it enables downstream. Gave AEs a grounding in what generic data architecture looks like so they could visualize customer environments before walking in the door. AEs are now running the framework on first calls with stronger results. The pattern has spread beyond SAs: account executives are mapping current state on their own and showing up to discovery more visually prepared.</p>
+    <p id="item-discovery" style="margin-top:28px;"><strong>Discovery Process Redesign.</strong> AEs were walking into discovery without a frame, surfacing the customer's actual architecture and problems halfway through the cycle, when it was too late to redirect. So I built a structured framework around current state, future state, the gap between them, and what closing it enables downstream. AEs now run it on first calls. One of them is doing light technical requirements gathering on his own, getting further into the customer's situation than he was before, and his grasp of the product has grown alongside it. The calls keep landing as follow-ups or stage advances. The pattern has spread beyond SAs, AEs are now mapping current state on their own and walking into discovery with a working picture.</p>
 
-  </div>
-
-  <!-- TEAM IMPACT -->
-  <div class="section section--impact">
-    <div class="section-label"><span class="hl">Team Impact</span></div>
-
-    <div class="sub-label">AE Ramp</div>
-    <ul>
-      <li>Helped ramp Mitch, Tony, and Taylor as new Account Executives, building pipeline within their first 45 days</li>
-      <li>Built out West region coverage alongside new AEs as they came on board</li>
-      <li>Coached on discovery, deal positioning, and execution</li>
-    </ul>
-
-    <div class="sub-label">SA Onboarding</div>
-    <ul>
-      <li>Helped onboard Shreya, Raphael, Minjae, John D'Amaro, Cici, and others as new Solutions Architects</li>
-      <li>Accelerated technical depth and customer-facing confidence</li>
-    </ul>
-
-    <div class="sub-label">Cross-Regional Reach</div>
-    <ul>
-      <li>Stretched across West, Central, and East since joining</li>
-      <li>Consistently brought in on discovery calls beyond my own book</li>
-      <li>Help qualify and disqualify deals across the broader team</li>
-    </ul>
-
-    <div class="sub-label">AI Practice</div>
-    <ul>
-      <li>Identified as one of dbt's AI subject matter experts</li>
-      <li>Led the rollout of Claude to account executives, showing what's possible and building new working patterns for the sales team</li>
-      <li>Leading internal AI initiatives across the org</li>
-      <li>Early involvement in AI partnership opportunities not yet public</li>
-    </ul>
-
-    <div class="sub-label">What I enabled on the team</div>
-
-    <div class="influence-item">
-      <div class="influence-name">Miles Freeborn</div>
-      <div class="influence-desc">Built a public interactive guide covering dbt architecture, development workflow, orchestration, and competitive positioning. Directly inspired by and modeled after my work.</div>
-      <div class="tag-row">
-        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
-        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
-      </div>
-    </div>
-    <div class="influence-item">
-      <div class="influence-name">Nicole Smith</div>
-      <div class="influence-desc">Built interactive side-by-side comparison pages covering dbt Platform vs. dbt Core, vs. Snowflake native tooling, and vs. Databricks. Used live in customer conversations.</div>
-      <div class="tag-row">
-        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
-        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
-      </div>
-    </div>
-    <div class="influence-item">
-      <div class="influence-name">Varun Harirajan</div>
-      <div class="influence-desc">Incorporated the artifact approach into an upcoming training workshop for new hires, extending the pattern into onboarding.</div>
-      <div class="tag-row">
-        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
-      </div>
-    </div>
-    <div class="influence-item">
-      <div class="influence-name">Reusable dbt 101 Deck</div>
-      <div class="influence-desc">Circulated across the team and picked up by teammates for their own customer conversations.</div>
-    </div>
   </div>
 
   <!-- NUMBERS -->
@@ -409,14 +346,18 @@
     <div class="section-label"><span class="hl">Numbers</span></div>
 
     <div class="sub-label">@ dbt</div>
-    <div class="numbers-grid">
+    <div class="numbers-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="num-cell">
+        <div class="num-val"><span class="hl hl-lav">$22M+</span></div>
+        <div class="num-label">Contract value managed since joining</div>
+      </div>
       <div class="num-cell">
         <div class="num-val"><span class="hl hl-arr">$2.3M+</span></div>
-        <div class="num-label">Total contract value</div>
+        <div class="num-label">closed net-new ARR</div>
       </div>
       <div class="num-cell">
         <div class="num-val"><span class="hl hl-top">Top Growth SA</span></div>
-        <div class="num-label">Q4 FY2026 · expansion tracking</div>
+        <div class="num-label">globally · Q4 FY2026</div>
       </div>
       <div class="num-cell">
         <div class="num-val"><span class="hl hl-pipe">3 for 3</span></div>
@@ -511,6 +452,70 @@
       </div>
     </div>
     <p style="font-size:14px; color:var(--muted); line-height:1.8;">Government services team. Built and maintained the backend keeping CVS pharmacy apps in compliance with federal regulations. Handled prescription data end-to-end: generating synthetic test data with last-gen AI for QA automation suites, masking PHI before it hit the database, and QA-ing the IVR voice recognition flow for patients calling in for prescriptions.</p>
+  </div>
+
+  <!-- TEAM IMPACT -->
+  <div class="section section--impact">
+    <div class="section-label"><span class="hl">Team Impact</span></div>
+
+    <div class="sub-label">AE Ramp</div>
+    <ul>
+      <li>Helped ramp multiple new Account Executives, building pipeline within their first 45 days</li>
+      <li>Built out West region coverage alongside new AEs as they came on board</li>
+      <li>Coached on discovery, deal positioning, and execution</li>
+    </ul>
+
+    <div class="sub-label">SA Onboarding</div>
+    <ul>
+      <li>Was the #2 hire on dbt's post-sales Solutions Architect team and helped establish it</li>
+      <li>Since moving to pre-sales, have helped onboard multiple new SAs</li>
+    </ul>
+
+    <div class="sub-label">Cross-Regional Reach</div>
+    <ul>
+      <li>Covered every segment since joining: West, Central, East, and Growth</li>
+      <li>Consistently brought in on discovery calls beyond my own book</li>
+      <li>Help qualify and disqualify deals across the broader team</li>
+    </ul>
+
+    <div class="sub-label">AI Practice</div>
+    <ul>
+      <li>Showed AEs how to use Claude for the work in front of them: architecture diagrams, outreach, email automation. Booked more meetings, tightened deal hygiene across the team.</li>
+      <li>Recognized internally as one of dbt's AI SMEs, with early involvement in AI partnership conversations.</li>
+    </ul>
+
+    <div class="sub-label">Whole-stack advisory</div>
+    <p>Early on, I anchored my advice to dbt's place in the stack. Lately I've been more prescriptive across the whole stack for commercial teams: walking customers through warehouse picks, BI tools, and where to bring in partners, not just where dbt fits. AEs are taking the same approach in their own conversations. Both customers and partners have landed in better spots because of it.</p>
+
+    <div class="sub-label" id="what-i-enabled">What I enabled on the team</div>
+
+    <div class="influence-item">
+      <div class="influence-name">Miles Freeborn</div>
+      <div class="influence-desc">Built a public interactive guide covering dbt architecture, development workflow, orchestration, and competitive positioning. Directly inspired by and modeled after my work.</div>
+      <div class="tag-row">
+        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
+    </div>
+    <div class="influence-item">
+      <div class="influence-name">Nicole Smith</div>
+      <div class="influence-desc">Built interactive side-by-side comparison pages covering dbt Platform vs. dbt Core, vs. Snowflake native tooling, and vs. Databricks. Used live in customer conversations.</div>
+      <div class="tag-row">
+        <a href="#item-diagram" class="built-tag">↑ Stored Procs vs dbt Visual Explainer</a>
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
+    </div>
+    <div class="influence-item">
+      <div class="influence-name">Varun Harirajan</div>
+      <div class="influence-desc">Incorporated the artifact approach into an upcoming training workshop for new hires, extending the pattern into onboarding.</div>
+      <div class="tag-row">
+        <a href="#item-prompt-md" class="built-tag">↑ PROMPT.md Artifact Replication System</a>
+      </div>
+    </div>
+    <div class="influence-item">
+      <div class="influence-name">Reusable dbt 101 Deck</div>
+      <div class="influence-desc">Circulated across the team and picked up by teammates for their own customer conversations.</div>
+    </div>
   </div>
 
   <!-- CAREER -->
