@@ -23,6 +23,14 @@ assert_not_contains() {
   fi
 }
 
+assert_not_contains_ci() {
+  local file="$1"
+  local text="$2"
+  if rg -Fiq "$text" "$file"; then
+    fail "$file must not contain (case-insensitive): $text"
+  fi
+}
+
 assert_match_count() {
   local file="$1"
   local pattern="$2"
@@ -68,6 +76,9 @@ assert_not_contains "$home" 'dbt-artifacts'
 assert_not_contains "$home" 'data-systems'
 assert_not_contains "$home" 'supercontext'
 assert_not_contains "$home" 'what-ive-done'
+assert_not_contains_ci "$home" 'category'
+assert_not_contains_ci "$home" 'date'
+assert_not_contains_ci "$home" 'description'
 assert_not_contains "$home" '<img'
 assert_not_contains "$home" '<section'
 assert_not_contains "$home" '<footer'
