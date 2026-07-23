@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Cedric Turner II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #171717;
+    --muted: #73736e;
+    --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); color: var(--ink); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .work-page {
+    width: min(760px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 52px 0 90px;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+    font-size: 11px;
+    text-decoration: none;
+  }
+  h1 {
+    margin: 72px 0 56px;
+    font-size: clamp(44px, 9vw, 78px);
+    font-weight: 500;
+    letter-spacing: -.055em;
+    line-height: .95;
+  }
+  .work-list { margin: 0; padding: 0; list-style: none; }
+  .work-list li { margin: 0 0 18px; }
+  .work-entry {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px 21px;
+    color: var(--ink);
+    border: 1.5px solid currentColor;
+    border-radius: 48% 4px 45% 3px / 10% 45% 8% 42%;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .work-list li:nth-child(even) .work-entry {
+    border-radius: 4px 47% 5px 40% / 43% 7% 38% 8%;
+    transform: rotate(.25deg);
+  }
+  .work-entry small {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 400;
+  }
+  .work-entry:hover,
+  .work-entry:focus-visible {
+    color: var(--paper);
+    background: var(--ink);
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+  .work-entry:hover small,
+  .work-entry:focus-visible small { color: var(--paper); }
+
+  @media (max-width: 560px) {
+    .work-entry {
+      display: block;
+    }
+    .work-entry small {
+      display: block;
+      margin-top: 6px;
+    }
+    .work-list li:nth-child(even) .work-entry {
+      transform: none;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="work-page">
+  <header class="work-header">
+    <a class="back" href="../">← Cedric Turner II</a>
+    <h1>work</h1>
+  </header>
+
+  <main>
+    <nav aria-label="Professional writing and projects">
+      <ul class="work-list">
+        <li><a class="work-entry" href="../data-systems/"><span>what the data stack becomes</span><small>writing</small></a></li>
+        <li><a class="work-entry" href="../supercontext/"><span>building supercontext</span><small>writing</small></a></li>
+        <li><a class="work-entry" href="https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/" target="_blank" rel="noopener noreferrer"><span>the script is not your enemy ↗</span><small>dbt</small></a></li>
+        <li><a class="work-entry" href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener noreferrer"><span>is dbt core enough in the age of AI? ↗</span><small>dbt</small></a></li>
+        <li><a class="work-entry" href="https://cedricturner.github.io/dbt-artifacts/" target="_blank" rel="noopener noreferrer"><span>dbt artifacts ↗</span><small>tool</small></a></li>
+        <li><a class="work-entry" href="../what-ive-done/"><span>what i've done</span><small>proof</small></a></li>
+      </ul>
+    </nav>
+  </main>
+</div>
+</body>
+</html>
