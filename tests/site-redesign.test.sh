@@ -63,6 +63,7 @@ assert_matches() {
 }
 
 assert_contains "$home" 'class="desk-item'
+assert_contains "$home" '<main class="desk" aria-label="Cedric'\''s desk">'
 assert_contains "$home" '<!DOCTYPE html>'
 assert_contains "$home" '</html>'
 assert_contains "$home" 'href="./blog/27/"'
