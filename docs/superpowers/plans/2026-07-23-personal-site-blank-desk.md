@@ -6,7 +6,7 @@
 
 **Architecture:** Keep the site as dependency-free static HTML. `index.html` owns the personal canvas and accessible language-picker interaction; `work/index.html` owns the professional directory. One shell regression test checks content separation, required semantics, launch exclusions, and link targets.
 
-**Tech Stack:** HTML5, CSS, vanilla JavaScript, Bash regression tests, macOS `tidy`
+**Tech Stack:** HTML5, CSS, vanilla JavaScript, Bash regression tests
 
 ## Global Constraints
 
@@ -72,6 +72,8 @@ assert_not_contains() {
 }
 
 assert_contains "$home" 'class="desk-item'
+assert_contains "$home" '<!DOCTYPE html>'
+assert_contains "$home" '</html>'
 assert_contains "$home" 'href="./blog/27/"'
 assert_contains "$home" 'href="./blog/ai-forces-preference/"'
 assert_contains "$home" 'href="./where-ive-been/"'
@@ -334,15 +336,16 @@ bash tests/site-redesign.test.sh
 
 Expected: `Homepage content boundary checks passed.`
 
-- [ ] **Step 6: Validate HTML syntax**
+- [ ] **Step 6: Check formatting and document smoke assertions**
 
 Run:
 
 ```bash
-tidy -quiet -errors index.html
+bash tests/site-redesign.test.sh
+git diff --check -- index.html tests/site-redesign.test.sh
 ```
 
-Expected: no errors. Warnings about HTML5 elements are acceptable only if `tidy` identifies them as proprietary; malformed tags are not acceptable.
+Expected: the regression script passes and `git diff --check` prints nothing.
 
 - [ ] **Step 7: Commit the homepage**
 
@@ -489,16 +492,16 @@ h1 {
 
 Add a mobile rule that makes `.work-entry` a block, gives `small` `display:block; margin-top:6px`, and removes rotation.
 
-- [ ] **Step 5: Run regression and syntax checks**
+- [ ] **Step 5: Run regression and formatting checks**
 
 Run:
 
 ```bash
 bash tests/site-redesign.test.sh
-tidy -quiet -errors work/index.html
+git diff --check -- work/index.html tests/site-redesign.test.sh
 ```
 
-Expected: the shell test passes; `tidy` reports no malformed HTML.
+Expected: the shell test passes and `git diff --check` prints nothing.
 
 - [ ] **Step 6: Commit the work page**
 
@@ -693,16 +696,16 @@ Add:
 
 Disabled options intentionally remain focusable so their color and unavailable state are discoverable. They have no click handler and cannot change the document language.
 
-- [ ] **Step 6: Run regression and syntax checks**
+- [ ] **Step 6: Run regression and formatting checks**
 
 Run:
 
 ```bash
 bash tests/site-redesign.test.sh
-tidy -quiet -errors index.html
+git diff --check -- index.html tests/site-redesign.test.sh
 ```
 
-Expected: the regression script passes and no malformed HTML is reported.
+Expected: the regression script passes and `git diff --check` prints nothing.
 
 - [ ] **Step 7: Commit the language picker**
 
@@ -730,12 +733,10 @@ Run:
 
 ```bash
 bash tests/site-redesign.test.sh
-tidy -quiet -errors index.html
-tidy -quiet -errors work/index.html
 git diff --check
 ```
 
-Expected: shell test passes, both documents have no malformed HTML, and `git diff --check` prints nothing.
+Expected: the shell test passes and `git diff --check` prints nothing.
 
 - [ ] **Step 2: Start a local static server**
 
@@ -756,8 +757,9 @@ Open `http://localhost:4173/` and confirm:
 3. The blank page has no hero, section labels, rules, excerpts, or photographs.
 4. `work →` and the language picker float without a header container.
 5. Hover and keyboard focus invert each writing item to black with white text.
+6. The browser console contains no HTML parsing or JavaScript errors.
 
-Expected: all five observations hold.
+Expected: all six observations hold.
 
 - [ ] **Step 4: Verify mobile homepage at 390 × 844**
 
