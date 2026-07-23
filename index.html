@@ -47,19 +47,6 @@
   }
 
   .name { font-weight: 500; }
-  .work-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    color: var(--muted);
-    text-decoration: none;
-  }
-  .work-link:hover,
-  .work-link:focus-visible {
-    color: var(--ink);
-    outline: 1px solid var(--ink);
-    outline-offset: 4px;
-  }
 
   .language-picker { position: relative; z-index: 10; }
   .language-current {
@@ -202,11 +189,6 @@
       display: block;
     }
 
-    .work-link {
-      display: flex;
-      width: fit-content;
-    }
-
     .desk {
       min-height: 0;
       margin-top: 74px;
@@ -236,7 +218,6 @@
   <header class="site-header">
     <div class="identity">
       <span class="name">Cedric Turner II</span>
-      <a class="work-link" href="./work/">work →</a>
     </div>
     <div class="language-picker">
       <button class="language-current" type="button" id="language-current"
@@ -255,7 +236,7 @@
 
   <main class="desk" aria-label="Personal writing">
     <a class="desk-item desk-item--one" href="./blog/27/">who is cedric?</a>
-    <a class="desk-item desk-item--two" href="./blog/ai-forces-preference/">ai forces preference</a>
+    <a class="desk-item desk-item--two" href="./work/">work related stuff</a>
     <a class="desk-item desk-item--three" href="./where-ive-been/">where i've been</a>
   </main>
 </div>

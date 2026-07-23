@@ -154,6 +154,7 @@ const pickerStateExpression = `(() => ({
   expanded: document.querySelector('#language-current').getAttribute('aria-expanded'),
   activeText: document.activeElement.textContent.trim(),
   activeClass: document.activeElement.className,
+  activeTag: document.activeElement.tagName,
   tabIndexes: [...document.querySelectorAll('.language-option')].map(option => option.tabIndex),
   selected: [...document.querySelectorAll('.language-option')].map(option => option.getAttribute('aria-selected')),
   disabled: [...document.querySelectorAll('.language-option')].map(option => option.getAttribute('aria-disabled')),
@@ -192,9 +193,7 @@ async function runPickerBehavior(cdp, homeUrl) {
   await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 1, y: 1 });
 
   await press(cdp, 'Tab');
-  assert(await evaluate(cdp, 'document.activeElement.matches(".work-link")'), 'First Tab must focus work link');
-  await press(cdp, 'Tab');
-  assert(await evaluate(cdp, 'document.activeElement.matches(".language-current")'), 'Second Tab must focus language trigger');
+  assert(await evaluate(cdp, 'document.activeElement.matches(".language-current")'), 'First Tab must focus language trigger');
   const focusStyle = await evaluate(cdp, `(() => {
     const trigger = document.querySelector('.language-current');
     const style = getComputedStyle(trigger);
@@ -279,9 +278,9 @@ async function runPickerBehavior(cdp, homeUrl) {
   await openFromTrigger(cdp);
   await press(cdp, 'Tab', { shift: true });
   state = await evaluate(cdp, pickerStateExpression);
-  assert(state.hidden && state.activeClass === 'work-link', 'Shift+Tab must exit backward and close the picker');
+  assert(state.hidden && state.activeTag === 'BODY', 'Shift+Tab must exit backward and close the picker');
 
-  await press(cdp, 'Tab');
+  await evaluate(cdp, 'document.querySelector(".language-current").focus()');
   await openFromTrigger(cdp);
   await evaluate(cdp, 'document.querySelector(".desk-item--two").focus()');
   await delay(40);
@@ -306,13 +305,13 @@ async function measureViewport(cdp, homeUrl, workUrl, width, height) {
     return {
       width: innerWidth,
       scrollWidth: document.documentElement.scrollWidth,
-      workLink: heights('.work-link'),
       trigger: heights('.language-current'),
       options: heights('.language-option'),
+      deskItems: heights('.desk-item'),
     };
   })()`);
-  const homeTargets = [...home.workLink, ...home.trigger, ...home.options];
-  assert(homeTargets.every(value => value >= 44), `${width}px homepage picker/work targets must be at least 44px high`);
+  const homeTargets = [...home.trigger, ...home.options, ...home.deskItems];
+  assert(homeTargets.every(value => value >= 44), `${width}px homepage picker and desk targets must be at least 44px high`);
   assert(home.scrollWidth === home.width, `${width}px homepage must not overflow horizontally`);
 
   await navigate(cdp, workUrl);
@@ -321,10 +320,25 @@ async function measureViewport(cdp, homeUrl, workUrl, width, height) {
     scrollWidth: document.documentElement.scrollWidth,
     back: document.querySelector('.back').getBoundingClientRect().height,
     workEntryCount: document.querySelectorAll('.work-entry').length,
+    workEntries: [...document.querySelectorAll('.work-entry')].map(entry => entry.getBoundingClientRect().height),
+    workDestinations: [...document.querySelectorAll('.work-entry')].map(entry => entry.getAttribute('href')),
   }))()`);
   assert(work.back >= 44, `${width}px work-page back target must be at least 44px high`);
   assert(work.scrollWidth === work.width, `${width}px work page must not overflow horizontally`);
-  assert(work.workEntryCount === 6, `${width}px work page must retain exactly six entries`);
+  assert(work.workEntryCount === 7, `${width}px work page must retain exactly seven entries`);
+  assert(work.workEntries.every(value => value >= 44), `${width}px work entries must be at least 44px high`);
+  assert(
+    JSON.stringify(work.workDestinations) === JSON.stringify([
+      '../data-systems/',
+      '../supercontext/',
+      '../blog/ai-forces-preference/',
+      'https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/',
+      'https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/',
+      'https://cedricturner.github.io/dbt-artifacts/',
+      '../what-ive-done/',
+    ]),
+    `${width}px work page must retain the expected destinations`,
+  );
 
   return { width, home, work };
 }
