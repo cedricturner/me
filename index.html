@@ -41,13 +41,16 @@
 
   .identity {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 16px;
     font-size: 11px;
   }
 
   .name { font-weight: 500; }
   .work-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: var(--muted);
     text-decoration: none;
   }
@@ -60,6 +63,7 @@
 
   .language-picker { position: relative; z-index: 10; }
   .language-current {
+    min-height: 44px;
     min-width: 154px;
     padding: 9px 14px;
     color: #1f5b8f;
@@ -67,9 +71,21 @@
     border: 1.5px solid currentColor;
     border-radius: 48% 4px 45% 3px / 10% 45% 8% 42%;
     cursor: pointer;
+    font-family: var(--sans);
     font-size: 12px;
     font-weight: 600;
     text-align: left;
+  }
+  .language-current:hover,
+  .language-current[aria-expanded="true"] {
+    color: var(--paper);
+    background: #1f5b8f;
+  }
+  .language-current:focus-visible {
+    color: var(--paper);
+    background: #1f5b8f;
+    outline: 2px solid #1f5b8f;
+    outline-offset: 3px;
   }
   .language-current::after { float: right; content: "+"; font-weight: 400; }
   .language-current[aria-expanded="true"]::after { content: "−"; }
@@ -86,17 +102,24 @@
   .language-option {
     display: block;
     width: 100%;
+    min-height: 44px;
     margin: 0 0 5px;
     padding: 10px 13px;
     color: var(--option-ink);
     background: var(--paper);
     border: 1.5px solid currentColor;
     cursor: pointer;
+    font-family: var(--sans);
     font-size: 14px;
     text-align: left;
     transform: rotate(var(--turn));
   }
   .language-option:last-child { margin-bottom: 0; }
+  .language-option:hover,
+  .language-option:focus-visible {
+    outline: 2px solid var(--option-ink);
+    outline-offset: 2px;
+  }
   .language-option[aria-selected="true"] {
     color: var(--paper);
     background: var(--option-ink);
@@ -108,8 +131,6 @@
   .language-option[aria-disabled="true"]:hover,
   .language-option[aria-disabled="true"]:focus-visible {
     opacity: 1;
-    outline: 2px solid var(--option-ink);
-    outline-offset: 2px;
   }
   .language-en { --option-ink: #1f5b8f; --turn: -.4deg; }
   .language-ja { --option-ink: #c43b2f; --turn: .7deg; }
@@ -182,9 +203,8 @@
     }
 
     .work-link {
-      display: block;
+      display: flex;
       width: fit-content;
-      margin-top: 7px;
     }
 
     .desk {
@@ -224,11 +244,11 @@
         English
       </button>
       <div class="language-menu" id="language-menu" role="listbox" aria-label="Language" hidden>
-        <button class="language-option language-en" type="button" role="option" aria-selected="true">English</button>
-        <button class="language-option language-ja" type="button" role="option" aria-selected="false" aria-disabled="true">日本語</button>
-        <button class="language-option language-es" type="button" role="option" aria-selected="false" aria-disabled="true">Español</button>
-        <button class="language-option language-pt" type="button" role="option" aria-selected="false" aria-disabled="true">Português (Brasil)</button>
-        <button class="language-option language-de" type="button" role="option" aria-selected="false" aria-disabled="true">Deutsch</button>
+        <button class="language-option language-en" type="button" role="option" aria-selected="true" tabindex="0">English</button>
+        <button class="language-option language-ja" type="button" role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="ja">日本語</span></button>
+        <button class="language-option language-es" type="button" role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="es">Español</span></button>
+        <button class="language-option language-pt" type="button" role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="pt-BR">Português (Brasil)</span></button>
+        <button class="language-option language-de" type="button" role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="de">Deutsch</span></button>
       </div>
     </div>
   </header>
@@ -243,17 +263,36 @@
   const languageCurrent = document.getElementById('language-current');
   const languageMenu = document.getElementById('language-menu');
   const languageOptions = [...languageMenu.querySelectorAll('[role="option"]')];
+  const selectedLanguageOption = languageOptions.find(option => option.getAttribute('aria-selected') === 'true');
+
+  function setRovingOption(activeOption) {
+    languageOptions.forEach(option => {
+      option.tabIndex = option === activeOption ? 0 : -1;
+    });
+  }
 
   function openLanguageMenu() {
+    setRovingOption(selectedLanguageOption);
     languageMenu.hidden = false;
     languageCurrent.setAttribute('aria-expanded', 'true');
-    languageOptions[0].focus();
+    selectedLanguageOption.focus();
   }
 
   function closeLanguageMenu({ restoreFocus = false } = {}) {
     languageMenu.hidden = true;
     languageCurrent.setAttribute('aria-expanded', 'false');
+    setRovingOption(selectedLanguageOption);
     if (restoreFocus) languageCurrent.focus();
+  }
+
+  function moveFocusOutsidePicker(backward) {
+    closeLanguageMenu();
+    const tabbableElements = [...document.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter(element => !element.hidden && element.getClientRects().length > 0);
+    const triggerIndex = tabbableElements.indexOf(languageCurrent);
+    const target = tabbableElements[triggerIndex + (backward ? -1 : 1)];
+    if (target) target.focus();
   }
 
   languageCurrent.addEventListener('click', () => {
@@ -262,11 +301,14 @@
   });
 
   languageCurrent.addEventListener('keydown', event => {
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       openLanguageMenu();
     }
-    if (event.key === 'Escape') closeLanguageMenu();
+    if (event.key === 'Escape' && !languageMenu.hidden) {
+      event.preventDefault();
+      closeLanguageMenu({ restoreFocus: true });
+    }
   });
 
   languageMenu.addEventListener('keydown', event => {
@@ -275,14 +317,43 @@
       event.preventDefault();
       closeLanguageMenu({ restoreFocus: true });
     }
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      moveFocusOutsidePicker(event.shiftKey);
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const option = languageOptions[index];
+      if (option && option.getAttribute('aria-disabled') !== 'true') {
+        closeLanguageMenu({ restoreFocus: true });
+      }
+    }
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      languageOptions[(index + 1) % languageOptions.length].focus();
+      const nextOption = languageOptions[(index + 1) % languageOptions.length];
+      setRovingOption(nextOption);
+      nextOption.focus();
     }
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      languageOptions[(index - 1 + languageOptions.length) % languageOptions.length].focus();
+      const previousOption = languageOptions[(index - 1 + languageOptions.length) % languageOptions.length];
+      setRovingOption(previousOption);
+      previousOption.focus();
     }
+  });
+
+  languageMenu.addEventListener('click', event => {
+    const option = event.target.closest('[role="option"]');
+    if (!option) return;
+    if (option.getAttribute('aria-disabled') === 'true') {
+      event.preventDefault();
+      return;
+    }
+    closeLanguageMenu({ restoreFocus: true });
+  });
+
+  document.querySelector('.language-picker').addEventListener('focusout', event => {
+    if (!event.currentTarget.contains(event.relatedTarget)) closeLanguageMenu();
   });
 
   document.addEventListener('click', event => {

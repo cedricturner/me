@@ -54,6 +54,14 @@ assert_match_count() {
   [[ "$actual" -eq "$expected" ]] || fail "$file must contain exactly $expected $label; found $actual"
 }
 
+assert_matches() {
+  local file="$1"
+  local pattern="$2"
+  local label="$3"
+
+  rg -UPq -- "$pattern" "$file" || fail "$file is missing required $label"
+}
+
 assert_contains "$home" 'class="desk-item'
 assert_contains "$home" '<!DOCTYPE html>'
 assert_contains "$home" '</html>'
@@ -80,6 +88,23 @@ assert_contains "$home" '>Deutsch<'
 
 assert_match_count "$home" '<a[^>]*class="desk-item[^"]*"' 3 'desk-item links'
 assert_match_count "$home" '<a\b' 4 'anchors'
+assert_match_count "$home" '<button[^>]*role="option"' 5 'language options'
+assert_match_count "$home" '<button[^>]*aria-selected="true"' 1 'selected language options'
+assert_match_count "$home" '<button[^>]*aria-selected="false"' 4 'unselected language options'
+assert_match_count "$home" '<button[^>]*aria-disabled="true"' 4 'disabled language options'
+assert_match_count "$home" '<button[^>]*tabindex="0"' 1 'initially roving language options'
+assert_match_count "$home" '<button[^>]*tabindex="-1"' 4 'initially untabbable language options'
+assert_contains "$home" 'role="option" aria-selected="true" tabindex="0">English</button>'
+assert_contains "$home" 'role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="ja">日本語</span></button>'
+assert_contains "$home" 'role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="es">Español</span></button>'
+assert_contains "$home" 'role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="pt-BR">Português (Brasil)</span></button>'
+assert_contains "$home" 'role="option" aria-selected="false" aria-disabled="true" tabindex="-1"><span lang="de">Deutsch</span></button>'
+assert_matches "$home" '\.work-link \{[^}]*min-height: 44px;' '44px work-link tap target'
+assert_matches "$home" '\.language-current \{[^}]*min-height: 44px;[^}]*font-family: var\(--sans\);' '44px language trigger and font token'
+assert_matches "$home" '\.language-option \{[^}]*min-height: 44px;[^}]*font-family: var\(--sans\);' '44px language option and font token'
+assert_contains "$home" '.language-current:hover'
+assert_contains "$home" '.language-current:focus-visible'
+assert_contains "$home" '.language-current[aria-expanded="true"]'
 
 assert_not_contains "$home" 'github.com'
 assert_not_contains "$home" 'linkedin.com'
@@ -122,5 +147,11 @@ assert_contains "$work" 'the script is not your enemy'
 assert_contains "$work" 'is dbt core enough in the age of AI?'
 assert_contains "$work" 'dbt artifacts'
 assert_contains "$work" "what i've done"
+assert_match_count "$work" '<a[^>]*class="work-entry"' 6 'work-entry links'
+assert_contains "$work" 'href="https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/" target="_blank" rel="noopener noreferrer"'
+assert_contains "$work" 'href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank" rel="noopener noreferrer"'
+assert_contains "$work" 'href="https://cedricturner.github.io/dbt-artifacts/" target="_blank" rel="noopener noreferrer"'
+assert_match_count "$work" 'class="work-entry" href="https://[^"]*" target="_blank" rel="noopener noreferrer"' 3 'secured external work-entry links'
+assert_matches "$work" '\.back \{[^}]*min-height: 44px;' '44px back-link tap target'
 
 printf 'Homepage content boundary checks passed.\n'
