@@ -4,262 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cedric Turner II</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Abril+Fatface&family=Permanent+Marker&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #ffffff;
+    --ink: #171717;
+    --muted: #73736e;
+    --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
+  * { box-sizing: border-box; }
+  html { background: var(--paper); color: var(--ink); }
   body {
-    background: #faf9f7;
-    color: #1a1a1a;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    font-family: var(--sans);
     font-size: 15px;
-    line-height: 1.6;
-    padding: 60px 24px 120px;
-  }
-
-  .wrap {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  header {
-    margin-bottom: 72px;
-  }
-
-  header h1 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 6px;
-  }
-
-  header .tagline {
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-
-  header .site-desc {
-    color: #aaa;
-    font-size: 13px;
-    line-height: 1.55;
-    max-width: 420px;
-  }
-
-  section {
-    margin-bottom: 52px;
-  }
-
-  .section-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #aaa;
-    margin-bottom: 20px;
-  }
-
-  .section-desc {
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-
-  .hl {
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    padding: 2px 7px;
-    display: inline-block;
-  }
-
-  .section--systems .section-label { font-family: 'Permanent Marker', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 15px; color: #1a1a1a; }
-  .section--systems .section-label .hl { background: #e9d5ff; transform: rotate(-2deg); }
-
-  .section--strategy .section-label { font-family: 'Bebas Neue', cursive; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; font-size: 18px; color: #1a1a1a; }
-  .section--strategy .section-label .hl { background: #c7d2fe; transform: rotate(1deg); }
-
-  .section--tools .section-label { font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: #1a1a1a; }
-  .section--tools .section-label .hl { background: #fca5a5; transform: rotate(1.5deg); }
-
-  .section--travel .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
-  .section--travel .section-label .hl { background: #fde68a; transform: rotate(-1deg); }
-
-  .section--me .section-label { font-family: 'Bebas Neue', cursive; font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; font-size: 18px; color: #1a1a1a; }
-  .section--me .section-label .hl { background: #166534; color: #fff; transform: rotate(-1.5deg); }
-
-  .section--elsewhere .section-label { font-family: 'Abril Fatface', cursive; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 17px; color: #1a1a1a; }
-  .section--elsewhere .section-label .hl { background: #a7f3d0; transform: rotate(-1.5deg); }
-
-  ul { list-style: none; }
-
-  li {
-    border-top: 1px solid #ece9e4;
-    padding: 16px 0;
-  }
-
-  li:last-child { border-bottom: 1px solid #ece9e4; }
-
-  a.item {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  a.item:hover .item-title { text-decoration: underline; text-underline-offset: 3px; }
-
-  .item-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin-bottom: 3px;
-  }
-
-  .item-meta {
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 4px;
-  }
-
-  .item-why {
-    font-size: 12px;
-    color: #bbb;
     line-height: 1.5;
   }
 
-  .item-tag {
-    display: inline-block;
-    font-size: 9px;
-    font-family: 'Space Mono', monospace;
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 1px 5px;
-    border-radius: 2px;
-    margin-left: 6px;
-    vertical-align: middle;
-    letter-spacing: 0.03em;
-    font-weight: 400;
+  .page {
+    width: min(1040px, calc(100% - 56px));
+    margin: 0 auto;
+    padding: 54px 0 100px;
   }
 
+  .site-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .identity {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-size: 11px;
+  }
+
+  .name { font-weight: 500; }
+  .work-link {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .work-link:hover,
+  .work-link:focus-visible {
+    color: var(--ink);
+    outline: 1px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  .desk {
+    position: relative;
+    min-height: 720px;
+    margin-top: 96px;
+  }
+
+  .desk-item {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    min-height: 92px;
+    padding: 20px 24px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid currentColor;
+    font-size: clamp(16px, 1.8vw, 19px);
+    font-weight: 500;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: color 120ms ease, background-color 120ms ease;
+  }
+
+  .desk-item:hover,
+  .desk-item:focus-visible {
+    color: var(--paper);
+    background: var(--ink);
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  .desk-item--one {
+    width: 31%;
+    top: 12px;
+    left: 3%;
+    border-radius: 48% 4px 45% 3px / 10% 45% 8% 42%;
+    transform: rotate(-.7deg);
+  }
+
+  .desk-item--two {
+    width: 33%;
+    top: 70px;
+    right: 7%;
+    border-radius: 4px 47% 5px 40% / 43% 7% 38% 8%;
+    transform: rotate(.6deg);
+  }
+
+  .desk-item--three {
+    width: 30%;
+    top: 300px;
+    left: 34%;
+    border-radius: 6% 44% 4% 46% / 39% 8% 41% 7%;
+    transform: rotate(.4deg);
+  }
+
+  @media (max-width: 720px) {
+    .page {
+      width: min(100% - 36px, 1040px);
+      padding: 34px 0 70px;
+    }
+
+    .identity {
+      display: block;
+    }
+
+    .work-link {
+      display: block;
+      width: fit-content;
+      margin-top: 7px;
+    }
+
+    .desk {
+      min-height: 0;
+      margin-top: 74px;
+    }
+
+    .desk-item {
+      position: relative;
+      width: 88%;
+      min-height: 76px;
+      inset: auto;
+      margin: 0 0 28px;
+      font-size: 16px;
+    }
+
+    .desk-item:nth-child(even) {
+      margin-left: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .desk-item { transition-duration: .01ms; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <h1>Cedric Turner II</h1>
-    <p class="tagline">#1 german shepherd dad &middot; solutions @ dbt</p>
-    <p class="site-desc">where i think out loud.</p>
+<div class="page">
+  <header class="site-header">
+    <div class="identity">
+      <span class="name">Cedric Turner II</span>
+      <a class="work-link" href="./work/">work →</a>
+    </div>
+    <!-- The language picker is added in Task 4. -->
   </header>
 
-  <section class="section--systems">
-    <div class="section-label"><span class="hl">Systems</span></div>
-    <ul>
-      <li>
-        <a class="item" href="./data-systems/">
-          <div class="item-title">what the data stack becomes</div>
-          <div class="item-meta">the four stages of the data stack, redrawn for the AC era</div>
-          <div class="item-why">same chain as always, different consumer at the end — and quantum computing is about to change what each layer needs to produce</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--strategy">
-    <div class="section-label"><span class="hl">Strategy &amp; Narrative</span></div>
-    <ul>
-      <li>
-        <a class="item" href="./supercontext/">
-          <div class="item-title">building supercontext</div>
-          <div class="item-meta">on intelligence, compute, and what dbt and Fivetran are actually building toward</div>
-          <div class="item-why">starts with an asimov story from 1956 and ends with a prediction about the next 40 years of data infrastructure</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="./blog/ai-forces-preference/">
-          <div class="item-title">AI forces preference</div>
-          <div class="item-meta">AI doesn't give you answers. it forces you to know what you want.</div>
-          <div class="item-why">less about AI and more about what happens when you can't avoid having an opinion</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/" target="_blank">
-          <div class="item-title">the script is not your enemy ↗ <span class="item-tag">dbt</span></div>
-          <div class="item-meta">the real issue isn't the script. it's that the whole thing was built to run, not to be looked inside</div>
-          <div class="item-why">the question isn't what the tool does, it's whether you actually know what you need it to do</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/" target="_blank">
-          <div class="item-title">is dbt core enough in the age of AI? ↗ <span class="item-tag">dbt</span></div>
-          <div class="item-meta">AI changed the calculus, not because of dbt Platform features, but because of what AI agents actually need from your data infrastructure</div>
-          <div class="item-why">the answer depends entirely on what you think AI is actually going to do with your data</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--tools">
-    <div class="section-label"><span class="hl">Tools</span></div>
-    <ul>
-      <li>
-        <a class="item" href="https://cedricturner.github.io/dbt-artifacts/" target="_blank">
-          <div class="item-title">dbt artifacts ↗ <span class="item-tag">dbt</span></div>
-          <div class="item-meta">interactive learning site for dbt concepts</div>
-          <div class="item-why">the gap between "i know what dbt is" and "i actually understand how it works" was real, and nobody had filled it</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--travel">
-    <div class="section-label"><span class="hl">Where I've Been</span></div>
-    <ul>
-      <li>
-        <a class="item" href="./where-ive-been/">
-          <div class="item-title">where i've been</div>
-          <div class="item-meta">travel writing, map, and photos from Japan, Seoul, Europe, and more</div>
-          <div class="item-why">travel is the fastest way to notice what you've stopped noticing at home</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--me">
-    <div class="section-label"><span class="hl">me</span></div>
-    <ul>
-      <li>
-        <a class="item" href="./blog/27/">
-          <div class="item-title">who is cedric?</div>
-          <div class="item-meta">how i think, where it comes from</div>
-          <div class="item-why">the most honest answer i've come up with to the question people ask before they decide if they want to work with me</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="./what-ive-done/">
-          <div class="item-title">what i've done</div>
-          <div class="item-meta">what i've built, who i've helped</div>
-          <div class="item-why">numbers and projects, for the people who want to see receipts</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="section--elsewhere">
-    <div class="section-label"><span class="hl">Socials</span></div>
-    <ul>
-      <li>
-        <a class="item" href="https://github.com/cedricturner" target="_blank">
-          <div class="item-title">GitHub ↗</div>
-        </a>
-      </li>
-      <li>
-        <a class="item" href="https://www.linkedin.com/in/cedturnerjr" target="_blank">
-          <div class="item-title">LinkedIn ↗</div>
-        </a>
-      </li>
-    </ul>
-  </section>
-
+  <main class="desk" aria-label="Personal writing">
+    <a class="desk-item desk-item--one" href="./blog/27/">who is cedric?</a>
+    <a class="desk-item desk-item--two" href="./blog/ai-forces-preference/">ai forces preference</a>
+    <a class="desk-item desk-item--three" href="./where-ive-been/">where i've been</a>
+  </main>
 </div>
 </body>
 </html>
