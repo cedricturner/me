@@ -23,6 +23,28 @@ assert_not_contains() {
   fi
 }
 
+assert_match_count() {
+  local file="$1"
+  local pattern="$2"
+  local expected="$3"
+  local label="$4"
+  local matches
+  local actual
+  local rg_status
+
+  if matches="$(rg -o -- "$pattern" "$file")"; then
+    actual="$(printf '%s\n' "$matches" | awk 'END { print NR }')"
+  else
+    rg_status=$?
+    if [[ "$rg_status" -ne 1 ]]; then
+      fail "could not count $label in $file"
+    fi
+    actual=0
+  fi
+
+  [[ "$actual" -eq "$expected" ]] || fail "$file must contain exactly $expected $label; found $actual"
+}
+
 assert_contains "$home" 'class="desk-item'
 assert_contains "$home" '<!DOCTYPE html>'
 assert_contains "$home" '</html>'
@@ -34,15 +56,29 @@ assert_contains "$home" 'who is cedric?'
 assert_contains "$home" 'ai forces preference'
 assert_contains "$home" "where i've been"
 
-assert_not_contains "$home" 'href="./data-systems/"'
-assert_not_contains "$home" 'href="./supercontext/"'
-assert_not_contains "$home" 'href="./what-ive-done/"'
-assert_not_contains "$home" 'cedricturner.github.io/dbt-perspectives'
-assert_not_contains "$home" 'cedricturner.github.io/dbt-artifacts'
+assert_match_count "$home" '<a[^>]*class="desk-item[^"]*"' 3 'desk-item links'
+assert_match_count "$home" '<a\b' 4 'anchors'
+
+assert_not_contains "$home" 'github.com'
+assert_not_contains "$home" 'linkedin.com'
+assert_not_contains "$home" 'GitHub'
+assert_not_contains "$home" 'LinkedIn'
+assert_not_contains "$home" 'dbt-perspectives'
+assert_not_contains "$home" 'dbt-artifacts'
+assert_not_contains "$home" 'data-systems'
+assert_not_contains "$home" 'supercontext'
+assert_not_contains "$home" 'what-ive-done'
 assert_not_contains "$home" '<img'
+assert_not_contains "$home" '<section'
+assert_not_contains "$home" '<footer'
+assert_not_contains "$home" '<time'
+assert_not_contains "$home" '<p'
+assert_not_contains "$home" 'class="hero'
+assert_not_contains "$home" 'class="tagline'
+assert_not_contains "$home" 'class="site-desc'
 assert_not_contains "$home" 'class="gallery'
-assert_not_contains "$home" 'section-label'
-assert_not_contains "$home" 'item-meta'
-assert_not_contains "$home" 'item-why'
+assert_not_contains "$home" 'class="section-label'
+assert_not_contains "$home" 'class="item-meta'
+assert_not_contains "$home" 'class="item-why'
 
 printf 'Homepage content boundary checks passed.\n'
