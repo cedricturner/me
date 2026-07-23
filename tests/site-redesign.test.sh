@@ -88,7 +88,7 @@ assert_contains "$home" '>Português (Brasil)<'
 assert_contains "$home" '>Deutsch<'
 
 assert_match_count "$home" '<a[^>]*class="desk-item[^"]*"' 3 'desk-item links'
-assert_match_count "$home" '<a\b' 4 'anchors'
+assert_match_count "$home" '<a\b' 3 'anchors'
 assert_match_count "$home" '<button[^>]*role="option"' 5 'language options'
 assert_match_count "$home" '<button[^>]*aria-selected="true"' 1 'selected language options'
 assert_match_count "$home" '<button[^>]*aria-selected="false"' 4 'unselected language options'
