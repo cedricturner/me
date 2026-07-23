@@ -3,6 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 home="$repo_root/index.html"
+work="$repo_root/work/index.html"
 
 fail() {
   printf 'FAIL: %s\n' "$1" >&2
@@ -91,5 +92,22 @@ assert_not_contains "$home" 'class="gallery'
 assert_not_contains "$home" 'class="section-label'
 assert_not_contains "$home" 'class="item-meta'
 assert_not_contains "$home" 'class="item-why'
+
+[[ -f "$work" ]] || fail "work/index.html does not exist"
+assert_contains "$work" 'href="../"'
+assert_contains "$work" 'href="../data-systems/"'
+assert_contains "$work" 'href="../supercontext/"'
+assert_contains "$work" 'href="../what-ive-done/"'
+assert_contains "$work" 'https://cedricturner.github.io/dbt-perspectives/posts/the-script-is-not-your-enemy/'
+assert_contains "$work" 'https://cedricturner.github.io/dbt-perspectives/posts/is-dbt-core-enough/'
+assert_contains "$work" 'https://cedricturner.github.io/dbt-artifacts/'
+assert_contains "$work" 'target="_blank"'
+assert_contains "$work" 'rel="noopener noreferrer"'
+assert_contains "$work" 'what the data stack becomes'
+assert_contains "$work" 'building supercontext'
+assert_contains "$work" 'the script is not your enemy'
+assert_contains "$work" 'is dbt core enough in the age of AI?'
+assert_contains "$work" 'dbt artifacts'
+assert_contains "$work" "what i've done"
 
 printf 'Homepage content boundary checks passed.\n'
