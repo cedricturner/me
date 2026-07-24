@@ -299,6 +299,11 @@ async function runPickerBehavior(cdp, homeUrl) {
 async function measureViewport(cdp, homeUrl, workUrl, width, height) {
   await setViewport(cdp, width, height);
   await navigate(cdp, homeUrl);
+  const deskDestinations = await evaluate(cdp, 'JSON.stringify([...document.querySelectorAll(".desk-item")].map(item => item.getAttribute("href")))');
+  assert(
+    deskDestinations === JSON.stringify(['./blog/27/', './where-ive-been/', './work/']),
+    `Homepage desk order must end with work: ${deskDestinations}`,
+  );
   await evaluate(cdp, 'document.querySelector("#language-current").click()');
   const home = await evaluate(cdp, `(() => {
     const heights = selector => [...document.querySelectorAll(selector)].map(element => element.getBoundingClientRect().height);

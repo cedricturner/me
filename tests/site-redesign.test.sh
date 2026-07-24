@@ -74,6 +74,7 @@ assert_not_contains "$home" 'class="work-link"'
 assert_contains "$home" 'who is cedric?'
 assert_contains "$home" 'work related stuff'
 assert_contains "$home" "where i've been"
+assert_matches "$home" 'href="\./blog/27/"[^>]*>[^<]*</a>\s*<a[^>]*href="\./where-ive-been/"[^>]*>[^<]*</a>\s*<a[^>]*href="\./work/"[^>]*>work related stuff</a>' 'work item last in DOM order'
 assert_contains "$home" 'id="language-current"'
 assert_contains "$home" 'aria-haspopup="listbox"'
 assert_contains "$home" 'aria-expanded="false"'
