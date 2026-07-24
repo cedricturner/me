@@ -12,6 +12,7 @@ Make the homepage desk the complete navigation surface. Work should appear as on
 - Keep `where i've been` as a personal desk item.
 - Replace the homepage `ai forces preference` item with `work related stuff`.
 - Link `work related stuff` to `./work/`.
+- Keep `work related stuff` as the final homepage link in DOM order, so it is last in mobile stacking, keyboard traversal, and screen-reader reading order.
 - Preserve the existing three-item spatial layout, irregular outlines, hover/focus behavior, and responsive mobile stack.
 
 The homepage continues to contain exactly three outlined desk items and three total links.
